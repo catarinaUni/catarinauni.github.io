@@ -1,6 +1,7 @@
 import React from "react";
-import { MainHero, LogoSection, HeroText, HeroItems } from "./Hero.style";
+import { MainHero, LogoSection, HeroText, HeroItems, Buttons } from "./Hero.style";
 import { Link } from "react-router-dom";
+import logo from '../assets/logo.png';
 
 function Hero() {
     return (
@@ -8,17 +9,21 @@ function Hero() {
             <MainHero>
                 <HeroItems>
                     <LogoSection>
-                        LOGO
+                        <img src={logo} alt="" />
                     </LogoSection>
                     <HeroText>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </HeroText>
-                    <Link to="/login">
-                        <button>Entrar</button>
-                    </Link>
-                    <Link to="/cadastro">
-                        <button>Cadastro</button>
-                    </Link>
+                    <Buttons>
+                        <Link to="/login">
+                            <button>Entrar</button>
+                        </Link>
+                        <Link to="/cadastro">
+                            <button>Cadastro</button>
+                        </Link>
+
+                    </Buttons>
+                    
                 </HeroItems>
             </MainHero>
         </>

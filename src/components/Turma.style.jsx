@@ -10,7 +10,7 @@ export const Main= styled.div`
 export const MainContent = styled.div`
     width: 82vw;
     background-color: #3F3F3F;
-    height:auto;
+    min-height:92vh;
     margin-top: 8vh;
     margin-left: 18vw;
     padding-bottom: 100px;
@@ -23,10 +23,20 @@ export const Header = styled.div`
     width:100%;
     height: 30vh;
     color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    p{
+        padding-top:50px;
+    }
+
 `;
 
 export const Title = styled.div`
-
+    font-size: 45px;
+    padding-top: 50px;
+    padding-right: 100px;
 
 `;
 

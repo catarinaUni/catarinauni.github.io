@@ -35,7 +35,6 @@ function QuestionForm({ questions, responses, setResponses }) {
   );
 }
 
-// Exemplo de uso:
 const questionsData = [
   {
     id: 1,

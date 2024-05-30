@@ -47,39 +47,49 @@ const QuestionForm = () => {
     };
   
     return (
-      <div>
-        <input
+      <>
+        <input 
+          className="pergunta"
           type="text"
           placeholder="Digite a pergunta"
           value={newQuestion.question}
           onChange={(e) => setNewQuestion({ ...newQuestion, question: e.target.value })}
         />
-  
+        <div className="alternativas">
+        <div>
         <label>a):</label>
         <input
           type="text"
           value={newQuestion.alternatives.a}
           onChange={(e) => handleChangeAlternative(e, 'a')}
         />
+        </div>
+        <div>
         <label>b):</label>
         <input
           type="text"
           value={newQuestion.alternatives.b}
           onChange={(e) => handleChangeAlternative(e, 'b')}
         />
+        </div>
+        <div>
         <label>c):</label>
         <input
           type="text"
           value={newQuestion.alternatives.c}
           onChange={(e) => handleChangeAlternative(e, 'c')}
         />
+        </div>
+        <div>
         <label>d):</label>
         <input
           type="text"
           value={newQuestion.alternatives.d}
           onChange={(e) => handleChangeAlternative(e, 'd')}
         />
-  
+        </div>
+        </div>
+        <div className="resposta">
         <label>Resposta:</label>
         <select
           value={newQuestion.correctAlternative}
@@ -90,29 +100,40 @@ const QuestionForm = () => {
           <option value="c">c</option>
           <option value="d">d</option>
         </select>
-  
+        </div>
+        <div className="tags">
+        <div>
         <label>Tag 1:</label>
         <input
           type="text"
           value={newQuestion.tags[0]}
           onChange={(e) => handleChangeTag(e, 0)}
         />
+        </div>
+        <div>
         <label>Tag 2:</label>
         <input
           type="text"
           value={newQuestion.tags[1]}
           onChange={(e) => handleChangeTag(e, 1)}
         />
+        </div>
+        <div>
         <label>Tag 3:</label>
         <input
           type="text"
           value={newQuestion.tags[2]}
           onChange={(e) => handleChangeTag(e, 2)}
         />
-  
-        <button onClick={handleAddQuestion}>Adicionar Pergunta</button>
-        <button onClick={handleSaveToJson}>Salvar em JSON</button>
-      </div>
+        </div>
+        </div>
+        <div className="paiAddP">
+          <button onClick={handleAddQuestion} className="addPergunta">Adicionar Pergunta</button>
+          <button onClick={handleSaveToJson} className="finalizar">Finalizar lista</button>
+        </div>
+        
+        
+      </>
     );
   };
 function NewList(props){
