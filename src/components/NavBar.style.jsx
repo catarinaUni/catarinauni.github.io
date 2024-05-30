@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const NavBarContainer = styled.nav`
-  background-color: #333;
+  background-color: #3F3F3F;
   padding: 20px;
   width: 100vw;
   z-index: 3;

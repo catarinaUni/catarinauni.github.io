@@ -2,13 +2,14 @@ import styled from "styled-components";
 
 export const Main= styled.div`
     display:flex;
+    color: white;
     
     
 `;
 
 export const MainContent = styled.div`
     width: 82vw;
-    background-color: pink;
+    background-color: #3F3F3F;
     height:auto;
     margin-top: 8vh;
     margin-left: 18vw;
@@ -18,7 +19,7 @@ export const MainContent = styled.div`
 
 export const Header = styled.div`
 
-    background-color:blue;
+    background-color:#00A4CC;
     width:100%;
     height: 30vh;
     color: white;

@@ -8,6 +8,9 @@ import Cadastro from './components/Cadastro';
 import NavBar from './components/NavBar';
 import Turma from './components/Turma';
 import NewList from './components/NewList'
+import AlunoTurma from './components/AlunoTurma';
+import Lista from './components/Lista';
+import Resultado from './components/Resultado';
 
 function App() {
     return (
@@ -16,8 +19,11 @@ function App() {
             <Routes> 
                 <Route path="/login" element={<Login />} /> 
                 <Route path="/cadastro" element={<Cadastro />} /> 
-                <Route path="/turma" element={<Turma />} /> 
-                <Route path="/novalista" element={<NewList />} /> 
+                <Route path="professor/turma" element={<Turma />} /> 
+                <Route path="professor/turma/novalista" element={<NewList />} />
+                <Route path="aluno/turma" element={<AlunoTurma />} /> 
+                <Route path="aluno/turma/lista" element={<Lista />} />  
+                <Route path="aluno/turma/lista/resultado" element={<Resultado />} />  
                 <Route path="/" element={<Hero />} /> 
             </Routes>
         </Router>
