@@ -5,7 +5,8 @@ export const MainHero = styled.div`
     display:flex;
     align-items: center;
     justify-content: center;
-    height: 70vh;
+    height: 100vh;
+    background-color: #3F3F3F;
 `;
 
 export const HeroItems = styled.div`
@@ -30,6 +31,13 @@ export const HeroText = styled.div`
 export const Buttons = styled.div` 
 
     display:flex;
-    width: 30%;
+    width: 50%;
     justify-content: space-around;
+
+    .botao{
+        width: 100px;
+        height: 30px;
+        border-radius: 4px;
+        border: none;
+    }
 `;

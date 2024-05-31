@@ -58,7 +58,7 @@ export const Titulo = styled.div`
     p {
         width: 60px;
         height: 1px;
-        background-color:black;
+        background-color:white;
     }
 margin-bottom: 20px;
 display: flex;

@@ -6,6 +6,8 @@ export const LoginContainer = styled.div`
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-color: #3F3F3F;
+    color: white;
 `;
 
 export const LoginItems = styled.div`
@@ -13,7 +15,8 @@ export const LoginItems = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: red;
+    background-color: #8F8787;
+    border-radius: 4px;
     padding: 30px;
 
     h1 {

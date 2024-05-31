@@ -24,10 +24,10 @@ const QuestionForm = () => {
     };
   
     const handleSaveToJson = () => {
-      // Convert questions to JSON and log to console (or save to file)
+      
       const json = JSON.stringify(questions, null, 2);
       console.log('Questions saved to JSON:', json);
-      // Save the JSON to a file if needed
+
     };
   
     const handleChangeAlternative = (e, key) => {

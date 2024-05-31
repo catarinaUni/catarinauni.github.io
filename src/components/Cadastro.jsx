@@ -1,9 +1,12 @@
 import React from "react";
-import { CadastroContainer, CadastroForm, FormGroup, Label, Input, SubmitButton } from "./Cadastro.style";
+import { CadastroContainer, CadastroForm, FormGroup, Label, Input, SubmitButton, CadastroItems } from "./Cadastro.style";
 
 function Cadastro() {
     return (
         <CadastroContainer>
+            <CadastroItems>
+
+            
             <h1>Cadastro</h1>
             <CadastroForm>
                 <FormGroup>
@@ -18,8 +21,16 @@ function Cadastro() {
                     <Label>Email:</Label>
                     <Input type="email" name="email" />
                 </FormGroup>
+                <FormGroup>
+                    <Label>Type:</Label>
+                    <select>
+                    <option value="professor">Professor</option>
+                    <option value="aluno">Aluno</option>
+                    </select>
+                </FormGroup>
                 <SubmitButton type="submit">Cadastrar</SubmitButton>
             </CadastroForm>
+            </CadastroItems>
         </CadastroContainer>
     );
 }

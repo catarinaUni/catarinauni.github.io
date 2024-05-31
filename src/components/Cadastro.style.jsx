@@ -1,27 +1,46 @@
 import styled from 'styled-components';
 
 export const CadastroContainer = styled.div`
-    display: flex;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+height: 100vh;
+background-color: #3F3F3F;
+color: white;
+`;
+
+export const CadastroItems = styled.div` 
+display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    background-color: #8F8787;
+    border-radius: 4px;
+    padding: 30px;
 
     h1 {
-        font-size: 2rem;
-        color: #333;
-        margin-bottom: 20px;
+        margin-bottom: 50px;
     }
+
+
 `;
 
 export const CadastroForm = styled.form`
-    display: flex;
-    flex-direction: column;
-    width: 300px;
+display: flex;
+flex-direction: column;
+width: 300px;
 `;
 
 export const FormGroup = styled.div`
-    margin-bottom: 15px;
+margin-bottom: 25px;
+display: flex;
+flex-direction: column;
+
+    select{
+        color: #3F3F3F;
+        height: 30px;
+    }
 `;
 
 export const Label = styled.label`
@@ -35,6 +54,7 @@ export const Input = styled.input`
     border: 1px solid #ccc;
     border-radius: 5px;
 `;
+
 
 export const SubmitButton = styled.button`
     padding: 10px;
