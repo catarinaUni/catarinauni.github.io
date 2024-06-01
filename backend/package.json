@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "setup-db": "mysql -u root -p -e \"CREATE DATABASE IF NOT EXISTS questaoai;\" && mysql -u root -p questaoai < db/questaoai_dump.sql"
   },
   "keywords": [],
   "author": "",
