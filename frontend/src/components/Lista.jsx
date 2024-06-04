@@ -72,6 +72,8 @@ function Lista() {
             .catch(error => {
                 console.error("Houve um erro ao salvar as respostas do aluno:", error);
             });
+
+        navigate("/aluno/turma/lista/resultado")
     };
 
     return (
@@ -83,16 +85,19 @@ function Lista() {
                     <p>Código: 1234567</p>
                 </Header>
                 <MainItems>
-                    <ListaNome>Algoritmos e Programação 1</ListaNome>
+                    <ListaNome>LISTA</ListaNome>
                     <form onSubmit={handleFormSubmit}>
                         <QuestionForm
                             questions={questions}
                             responses={responses}
                             setResponses={setResponses}
                         />
+                        
+                        
                         <button type="submit">
-                            Enviar
+                        Enviar
                         </button>
+                        
                     </form>
                 </MainItems>
             </MainContent>

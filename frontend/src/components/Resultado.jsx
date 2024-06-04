@@ -1,25 +1,59 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import SideBar from "./SideBar";
 import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
 import { ListaNome, Question } from "./Lista.style";
 import { Score } from './Resultado.style';
+import axios from "axios";
 
 
-const resultados = 
-    {
-        "score": "8/10",
-        "assuntos": [
-          "Matematica basica",
-          "Algoritmos",
-          "Estruturas de Dados",
-          "Programação Orientada a Objetos"
-        ]
-      }
-      
+const CheckAnswersComponent = () => {
+    const [resultados, setResultados] = useState([]);
+    const [topTags, setTopTags] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:8800/aluno/turma/lista/resultado')
+            .then(response => {
+                setResultados(response.data.resultados);
+                setTopTags(response.data.topTags);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
+    return (
+        <div>
+            <h1>Resultados</h1>
+            <ul>
+                {resultados.map((resultado, index) => (
+                    <li key={index}>
+                        <p>Pergunta ID: {resultado.perguntaId}</p>
+                        <p>Resposta do Aluno: {resultado.respostaAluno}</p>
+
+                        <p>Correta: {resultado.correta ? 'Sim' : 'Não'}</p>
+                        <p>Tags: {resultado.tag1}, {resultado.tag2}, {resultado.tag3}</p>
+                    </li>
+                ))}
+            </ul>
+
+            <h2>Top Tags</h2>
+            <ul>
+                {topTags.map((tag, index) => (
+                    <li key={index}>{tag}</li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+    
+    
+
+
+
+
+
 
 
 function Resultado(props) {
-  const { score, assuntos } = resultados;
+
 
   return (
     <>
@@ -32,11 +66,8 @@ function Resultado(props) {
           </Header>
           <MainItems>
             <ListaNome>Algoritmos e Programação 1</ListaNome>
-            <Score>{score}</Score>
             <div>
-              {assuntos.map((assunto, index) => (
-                <div key={index}>{assunto}</div>
-              ))}
+              <CheckAnswersComponent/>
             </div>
           </MainItems>
         </MainContent>

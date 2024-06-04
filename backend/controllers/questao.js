@@ -43,28 +43,54 @@ export const saveAnswers = (req, res) => {
 };
 
 
-/*
 export const checkAnswers = (req, res) => {
-    const { alunoId } = req.body;
+    console.log("Oi");
 
     const query = `
-        SELECT r.pergunta_id, r.resposta_aluno, p.resposta AS resposta_correta
+        SELECT r.pergunta_id, r.resposta, p.tag_1, p.tag_2, p.tag_3, p.resposta_correta AS resposta_correta
         FROM respostas r
-        JOIN perguntas p ON r.pergunta_id = p.id
-        WHERE r.aluno_id = ?
+        JOIN perguntas p ON r.pergunta_id = p.id;
     `;
 
-    db.query(query, [alunoId], (err, data) => {
+    db.query(query, (err, data) => {
         if (err) return res.json(err);
 
         const resultados = data.map(item => ({
             perguntaId: item.pergunta_id,
-            respostaAluno: item.resposta_aluno,
+            respostaAluno: item.resposta,
             respostaCorreta: item.resposta_correta,
-            correta: item.resposta_aluno === item.resposta_correta
+            correta: item.resposta === item.resposta_correta,
+            tag1: item.tag_1,
+            tag2: item.tag_2,
+            tag3: item.tag_3
         }));
 
-        return res.status(200).json(resultados);
+        // First step: Collect tags of incorrect answers
+        const tags = [];
+        resultados.forEach(item => {
+            if (!item.correta) {
+                if (item.tag1) tags.push(item.tag1);
+                if (item.tag2) tags.push(item.tag2);
+                if (item.tag3) tags.push(item.tag3);
+            }
+        });
+
+        // Second step: Count tag occurrences
+        const tagCounts = tags.reduce((acc, tag) => {
+            acc[tag] = (acc[tag] || 0) + 1;
+            return acc;
+        }, {});
+
+        // Third step: Return the 4 most frequent tags
+        const sortedTags = Object.entries(tagCounts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 4)
+            .map(entry => entry[0]);
+            console.log(sortedTags)
+        return res.status(200).json({
+            resultados,
+            topTags: sortedTags
+            
+        });
     });
-    
-};*/
+};
