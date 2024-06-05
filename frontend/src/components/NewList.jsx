@@ -53,37 +53,49 @@ const QuestionForm = () => {
   return (
       <div>
           <input
+
               type="text"
               placeholder="Digite a pergunta"
               value={newQuestion.pergunta}
               onChange={(e) => setNewQuestion({ ...newQuestion, pergunta: e.target.value })}
+              className="pergunta"
           />
 
+        <div className="alternativas">
+                <div>
           <label>a):</label>
           <input
               type="text"
               value={newQuestion.alternativa.a}
               onChange={(e) => handleChangeAlternative(e, 'a')}
           />
+          </div>
+          <div>
           <label>b):</label>
           <input
               type="text"
               value={newQuestion.alternativa.b}
               onChange={(e) => handleChangeAlternative(e, 'b')}
           />
+          </div>
+          <div>
           <label>c):</label>
           <input
               type="text"
               value={newQuestion.alternativa.c}
               onChange={(e) => handleChangeAlternative(e, 'c')}
           />
+          </div>
+          <div>
           <label>d):</label>
           <input
               type="text"
               value={newQuestion.alternativa.d}
               onChange={(e) => handleChangeAlternative(e, 'd')}
           />
-
+          </div>
+          </div>
+          <div className="resposta">
           <label>Resposta:</label>
           <select
               value={newQuestion.resposta}
@@ -94,28 +106,39 @@ const QuestionForm = () => {
               <option value="c">c</option>
               <option value="d">d</option>
           </select>
+          </div>
 
+          <div className="tags">
+          <div>
           <label>Tag 1:</label>
           <input
               type="text"
               value={newQuestion.tags[0]}
               onChange={(e) => handleChangeTag(e, 0)}
           />
+          </div>
+          <div>
           <label>Tag 2:</label>
           <input
               type="text"
               value={newQuestion.tags[1]}
               onChange={(e) => handleChangeTag(e, 1)}
           />
+          </div>
+          <div>
           <label>Tag 3:</label>
           <input
               type="text"
               value={newQuestion.tags[2]}
               onChange={(e) => handleChangeTag(e, 2)}
           />
+          </div>
+          </div>
+          <div className="paiAddP">
+          <button onClick={handleAddQuestion} className="addPergunta">Adicionar Pergunta</button>
 
-          <button onClick={handleAddQuestion}>Adicionar Pergunta</button>
-          <button onClick={handleSaveToJson}>Salvar em JSON</button>
+          <button onClick={handleSaveToJson} className="finalizar">Salvar em JSON</button>
+          </div>
 
           <h3>Perguntas adicionadas:</h3>
           <ul>
@@ -131,7 +154,7 @@ const QuestionForm = () => {
 function NewList(props){
 
 
-    
+
 
     return(
         <>
@@ -154,15 +177,15 @@ function NewList(props){
                         </Titulo>
                         <Form>
                             <QuestionForm/>
-                            
+
                         </Form>
-                        
+
                     </MainItems>
                 </MainContent>
 
             </Main>
 
-        
+
         </>
     )
 
