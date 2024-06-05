@@ -65,7 +65,7 @@ export const checkAnswers = (req, res) => {
             tag3: item.tag_3
         }));
 
-        // First step: Collect tags of incorrect answers
+        
         const tags = [];
         resultados.forEach(item => {
             if (!item.correta) {
@@ -75,13 +75,13 @@ export const checkAnswers = (req, res) => {
             }
         });
 
-        // Second step: Count tag occurrences
+        
         const tagCounts = tags.reduce((acc, tag) => {
             acc[tag] = (acc[tag] || 0) + 1;
             return acc;
         }, {});
 
-        // Third step: Return the 4 most frequent tags
+       
         const sortedTags = Object.entries(tagCounts)
             .sort((a, b) => b[1] - a[1])
             .slice(0, 4)

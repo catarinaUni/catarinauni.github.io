@@ -2,13 +2,14 @@ import {React, useState, useEffect} from "react";
 import SideBar from "./SideBar";
 import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
 import { ListaNome, Question } from "./Lista.style";
-import { Score } from './Resultado.style';
+import { Score, Result } from './Resultado.style';
 import axios from "axios";
 
 
 const CheckAnswersComponent = () => {
     const [resultados, setResultados] = useState([]);
     const [topTags, setTopTags] = useState([]);
+    var score = 0;
 
     useEffect(() => {
         axios.get('http://localhost:8800/aluno/turma/lista/resultado')
@@ -19,28 +20,28 @@ const CheckAnswersComponent = () => {
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
+    resultados.forEach((resultado, index) => {
+      if (resultado.correta) {
+        score++;
+      }
+    });
+    
+
     return (
-        <div>
-            <h1>Resultados</h1>
-            <ul>
-                {resultados.map((resultado, index) => (
-                    <li key={index}>
-                        <p>Pergunta ID: {resultado.perguntaId}</p>
-                        <p>Resposta do Aluno: {resultado.respostaAluno}</p>
+        <Result>
 
-                        <p>Correta: {resultado.correta ? 'Sim' : 'Não'}</p>
-                        <p>Tags: {resultado.tag1}, {resultado.tag2}, {resultado.tag3}</p>
-                    </li>
-                ))}
-            </ul>
+            <h2>Resultados</h2>
 
-            <h2>Top Tags</h2>
+             <h4>Você acertou {score} questões!</h4>
+
+
+            <h3>Assuntos recomendados para estudo</h3>
             <ul>
                 {topTags.map((tag, index) => (
                     <li key={index}>{tag}</li>
                 ))}
             </ul>
-        </div>
+        </Result>
     );
 };
     

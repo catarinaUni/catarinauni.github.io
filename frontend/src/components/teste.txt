@@ -1,0 +1,11 @@
+<ul>
+                {resultados.map((resultado, index) => (
+                    <li key={index}>
+                        <p>Pergunta ID: {resultado.perguntaId}</p>
+                        <p>Resposta do Aluno: {resultado.respostaAluno}</p>
+
+                        <p>Correta: {resultado.correta ? 'Sim' : 'Não'}</p>
+                        <p>Tags: {resultado.tag1}, {resultado.tag2}, {resultado.tag3}</p>
+                    </li>
+                ))}
+            </ul>

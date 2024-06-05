@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "./SideBar";
-import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
+import { Main, MainContent, Header, Title, MainItems, FormAluno } from "./Turma.style";
 import { ListaNome } from "./Lista.style";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -17,9 +17,9 @@ function QuestionForm({ questions, responses, setResponses }) {
         <div>
             {questions.map(question => (
                 <div key={question.id}>
-                    <h3>{question.question}</h3>
+                    <h4 className="enunciado">{question.question}</h4>
                     {Object.keys(question.alternatives).map(altKey => (
-                        <div key={altKey}>
+                        <div key={altKey} className="alternativa">
                             <input
                                 type="radio"
                                 name={`question_${question.id}`}
@@ -86,15 +86,17 @@ function Lista() {
                 </Header>
                 <MainItems>
                     <ListaNome>LISTA</ListaNome>
-                    <form onSubmit={handleFormSubmit}>
+                    <form onSubmit={handleFormSubmit} className="formAluno">
+                        <FormAluno >
                         <QuestionForm
                             questions={questions}
                             responses={responses}
                             setResponses={setResponses}
                         />
+                        </FormAluno>
                         
                         
-                        <button type="submit">
+                        <button type="submit" className="botao">
                         Enviar
                         </button>
                         

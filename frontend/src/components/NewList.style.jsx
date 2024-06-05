@@ -6,7 +6,6 @@ export const Form = styled.div`
 		flex-direction: column;
 		width: 80%;
 
-		margin-left: 50px;
 
 		.pergunta{
 				padding: 10px;
