@@ -1,0 +1,31 @@
+id_aluno,conhecimento_consolidado,conhecimento_para_aperfeicoar,turno_disponivel
+a1,"['exponencial', 'trigonometria']","['frações', 'equacao1grau']",manha
+a2,"['matrizes', 'trigonometria', 'equacao2grau']","['progressão', 'frações']",noite
+a3,"['frações', 'equacao1grau', 'matrizes']","['equacao2grau', 'progressão', 'trigonometria']",manha
+a4,"['equacao2grau', 'trigonometria']",['frações'],tarde
+a5,"['matrizes', 'progressão', 'frações']",['equacao1grau'],manha
+a6,"['matrizes', 'exponencial']",['trigonometria'],tarde
+a7,"['equacao2grau', 'equacao1grau']","['frações', 'exponencial', 'trigonometria']",manha
+a8,"['exponencial', 'trigonometria', 'equacao2grau']","['matrizes', 'equacao1grau']",noite
+a9,['equacao1grau'],"['exponencial', 'frações', 'matrizes']",manha
+a10,['exponencial'],"['matrizes', 'trigonometria', 'progressão']",tarde
+a11,"['progressão', 'matrizes', 'trigonometria']","['equacao2grau', 'frações', 'equacao1grau']",noite
+a12,['progressão'],"['frações', 'equacao2grau']",noite
+a13,"['trigonometria', 'progressão']","['matrizes', 'frações']",tarde
+a14,"['equacao2grau', 'progressão', 'exponencial']","['frações', 'trigonometria', 'equacao1grau']",noite
+a15,"['trigonometria', 'equacao2grau']",['frações'],tarde
+a16,"['progressão', 'equacao2grau', 'equacao1grau']","['exponencial', 'frações', 'matrizes']",noite
+a17,['matrizes'],['frações'],tarde
+a18,['equacao1grau'],['frações'],manha
+a19,"['progressão', 'matrizes', 'equacao2grau']",['frações'],tarde
+a20,"['trigonometria', 'frações', 'exponencial']",['equacao2grau'],noite
+a21,"['frações', 'equacao1grau']",['exponencial'],manha
+a22,['exponencial'],"['equacao2grau', 'equacao1grau']",manha
+a23,"['exponencial', 'trigonometria']","['equacao2grau', 'progressão', 'frações']",tarde
+a24,"['trigonometria', 'matrizes']","['equacao1grau', 'equacao2grau', 'exponencial']",manha
+a25,"['progressão', 'matrizes']","['equacao2grau', 'exponencial']",noite
+a26,"['matrizes', 'frações']",['equacao2grau'],tarde
+a27,['exponencial'],['equacao1grau'],manha
+a28,"['equacao1grau', 'matrizes']","['progressão', 'equacao2grau']",tarde
+a29,"['matrizes', 'trigonometria']",['equacao2grau'],manha
+a30,['frações'],"['exponencial', 'progressão']",tarde

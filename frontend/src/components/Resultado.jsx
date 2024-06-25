@@ -40,6 +40,8 @@ const CheckAnswersComponent = () => {
                     <li key={index}>{tag}</li>
                 ))}
             </ul>
+            <h2>Grupos de estudo recomendados</h2>
+            
         </div>
     );
 };
