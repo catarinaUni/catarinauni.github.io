@@ -15,6 +15,8 @@ export const MainContent = styled.div`
     margin-left: 18vw;
     padding-bottom: 100px;
     
+
+    
 `;
 
 export const Header = styled.div`
@@ -47,7 +49,43 @@ export const MainItems = styled.div`
     padding-left: 50px;
     padding-top:20px;
     height: auto;
+    align-items: center;
+
+    .formAluno{
+        width: 100%;
+        display:flex;
+        flex-direction:column;
+        align-items: center;
+    }
+
+    .botao{
+        border: none;
+				width: 100px;
+				margin-top: 70px;
+				height: 30px;
+				background-color: #00DCBA;
+    }
+
 `;
+
+export const FormAluno = styled.div`
+margin-top: 20px;
+width: 60vw;
+display: flex;
+align-items: left; 
+
+.enunciado{
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.alternativa{
+    margin-left: 20px;
+    margin-bottom: 10px;
+    
+}
+
+`
 
 export const Alunos = styled.div`
     margin-bottom: 70px;

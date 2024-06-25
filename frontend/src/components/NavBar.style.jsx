@@ -40,4 +40,8 @@ export const NavItens = styled.div`
 
 `;
 export const NavLogo = styled.div`
+ img{
+  width: 100px;
+ }
+  
 `;

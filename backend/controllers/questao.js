@@ -64,32 +64,25 @@ export const checkAnswers = (req, res) => {
             tag2: item.tag_2,
             tag3: item.tag_3
         }));
-    
-        const totalTagCounts = {};
-        const wrongTagCounts = {};
-    
-        resultados.forEach(item => {
-            const tags = [item.tag1, item.tag2, item.tag3].filter(Boolean);
-            tags.forEach(tag => {
-                totalTagCounts[tag] = (totalTagCounts[tag] || 0) + 1;
-            });
-        });
-    
+
+        // First step: Collect tags of incorrect answers
+        const tags = [];
         resultados.forEach(item => {
             if (!item.correta) {
-                const tags = [item.tag1, item.tag2, item.tag3].filter(Boolean);
-                tags.forEach(tag => {
-                    wrongTagCounts[tag] = (wrongTagCounts[tag] || 0) + 1;
-                });
+                if (item.tag1) tags.push(item.tag1);
+                if (item.tag2) tags.push(item.tag2);
+                if (item.tag3) tags.push(item.tag3);
             }
         });
-    
-        const tagErrorRates = Object.keys(wrongTagCounts).reduce((acc, tag) => {
-            acc[tag] = wrongTagCounts[tag] / totalTagCounts[tag];
+
+        // Second step: Count tag occurrences
+        const tagCounts = tags.reduce((acc, tag) => {
+            acc[tag] = (acc[tag] || 0) + 1;
             return acc;
         }, {});
-    
-        const sortedTags = Object.entries(tagErrorRates)
+
+        // Third step: Return the 4 most frequent tags
+        const sortedTags = Object.entries(tagCounts)
             .sort((a, b) => b[1] - a[1])
             .slice(0, 4)
             .map(entry => entry[0]);

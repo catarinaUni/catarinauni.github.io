@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Side = styled.div`
-font-size:12px;
+font-size:16px;
     color: white;
     height: 100%; 
     width: 18vw; 
@@ -23,7 +23,6 @@ export const SideBarItems = styled.div`
     height: 75%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-direction: column;
 `;
 
@@ -62,11 +61,14 @@ export const TurmaButton = styled.div`
     width: 100%;
     height: 40px;
     display: flex;
-align-items: center;
-justify-content: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 
-margin-bottom: 10px;
-    
+    &:hover {
+        background-color:#8F8787;
+        cursor: pointer;
+    }
 `;
 
 export const TurmasList = styled.div`
@@ -78,7 +80,15 @@ flex-direction: column;
 
 export const NewTurmaButton = styled.div`
 
-width: 100%;
+
 text-align: center;
 margin-top:10px;
+padding: 10px;
+width:100%;
+
+&:hover {
+    color:#8F8787;
+    cursor: pointer;
+    
+}
 `;

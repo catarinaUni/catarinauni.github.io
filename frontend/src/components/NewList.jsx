@@ -137,7 +137,7 @@ const QuestionForm = () => {
           <div className="paiAddP">
           <button onClick={handleAddQuestion} className="addPergunta">Adicionar Pergunta</button>
 
-          <button onClick={handleSaveToJson} className="finalizar">Salvar em JSON</button>
+          <button onClick={handleSaveToJson} className="finalizar">Finalizar</button>
           </div>
 
           <h3>Perguntas adicionadas:</h3>

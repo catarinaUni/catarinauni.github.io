@@ -7,6 +7,7 @@ export const MainHero = styled.div`
     justify-content: center;
     height: 100vh;
     background-color: #3F3F3F;
+    color: white;
 `;
 
 export const HeroItems = styled.div`
@@ -21,7 +22,9 @@ export const HeroItems = styled.div`
 `;
 
 export const LogoSection = styled.div` 
-
+    img{
+        width: 500px;
+    }
 `;
 
 export const HeroText = styled.div`
