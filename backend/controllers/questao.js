@@ -64,25 +64,36 @@ export const checkAnswers = (req, res) => {
             tag2: item.tag_2,
             tag3: item.tag_3
         }));
-
-        // First step: Collect tags of incorrect answers
-        const tags = [];
+    
+        const totalTagCounts = {};
+        const wrongTagCounts = {};
+    
+        // Calcular o total de questões por tag
+        resultados.forEach(item => {
+            const tags = [item.tag1, item.tag2, item.tag3].filter(Boolean);
+            tags.forEach(tag => {
+                totalTagCounts[tag] = (totalTagCounts[tag] || 0) + 1;
+            });
+        });
+    
+        // Calcular o total de questões erradas por tag
         resultados.forEach(item => {
             if (!item.correta) {
-                if (item.tag1) tags.push(item.tag1);
-                if (item.tag2) tags.push(item.tag2);
-                if (item.tag3) tags.push(item.tag3);
+                const tags = [item.tag1, item.tag2, item.tag3].filter(Boolean);
+                tags.forEach(tag => {
+                    wrongTagCounts[tag] = (wrongTagCounts[tag] || 0) + 1;
+                });
             }
         });
-
-        // Second step: Count tag occurrences
-        const tagCounts = tags.reduce((acc, tag) => {
-            acc[tag] = (acc[tag] || 0) + 1;
+    
+        // Calcular a taxa de erro ponderada por tag
+        const tagErrorRates = Object.keys(wrongTagCounts).reduce((acc, tag) => {
+            acc[tag] = wrongTagCounts[tag] / totalTagCounts[tag];
             return acc;
         }, {});
-
-        // Third step: Return the 4 most frequent tags
-        const sortedTags = Object.entries(tagCounts)
+    
+        // Ordenar as tags pela taxa de erro ponderada e pegar as top 4
+        const sortedTags = Object.entries(tagErrorRates)
             .sort((a, b) => b[1] - a[1])
             .slice(0, 4)
             .map(entry => entry[0]);
@@ -94,5 +105,6 @@ export const checkAnswers = (req, res) => {
             topTags: sortedTags
         });
     });
+    
     
 };

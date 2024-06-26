@@ -25,6 +25,8 @@ const CheckAnswersComponent = () => {
         score++;
       }
     });
+
+    
     
 
     return (
@@ -41,7 +43,9 @@ const CheckAnswersComponent = () => {
                     <li key={index}>{tag}</li>
                 ))}
             </ul>
-        </div>
+
+
+        </Result>
     );
 };
     
