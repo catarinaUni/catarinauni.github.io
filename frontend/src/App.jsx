@@ -11,6 +11,7 @@ import NewList from './components/NewList'
 import AlunoTurma from './components/AlunoTurma';
 import Lista from './components/Lista';
 import Resultado from './components/Resultado';
+import AlunoTurmaInscrito from './components/AlunoTurmaInscrito';
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path="aluno/turma/lista" element={<Lista />} />  
                 <Route path="aluno/turma/lista/resultado" element={<Resultado />} />  
                 <Route path="/" element={<Hero />} /> 
+                <Route path="/turma/:id" element={<AlunoTurmaInscrito />} />
             </Routes>
         </Router>
     );

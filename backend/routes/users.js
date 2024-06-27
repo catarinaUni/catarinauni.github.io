@@ -60,5 +60,22 @@ router.post('/cadastro', async (req, res) => {
     });
 });
 
+// Rota para obter listas de uma turma
+router.get('/turma/:turmaId/listas', (req, res) => {
+  const turmaId = req.params.turmaId;
+  
+  const query = 'SELECT * FROM perguntas as  p join turma_perguntas as tp on p.id = tp.pergunta_id WHERE turma_id = ?';
+  
+  db.query(query, [turmaId], (err, results) => {
+      if (err) {
+          console.error('Erro ao consultar listas da turma:', err);
+          return res.status(500).json({ message: 'Erro interno do servidor' });
+      }
+
+      res.status(200).json({ listas: results });
+  });
+});
+
+
 
 export default router;

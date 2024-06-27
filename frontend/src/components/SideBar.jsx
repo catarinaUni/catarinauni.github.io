@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Side, NewTurmaButton, SideBarItems, TurmaButton, TurmasItems, TurmasList, UserItems, Modal, ModalContent, CloseButton, ErrorMessage } from './SideBar.style';
 import imgt from "../assets/imgt.png";
@@ -8,15 +9,15 @@ function SideBar(props) {
     const [turmaCode, setTurmaCode] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [turmas, setTurmas] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // Carregar turmas do usuário quando o componente for montado
         const fetchTurmas = async () => {
             try {
                 const response = await axios.get(`http://localhost:8800/turmas/${props.userId}`);
                 setTurmas(response.data.turmas);
             } catch (error) {
-                console.error('Erro ao carregar turmas:', error);
+                console.error('Erro ao buscar turmas:', error);
             }
         };
 
@@ -39,17 +40,22 @@ function SideBar(props) {
 
     const handleParticiparSubmit = async () => {
         try {
-            const response = await axios.post('http://localhost:8800/participar-turma', {
+            await axios.post('http://localhost:8800/participar-turma', {
                 userId: props.userId,
                 turmaCode
             });
-            // Atualizar a lista de turmas com a resposta do servidor
-            setTurmas(response.data.turmas);
             handleCloseModal();
+            // Atualiza a lista de turmas após participar de uma nova turma
+            const response = await axios.get(`http://localhost:8800/turmas/${props.userId}`);
+            setTurmas(response.data.turmas);
         } catch (error) {
             console.error('Erro ao participar da turma:', error);
             setErrorMessage('Código da turma inválido ou erro ao adicionar.');
         }
+    };
+
+    const handleTurmaClick = (turma) => {
+        navigate(`/turma/${turma.id}`, { state: { user: { name: props.userName, userType: props.userType, id: props.userId }, turma } });
     };
 
     return (
@@ -65,8 +71,10 @@ function SideBar(props) {
                         <h5>Turmas</h5>
                         <p></p>
                         <TurmasList>
-                            {turmas.map(turma => (
-                                <TurmaButton key={turma.id}>{turma.nome}</TurmaButton>
+                            {turmas.map((turma) => (
+                                <TurmaButton key={turma.id} onClick={() => handleTurmaClick(turma)}>
+                                    {turma.nome}
+                                </TurmaButton>
                             ))}
                         </TurmasList>
                         {props.userType === 'aluno' ? (

@@ -111,14 +111,14 @@ export const Image = styled.img`
 
 
 export const Listas = styled.div`
-margin-bottom: 70px;
-
+margin-bottom: 50px;
+width: 85%;
 
 
 `;
 
 export const Materiais = styled.div` 
-
+    width: 85%;
 `;
 
 export const ButtonNew = styled.div`
