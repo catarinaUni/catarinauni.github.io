@@ -58,6 +58,9 @@ CREATE TABLE IF NOT EXISTS respostas (
     FOREIGN KEY (aluno_id) REFERENCES alunos(id),
     FOREIGN KEY (pergunta_id) REFERENCES perguntas(id)
 );
+ALTER TABLE `questaoai`.`turmas` 
+ADD COLUMN `codigo` INT NOT NULL AFTER `professor_id`,
+ADD UNIQUE INDEX `codigo_UNIQUE` (`codigo` ASC) VISIBLE;
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1801';
 
