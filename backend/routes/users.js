@@ -3,6 +3,8 @@ import { getUsers, addQuestion } from "../controllers/user.js";
 import { checkAnswers, getQuestions, saveAnswers } from '../controllers/questao.js';
 import { inserirAluno, inserirProfessor } from '../controllers/cadastro.js';
 import { checkLogin } from "../controllers/login.js";
+import { participarTurma } from "../controllers/participarTurma.js";
+import { db } from "../db.js";
 
 
 const router = express.Router();
@@ -39,5 +41,24 @@ router.post('/cadastro', async (req, res) => {
       res.status(500).json({ message: 'Erro ao realizar cadastro' });
     }
   });
+
+  // aqui é quando o aluno vai entrar em uma turma
+  router.post('/participar-turma', participarTurma);
+
+  router.get('/turmas/:userId', (req, res) => {
+    const userId = req.params.userId;
+    
+    const query = 'SELECT t.* FROM turmas t INNER JOIN turma_alunos ta ON t.id = ta.turma_id WHERE ta.aluno_id = ?';
+    console.log("opa");
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error('Erro ao consultar turmas do aluno:', err);
+            return res.status(500).json({ message: 'Erro interno do servidor' });
+        }
+
+        res.status(200).json({ turmas: results });
+    });
+});
+
 
 export default router;
