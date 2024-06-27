@@ -19,8 +19,17 @@ export const checkLogin = (req, res) => {
         }
 
         if (results.length > 0) {
-            // Login bem-sucedido
-            res.status(200).json({ message: 'Login realizado com sucesso!' });
+            // Extrair informações do usuário
+            const user = results[0]; // Primeiro resultado
+            res.status(200).json({
+                message: 'Login realizado com sucesso!',
+                user: {
+                    id: user.id,
+                    name: user.nome,
+                    email: user.email,
+                    userType
+                }
+            });
         } else {
             // Credenciais inválidas
             res.status(401).json({ message: 'Senha ou login invalido' });
