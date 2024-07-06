@@ -10,7 +10,6 @@ function AlunoTurmaInscrito(props) {
     const location = useLocation();
     const { user, turma } = location.state;
     const [listas, setListas] = useState([]);
-    const [selectedLista, setSelectedLista] = useState(null); // Estado para a lista selecionada
     const [flag, setFlag] = useState(false)
 
     console.log("USER: ", props.user)
@@ -26,7 +25,7 @@ function AlunoTurmaInscrito(props) {
                         
                             items={listas}
                             renderItem={(lista) => (
-                                <div onClick={() => setSelectedLista(lista)}>
+                                <div onClick={() => props.handleSetFlagLista(true, lista)}>
                                     <svg width="64" height="84" viewBox="0 0 64 84" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="64" height="84" fill="#8F8787"/>
                                     </svg>

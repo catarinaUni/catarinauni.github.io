@@ -17,22 +17,22 @@ export const addQuestion = (req, res) => {
         return res.status(400).json({ error: "Data should be an array of questions" });
     }
 
-    const q = "INSERT INTO perguntas (pergunta, alternativa_a, alternativa_b, alternativa_c, alternativa_d, resposta_correta, tag_1, tag_2, tag_3) VALUES ?";
+    const q = "INSERT INTO perguntas (pergunta, alternativa_a, alternativa_b, alternativa_c, alternativa_d, resposta_correta, tag_1, tag_2, tag_3, ref) VALUES ?";
     const values = questions.map((question) => [
         question.pergunta,
         question.alternativa.a,
         question.alternativa.b,
         question.alternativa.c,
         question.alternativa.d,
-        question.resposta.correta,
+        question.resposta,
         question.tags[0],
         question.tags[1],
-        question.tags[2]
+        question.tags[2],
+        question.ref
     ]);
 
     db.query(q, [values], (err, data) => {
         if (err) return res.json(err);
-
         return res.status(200).json("Perguntas adicionadas com sucesso.");
     });
 };

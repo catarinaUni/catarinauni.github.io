@@ -49,13 +49,6 @@ const CheckAnswersComponent = () => {
     );
 };
     
-    
-
-
-
-
-
-
 
 function Resultado({usuario}) {
   console.log(usuario)
@@ -65,11 +58,6 @@ function Resultado({usuario}) {
     <>
       <Main>
         <MainContent>
-          <Header>
-            <Title>Inteligência Artificial</Title>
-            <p>Código: 1234567</p>
-            
-          </Header>
           <MainItems>
             <ListaNome>Algoritmos e Programação 1</ListaNome>
             

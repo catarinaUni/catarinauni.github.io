@@ -32,7 +32,6 @@ function AlunoTurma() {
 
     const handleSetFlagLista = (flag, lista) => {
         setFlagTurma(false);
-        console.log("entrou")
         setFlagLista(flag);
         setSelectedLista(lista);
     };
@@ -67,7 +66,7 @@ function AlunoTurma() {
             
             <SideBar userName={user.name} userType={user.userType} userId={user?.id} handleSetFlagTurma={handleSetFlagTurma} />
             <Contents>
-            <Header/>
+            <Header turma={selectedTurma}/>
                 {renderContent()}         
             </Contents>
             

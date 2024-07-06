@@ -31,7 +31,7 @@ function Login() {
                 console.log(response.data.user);
                 navigate('/aluno/turma', { state: { user: response.data.user } });
             } else if (formData.userType === 'professor') {
-                navigate('/professor/dashboard', { state: { user: response.data.user } });
+                navigate('/professor', { state: { user: response.data.user } });
             }
             
             setErrorMessage(''); // Limpa a mensagem de erro em caso de sucesso

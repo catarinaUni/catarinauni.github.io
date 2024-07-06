@@ -12,6 +12,7 @@ import AlunoTurma from './components/AlunoTurma';
 import Lista from './components/Lista';
 import Resultado from './components/Resultado';
 import AlunoTurmaInscrito from './components/AlunoTurmaInscrito';
+import ProfessorMain from './components/ProfessorMain'
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
             <Routes> 
                 <Route path="/login" element={<Login />} /> 
                 <Route path="/cadastro" element={<Cadastro />} /> 
+                <Route path='/professor' element={<ProfessorMain/>} />
                 <Route path="professor/turma" element={<Turma />} /> 
                 <Route path="professor/turma/novalista" element={<NewList />} />
                 <Route path="aluno/turma" element={<AlunoTurma />} /> 

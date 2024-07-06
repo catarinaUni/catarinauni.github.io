@@ -56,6 +56,16 @@ function Cadastro() {
                             <option value="aluno">Aluno</option>
                         </select>
                     </FormGroup>
+                    <FormGroup>
+                        <Label>Preferência de formato para conteúdos:</Label>
+                        <select name="userFormatPref" onChange={handleChange} value={formData.userFormatPref}>
+                            <option value="Video">Video</option>
+                            <option value="Livro">Livro</option>
+                            <option value="Artigo">Artigo</option>
+                            <option value="Quiz">Quiz</option>
+                            <option value="Podcast">Podcast</option>
+                        </select>
+                    </FormGroup>
                     <SubmitButton type="submit">Cadastrar</SubmitButton>
                 </CadastroForm>
             </CadastroItems>
