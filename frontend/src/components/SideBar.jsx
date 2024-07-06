@@ -55,7 +55,8 @@ function SideBar(props) {
     };
 
     const handleTurmaClick = (turma) => {
-        navigate(`/turma/${turma.id}`, { state: { user: { name: props.userName, userType: props.userType, id: props.userId }, turma } });
+        props.handleSetFlagTurma(true, turma)
+       
     };
 
     return (

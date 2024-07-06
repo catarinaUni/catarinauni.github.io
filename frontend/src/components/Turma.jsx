@@ -16,10 +16,7 @@ function Turma(props){
             <SideBar/>
 
             <MainContent>
-                <Header>
-                    <Title>Inteligencia Artificial</Title>
-                    <p>Codigo: 1234567</p>
-                </Header>
+                
                 <MainItems>
                     <Alunos>
                         <Titulo>

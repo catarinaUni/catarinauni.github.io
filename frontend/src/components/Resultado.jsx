@@ -57,20 +57,22 @@ const CheckAnswersComponent = () => {
 
 
 
-function Resultado(props) {
+function Resultado({usuario}) {
+  console.log(usuario)
 
 
   return (
     <>
       <Main>
-        <SideBar />
         <MainContent>
           <Header>
             <Title>Inteligência Artificial</Title>
             <p>Código: 1234567</p>
+            
           </Header>
           <MainItems>
             <ListaNome>Algoritmos e Programação 1</ListaNome>
+            
             <div>
               <CheckAnswersComponent/>
             </div>
