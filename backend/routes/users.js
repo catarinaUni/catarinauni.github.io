@@ -4,6 +4,7 @@ import { checkAnswers, getQuestions, saveAnswers } from '../controllers/questao.
 import { inserirAluno, inserirProfessor } from '../controllers/cadastro.js';
 import { checkLogin } from "../controllers/login.js";
 import { participarTurma } from "../controllers/participarTurma.js";
+import { criarTurma } from "../controllers/Turma.js";
 import { db } from "../db.js";
 
 
@@ -45,14 +46,22 @@ router.post('/cadastro', async (req, res) => {
   // aqui é quando o aluno vai entrar em uma turma
   router.post('/participar-turma', participarTurma);
 
-  router.get('/turmas/:userId', (req, res) => {
+  router.get('/turmas/:userId/:userType', (req, res) => {
     const userId = req.params.userId;
-    
-    const query = 'SELECT t.* FROM turmas t INNER JOIN turma_alunos ta ON t.id = ta.turma_id WHERE ta.aluno_id = ?';
-    console.log("opa");
+    const userType = req.params.userType;
+
+    let query;
+    if (userType === 'aluno') {
+        query = 'SELECT t.* FROM turmas t INNER JOIN turma_alunos ta ON t.id = ta.turma_id WHERE ta.aluno_id = ?';
+    } else if (userType === 'professor') {
+        query = 'SELECT * FROM turmas WHERE professor_id = ?';
+    } else {
+        return res.status(400).json({ message: 'Tipo de usuário inválido' });
+    }
+
     db.query(query, [userId], (err, results) => {
         if (err) {
-            console.error('Erro ao consultar turmas do aluno:', err);
+            console.error('Erro ao consultar turmas:', err);
             return res.status(500).json({ message: 'Erro interno do servidor' });
         }
 
@@ -64,8 +73,8 @@ router.post('/cadastro', async (req, res) => {
 router.get('/turma/:turmaId/listas', (req, res) => {
   const turmaId = req.params.turmaId;
   
-  const query = 'SELECT * FROM perguntas as  p join turma_perguntas as tp on p.id = tp.pergunta_id WHERE turma_id = ?';
-  
+  const query = 'SELECT * FROM lista as  l join turma_listas as tl on l.id = tl.lista_id WHERE turma_id = ?';
+   
   db.query(query, [turmaId], (err, results) => {
       if (err) {
           console.error('Erro ao consultar listas da turma:', err);
@@ -76,6 +85,7 @@ router.get('/turma/:turmaId/listas', (req, res) => {
   });
 });
 
-
+// para o professor criar turma
+router.post('/criar-turma', criarTurma);
 
 export default router;

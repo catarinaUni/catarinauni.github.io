@@ -26,9 +26,9 @@ export const saveAnswers = (req, res) => {
 
     console.log("Recebendo respostas:", req.body);
 
-    const query = "INSERT INTO respostas (pergunta_id, resposta) VALUES ?";
+    const query = "INSERT INTO respostas (pergunta_id, resposta, aluno_id, lista_id) VALUES ?";
 
-    const values = respostas.map(resposta => [resposta.perguntaId, resposta.respostaAluno]);
+    const values = respostas.map(resposta => [resposta.perguntaId, resposta.respostaAluno, resposta.idAluno, resposta.listaId]);
 
     console.log("Valores para inserção:", values);
 
@@ -49,7 +49,8 @@ export const checkAnswers = (req, res) => {
     const query = `
         SELECT r.pergunta_id, r.resposta, p.tag_1, p.tag_2, p.tag_3, p.resposta_correta AS resposta_correta
         FROM respostas r
-        JOIN perguntas p ON r.pergunta_id = p.id;
+        JOIN perguntas p ON r.pergunta_id = p.id
+        where lista_id=?;
     `;
 
     db.query(query, (err, data) => {

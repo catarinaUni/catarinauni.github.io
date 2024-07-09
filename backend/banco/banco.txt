@@ -1,6 +1,8 @@
-create database questaoai;
-use questaoai;
-CREATE TABLE perguntas (
+CREATE DATABASE questaoai;
+USE questaoai;
+
+-- Tabela de Perguntas
+CREATE TABLE IF NOT EXISTS perguntas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pergunta VARCHAR(255),
     alternativa_a VARCHAR(255),
@@ -13,6 +15,7 @@ CREATE TABLE perguntas (
     tag_3 VARCHAR(255)
 );
 
+-- Tabela de Professores
 CREATE TABLE IF NOT EXISTS professores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -20,6 +23,7 @@ CREATE TABLE IF NOT EXISTS professores (
     senha VARCHAR(255) NOT NULL
 );
 
+-- Tabela de Alunos
 CREATE TABLE IF NOT EXISTS alunos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -27,13 +31,16 @@ CREATE TABLE IF NOT EXISTS alunos (
     senha VARCHAR(255) NOT NULL
 );
 
+-- Tabela de Turmas
 CREATE TABLE IF NOT EXISTS turmas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     professor_id INT,
+    codigo INT NOT NULL UNIQUE,
     FOREIGN KEY (professor_id) REFERENCES professores(id)
 );
 
+-- Tabela de Associação entre Turmas e Alunos
 CREATE TABLE IF NOT EXISTS turma_alunos (
     turma_id INT,
     aluno_id INT,
@@ -42,25 +49,38 @@ CREATE TABLE IF NOT EXISTS turma_alunos (
     FOREIGN KEY (aluno_id) REFERENCES alunos(id)
 );
 
-CREATE TABLE IF NOT EXISTS turma_perguntas (
-    turma_id INT,
+-- Tabela de Listas de Perguntas
+CREATE TABLE IF NOT EXISTS listas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+-- Tabela de Associação entre Listas e Perguntas
+CREATE TABLE IF NOT EXISTS lista_perguntas (
+    lista_id INT,
     pergunta_id INT,
-    PRIMARY KEY (turma_id, pergunta_id),
-    FOREIGN KEY (turma_id) REFERENCES turmas(id),
+    PRIMARY KEY (lista_id, pergunta_id),
+    FOREIGN KEY (lista_id) REFERENCES listas(id),
     FOREIGN KEY (pergunta_id) REFERENCES perguntas(id)
 );
 
+-- Tabela de Associação entre Turmas e Listas
+CREATE TABLE IF NOT EXISTS turma_listas (
+    turma_id INT,
+    lista_id INT,
+    PRIMARY KEY (turma_id, lista_id),
+    FOREIGN KEY (turma_id) REFERENCES turmas(id),
+    FOREIGN KEY (lista_id) REFERENCES listas(id)
+);
+
+-- Tabela de Respostas
 CREATE TABLE IF NOT EXISTS respostas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT,
     pergunta_id INT,
-    resposta VARCHAR(255),
+    lista_id INT,
+    resposta CHAR(1),
     FOREIGN KEY (aluno_id) REFERENCES alunos(id),
-    FOREIGN KEY (pergunta_id) REFERENCES perguntas(id)
+    FOREIGN KEY (pergunta_id) REFERENCES perguntas(id),
+    FOREIGN KEY (lista_id) REFERENCES listas(id)
 );
-ALTER TABLE `questaoai`.`turmas` 
-ADD COLUMN `codigo` INT NOT NULL AFTER `professor_id`,
-ADD UNIQUE INDEX `codigo_UNIQUE` (`codigo` ASC) VISIBLE;
-
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1801';
-
