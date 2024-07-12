@@ -31,6 +31,7 @@ function ProfessorMain() {
 
     const renderContent = () => {
         if (flagTurma) {
+            console.log("TURMAPROFESSOR:",selectedTurma);
             return <Turma user={user} turma={selectedTurma} />;
         }
         if (flagCriarTurma) {

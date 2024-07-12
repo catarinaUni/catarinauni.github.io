@@ -9,7 +9,7 @@ function Header(props){
     return(
         <Main>
                     <Title>{props.turma.nome}</Title>
-                    <p>Codigo: {props.turma.id}</p>
+                    <p>Codigo: {props.turma.codigo}</p>
         </Main>
     )
 }

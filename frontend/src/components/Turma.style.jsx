@@ -46,10 +46,10 @@ export const MainItems = styled.div`
     width: 100%;
     display:flex;
     flex-direction:column;
-    padding-left: 50px;
+    padding-left: 30px;
     padding-top:20px;
     height: auto;
-    align-items: center;
+    //align-items: ;
 
     .formAluno{
         width: 100%;
