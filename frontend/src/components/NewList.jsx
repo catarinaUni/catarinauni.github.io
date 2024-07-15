@@ -179,12 +179,7 @@ function NewList(props){
         <>
 
             <Main>
-                <SideBar/>
                 <MainContent>
-                    <Header>
-                        <Title>Inteligencia Artificial</Title>
-                        <p>Codigo: 1234567</p>
-                    </Header>
 
                     <MainItems>
                     <Titulo>

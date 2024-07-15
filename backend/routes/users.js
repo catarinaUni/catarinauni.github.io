@@ -114,7 +114,7 @@ router.get('/turma/:turmaId/ListarAlunos', (req, res) => {
 });
 
 // para o professor criar turma
-router.post('/criar-turma', criarTurma);
+router.post('/turmas/criar-turma', criarTurma);
 
 
 

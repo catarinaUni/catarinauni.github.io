@@ -4,7 +4,7 @@ import { Main, MainContent, Header, Title, Alunos, Titulo, Listas, Materiais, Ma
 import Carousel from "./Carousel";
 import { Link } from "react-router-dom";
 
-function Turma({ user, turma }) {
+function Turma({ user, turma, handleSetFlagNovaLista }) {
     const [alunos, setAlunos] = useState([]);
     const [listas, setListas] = useState([]);
 
@@ -61,10 +61,10 @@ function Turma({ user, turma }) {
                                 <h5>Listas</h5>
                                 <p></p>
                             </div>
-                            <ButtonNew>
-                                <Link to="novalista">
+                            <ButtonNew onClick={() => handleSetFlagNovaLista(true)}>
+                                
                                     Nova lista
-                                </Link>
+
                             </ButtonNew>
                         </Titulo>
                         <Carousel
