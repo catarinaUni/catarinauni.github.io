@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { Main, MainContent, Header, Title, Alunos, Titulo, Listas, Materiais, MainItems, Image, ButtonNew } from "./Turma.style";
 import Carousel from "./Carousel";
-import { Link } from "react-router-dom";
 
 function Turma({ user, turma, handleSetFlagNovaLista }) {
     const [alunos, setAlunos] = useState([]);
@@ -85,15 +84,7 @@ function Turma({ user, turma, handleSetFlagNovaLista }) {
                                 <p></p>
                             </div>
                         </Titulo>
-                        <Carousel
-                            items={listas}
-                            renderItem={(lista) => (
-                                <>
-                                    <Image src={`data:image/png;base64,${lista.imagem}`} alt={lista.nome} />
-                                    <p>{lista.nome}</p>
-                                </>
-                            )}
-                        />
+                       
                     </Materiais>
                 </MainItems>
             </MainContent>

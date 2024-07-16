@@ -43,6 +43,7 @@ function AlunoTurma() {
     const renderContent = () => {
         if (flagTurma) {
             console.log("TELA DA TURMA", selectedTurma)
+            
             return <AlunoTurmaInscrito user={user} turma={selectedTurma} handleSetFlagLista={handleSetFlagLista} handleSetFlagResposta={handleSetFlagResposta}/> 
         }
         if(flagLista){
