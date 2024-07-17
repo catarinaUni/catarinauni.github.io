@@ -6,20 +6,56 @@ export const Form = styled.div`
 		flex-direction: column;
 		width: 80%;
 
+		.questionForm{
+		
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+		height: 100%;
+		
+
+		.lista_titulo{
+		margin-bottom: 60px;
+		background: none;
+		border: none;
+		font-size: 20px;
+		text-align: center;
+
+		&:focus {
+		border: none;
+		}
+		
+		
+		}
+
+		.enunciado{
+		width: 100%;
+
+		}
+
+		.resref{
+		display: flex;
+		width: 100%;
+		align-items: center;
+		justify-content: space-around;
+		margin-bottom: 100px;
+		}
+	
 
 		.pergunta{
-				padding: 10px;
+				padding: 20px;
 				resize: vertical; 
 				box-sizing: border-box;
-				background-color: #D9D9D9;
-				border-radius: 4px;
+				background-color: #E9E8E8;
+				border-radius: 30px;
 				outline: none;
-				margin-left:50px;
-				width: 800px;
-
+				width: 100%;
+				height: 150px;
+				border: none; 
 
 				&:focus {
-						border-color: white;
+					border-color: white;
 				}
 
 
@@ -42,12 +78,13 @@ export const Form = styled.div`
 
 						& > input{
 								width: 40%;
-								padding: 5px;
+								padding: 8px;
 				resize: vertical; 
 				box-sizing: border-box;
-				background-color: #D9D9D9;
-				border-radius: 4px;
+				background-color: #E9E8E8;
+				border-radius: 30px;
 				outline: none;
+				border: none;
 
 
 				&:focus {
@@ -63,14 +100,21 @@ export const Form = styled.div`
 		}
 
 		.resposta{
-				margin-bottom: 40px;
+
 
 				& > select{
 						margin-left: 10px;
-						background-color: #D9D9D9;
-				border-radius: 4px;
+						background-color: #E9E8E8;
+				border-radius: 30px;
 				outline: none;
 				font-size: 16px;
+				width: 50px;
+				height: 25px;
+				padding-left: 8px;
+				border: none;
+				background-color: #D9D9D9;
+
+
 				}
 		}
 
@@ -84,10 +128,13 @@ export const Form = styled.div`
 
 				& > div{
 						& > input {
-								background-color: #D9D9D9;
-								border-radius: 4px;
+								background-color: #D5E2E5;
+								border-radius: 10px;
 								outline: none;
 								width: 150px;
+								border: none;
+								height: 30px;
+								padding: 8px;
 								&:focus {
 										border-color: white;
 								}
@@ -95,6 +142,23 @@ export const Form = styled.div`
 				}
 
 
+		}
+
+		.ref{
+			& > input{
+						margin-left: 10px;
+						background-color: #E9E8E8;
+				border-radius: 30px;
+				outline: none;
+				width: 300px;
+				height: 30px;
+				padding: 8px;
+				border: none;
+				background-color: #D9D9D9;
+
+
+				}
+		
 		}
 
 		.paiAddP{
@@ -109,20 +173,23 @@ export const Form = styled.div`
 		.addPergunta{
 
 				width: 170px;
-				height: 30px;
-				background-color: #B2DAFF;
+				height: 35px;
+				background-color: #D9D9D9;
 				border: none;
+				border-radius: 30px;
+				
 
 
 
 		}
 
 		.finalizar{
+				width: 250px;
+				height: 35px;
+				margin-top: 50px;
+				background-color: #D5E2E5;
 				border: none;
-				width: 200px;
-				margin-top: 70px;
-				height: 30px;
-				background-color: #00DCBA;
+				border-radius: 30px;
 
 		}
 `;

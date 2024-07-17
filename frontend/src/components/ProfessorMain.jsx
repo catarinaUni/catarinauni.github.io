@@ -48,11 +48,6 @@ function ProfessorMain() {
             return <NewList />
         }
 
-        return (
-            <div>
-                {/* Conteúdo adicional pode ser adicionado aqui */}
-            </div>
-        );
     };
 
     return (

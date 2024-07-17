@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const NavBarContainer = styled.nav`
-  background-color: #3F3F3F;
+  background-color: #EEEEEE;
   padding: 20px;
   width: 100vw;
   z-index: 3;
   position: fixed; 
-  height:8vh;
+  height:5vh;
 
 `;
 

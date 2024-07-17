@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import { Main, MainContent, Header, Title, Alunos, Titulo, Listas, Materiais, MainItems, Image, ButtonNew } from "./Turma.style";
+import { Main, MainContent, Alunos, Titulo, Listas, Materiais, MainItems, Image, ButtonNew, StyledImage } from "./Turma.style";
 import Carousel from "./Carousel";
+import imageTest from "../assets/imgt.png"
 
 function Turma({ user, turma, handleSetFlagNovaLista }) {
     const [alunos, setAlunos] = useState([]);
@@ -40,14 +41,14 @@ function Turma({ user, turma, handleSetFlagNovaLista }) {
                         <Titulo>
                             <div>
                                 <h5>Alunos</h5>
-                                <p></p>
+
                             </div>
                         </Titulo>
                         <Carousel
                             items={alunos}
                             renderItem={(aluno) => (
                                 <>
-                                    <Image src={`data:image/png;base64,${aluno.imagem}`} alt={aluno.nome} />
+                                    <StyledImage src={imageTest} alt={aluno.nome} />
                                     <p>{aluno.nome}</p>
                                 </>
                             )}
@@ -58,11 +59,11 @@ function Turma({ user, turma, handleSetFlagNovaLista }) {
                         <Titulo>
                             <div>
                                 <h5>Listas</h5>
-                                <p></p>
+
                             </div>
                             <ButtonNew onClick={() => handleSetFlagNovaLista(true)}>
-                                
-                                    Nova lista
+
+                                Nova lista
 
                             </ButtonNew>
                         </Titulo>
@@ -70,7 +71,7 @@ function Turma({ user, turma, handleSetFlagNovaLista }) {
                             items={listas}
                             renderItem={(lista) => (
                                 <>
-                                    <Image src={`data:image/png;base64,${lista.imagem}`} alt={lista.nome} />
+                                    <StyledImage src={imageTest} alt={lista.nome} />
                                     <p>{lista.nome}</p>
                                 </>
                             )}
@@ -81,10 +82,11 @@ function Turma({ user, turma, handleSetFlagNovaLista }) {
                         <Titulo>
                             <div>
                                 <h5>Referencias</h5>
-                                <p></p>
+
                             </div>
                         </Titulo>
-                       
+                        
+
                     </Materiais>
                 </MainItems>
             </MainContent>
