@@ -1,5 +1,4 @@
 import {React, useState, useEffect} from "react";
-import SideBar from "./SideBar";
 import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
 import { ListaNome, Question } from "./Lista.style";
 import { Score, Result } from './Resultado.style';

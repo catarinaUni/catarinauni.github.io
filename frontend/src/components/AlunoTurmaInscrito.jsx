@@ -15,10 +15,26 @@ function AlunoTurmaInscrito(props) {
     console.log("USER: ", props.user)
     console.log("TURMA: ", props.turma)
 
+    useEffect(() => {
+
+        const fetchListas = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8800/turma/${props.turma.id}/listas`);
+                setListas(response.data.listas);
+            } catch (error) {
+                console.error('Erro ao buscar listas da turma:', error);
+            }
+        };
+
+        fetchListas();
+    }, []);
+
 
 
     return (
-        <MainItems>
+
+        
+        <MainContent>
                     <Listas>
                         <h5>Listas</h5>
                         <Carousel
@@ -33,12 +49,12 @@ function AlunoTurmaInscrito(props) {
                                 </div>
                             )}
                         />
-                        <button onClick={() => props.handleSetFlagLista(true, [])}>lista qualquer</button>
+                        
                     </Listas>
                     <Materiais>
                         <h5>Materiais</h5>
                         <Carousel
-                            items={[]} // Para materiais, caso ainda não esteja implementado
+                            items={[]} 
                             renderItem={() => (
                                 <div>
                                     <svg width="64" height="84" viewBox="0 0 64 84" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +65,7 @@ function AlunoTurmaInscrito(props) {
                             )}
                         />
                     </Materiais>
-                </MainItems>
+                </MainContent>
     );
 }
 

@@ -11,7 +11,7 @@ CORS(app, resources={r"/*": {"origins": "*", "methods": ["GET", "POST", "PUT", "
 
 dataset = pd.read_csv('turma_AG.csv')
 
-# transformando '[string'] em [array]
+
 dataset['conhecimento_consolidado'] = dataset['conhecimento_consolidado'].apply(ast.literal_eval)
 dataset['conhecimento_para_aperfeicoar'] = dataset['conhecimento_para_aperfeicoar'].apply(ast.literal_eval)
 

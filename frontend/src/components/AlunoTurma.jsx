@@ -4,6 +4,7 @@ import SideBar from "./SideBar";
 import Resultado from "./Resultado";
 import Header from './Header'
 import Turma from './Turma'
+import Lista from "./Lista";
 import AlunoTurmaInscrito from "./AlunoTurmaInscrito";
 import { Contents } from "./AlunoTurma.style";
 import { Main, MainContent, Title, Alunos, Titulo, Listas, Materiais, MainItems, Image, ButtonNew} from "./Turma.style";
@@ -47,17 +48,11 @@ function AlunoTurma() {
             return <AlunoTurmaInscrito user={user} turma={selectedTurma} handleSetFlagLista={handleSetFlagLista} handleSetFlagResposta={handleSetFlagResposta}/> 
         }
         if(flagLista){
-            return console.log("TELA DA LISTA", selectedLista);
+            return <Lista lista={selectedLista} aluno={user} turma={selectedTurma} />
         }
         if(flagResposta){
             return console.log("TELA DE RESPOSTAS ", selectedResposta)
         }
-
-        return (
-            <div>
-                
-            </div>
-        );
     };
 
     return (

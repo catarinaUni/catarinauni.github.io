@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "./SideBar";
-import { Main, MainContent, Header, Title, MainItems, FormAluno } from "./Turma.style";
-import { ListaNome } from "./Lista.style";
+import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
+import { ListaNome, FormAluno } from "./Lista.style";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -26,6 +26,7 @@ function QuestionForm({ questions, responses, setResponses }) {
                                 value={altKey}
                                 checked={responses[question.id] === altKey}
                                 onChange={() => handleRadioChange(question.id, altKey)}
+                                className="alterButton"
                             />
                             {question.alternatives[altKey]}
                         </div>
@@ -36,10 +37,15 @@ function QuestionForm({ questions, responses, setResponses }) {
     );
 }
 
-function Lista() {
+function Lista(props) {
     const navigate = useNavigate();
     const [responses, setResponses] = useState({});
     const [questions, setQuestions] = useState([]);
+
+    //ACESSAR INFO DA LISTA, ALUNO E TURMA:
+    console.log(props.lista)
+    console.log(props.aluno)
+    console.log(props.turma)
 
     useEffect(() => {
         axios.get('http://localhost:8800/aluno/turma/lista')
@@ -54,7 +60,7 @@ function Lista() {
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        const alunoId = 1; // Substitua pelo ID do aluno real
+        const alunoId = props.aluno.id; 
         const respostas = Object.keys(responses).map(perguntaId => ({
             perguntaId: Number(perguntaId),
             respostaAluno: responses[perguntaId]
@@ -62,12 +68,11 @@ function Lista() {
 
         console.log("Enviando respostas:", { alunoId, respostas });
 
-        // Enviar as respostas do aluno para o backend
+        
         axios.post('http://localhost:8800/aluno/turma/resultado', { alunoId, respostas })
             .then(response => {
                 console.log("Respostas salvas com sucesso:", response.data);
-                // Remova a navegação temporariamente para depuração
-                // return navigate(-1);
+                
             })
             .catch(error => {
                 console.error("Houve um erro ao salvar as respostas do aluno:", error);
@@ -78,12 +83,7 @@ function Lista() {
 
     return (
         <Main>
-            <SideBar />
             <MainContent>
-                <Header>
-                    <Title>Inteligência Artificial</Title>
-                    <p>Código: 1234567</p>
-                </Header>
                 <MainItems>
                     <ListaNome>LISTA</ListaNome>
                     <form onSubmit={handleFormSubmit} className="formAluno">
