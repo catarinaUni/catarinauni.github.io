@@ -39,17 +39,19 @@ align-items: left;
 input[type='radio'] {
   box-sizing: border-box;
   appearance: none;
-  background: #393E46;
-  outline: 1px solid #393E46;
-  border: 3px solid #393E46;
-  width: 18px;
+  background: none;
+  outline: 1px solid black;
+  border: 0px solid #222831;
+  width: 14px;
   height: 14px;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-right: 10px;
 }
 
 input[type='radio']:checked {
-  background: #00DCBA;
+  background: #99d4a6;
+  outline: 1px solid #99d4a6;
+
 }
 
 

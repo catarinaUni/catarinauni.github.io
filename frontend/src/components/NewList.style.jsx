@@ -13,6 +13,7 @@ export const Form = styled.div`
 		align-items: center;
 		justify-content: space-between;
 		height: 100%;
+		}
 		
 
 		.lista_titulo{
@@ -47,7 +48,7 @@ export const Form = styled.div`
 				padding: 20px;
 				resize: vertical; 
 				box-sizing: border-box;
-				background-color: #E9E8E8;
+				background-color: #D9D9D9;
 				border-radius: 30px;
 				outline: none;
 				width: 100%;
@@ -81,7 +82,7 @@ export const Form = styled.div`
 								padding: 8px;
 				resize: vertical; 
 				box-sizing: border-box;
-				background-color: #E9E8E8;
+				background-color: #D9D9D9;
 				border-radius: 30px;
 				outline: none;
 				border: none;
@@ -104,7 +105,7 @@ export const Form = styled.div`
 
 				& > select{
 						margin-left: 10px;
-						background-color: #E9E8E8;
+						
 				border-radius: 30px;
 				outline: none;
 				font-size: 16px;
@@ -147,7 +148,6 @@ export const Form = styled.div`
 		.ref{
 			& > input{
 						margin-left: 10px;
-						background-color: #E9E8E8;
 				border-radius: 30px;
 				outline: none;
 				width: 300px;
@@ -155,6 +155,7 @@ export const Form = styled.div`
 				padding: 8px;
 				border: none;
 				background-color: #D9D9D9;
+				
 
 
 				}
@@ -192,6 +193,7 @@ export const Form = styled.div`
 				border-radius: 30px;
 
 		}
+
 `;
 
 export const Question = styled.div`

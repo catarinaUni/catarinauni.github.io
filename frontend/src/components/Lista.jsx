@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "./SideBar";
 import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
 import { ListaNome, FormAluno } from "./Lista.style";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 
 function QuestionForm({ questions, responses, setResponses }) {
     const handleRadioChange = (questionId, selectedAlternative) => {
@@ -72,13 +72,14 @@ function Lista(props) {
         axios.post('http://localhost:8800/aluno/turma/resultado', { alunoId, respostas })
             .then(response => {
                 console.log("Respostas salvas com sucesso:", response.data);
+                return props.handleSetFlagResposta(true, respostas)
                 
             })
             .catch(error => {
                 console.error("Houve um erro ao salvar as respostas do aluno:", error);
             });
 
-        navigate("/aluno/turma/lista/resultado")
+        
     };
 
     return (
