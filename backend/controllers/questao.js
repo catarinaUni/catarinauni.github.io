@@ -1,9 +1,17 @@
 import { db } from "../db.js";
 
 export const getQuestions = (req, res) => {
-    const q = "SELECT id, pergunta, alternativa_a, alternativa_b, alternativa_c, alternativa_d FROM perguntas";
+    const listaId = req.params.listaId; // Obtendo o lista_id dos parâmetros da rota
 
-    db.query(q, (err, data) => {
+    const q = `
+        SELECT p.id, p.pergunta, p.alternativa_a, p.alternativa_b, p.alternativa_c, p.alternativa_d 
+        FROM perguntas as p
+        JOIN lista_perguntas as lp on p.id = lp.pergunta_id
+        JOIN listas as l on l.id = lp.lista_id
+        WHERE l.id = ?
+    `;
+
+    db.query(q, [listaId], (err, data) => {
         if (err) return res.status(500).json(err);
 
         const questions = data.map(row => ({
@@ -21,14 +29,15 @@ export const getQuestions = (req, res) => {
     });
 };
 
+
 export const saveAnswers = (req, res) => {
-    const { alunoId, respostas } = req.body;
+    const { alunoId, listaId, respostas } = req.body;
 
     console.log("Recebendo respostas:", req.body);
 
     const query = "INSERT INTO respostas (pergunta_id, resposta, aluno_id, lista_id) VALUES ?";
 
-    const values = respostas.map(resposta => [resposta.perguntaId, resposta.respostaAluno, resposta.idAluno, resposta.listaId]);
+    const values = respostas.map(resposta => [resposta.perguntaId, resposta.respostaAluno, alunoId, listaId]);
 
     console.log("Valores para inserção:", values);
 
@@ -43,17 +52,20 @@ export const saveAnswers = (req, res) => {
 };
 
 
+
 export const checkAnswers = (req, res) => {
+    const { listaId } = req.params;
+
     console.log("Oi");
 
     const query = `
         SELECT r.pergunta_id, r.resposta, p.tag_1, p.tag_2, p.tag_3, p.resposta_correta AS resposta_correta
         FROM respostas r
         JOIN perguntas p ON r.pergunta_id = p.id
-        where lista_id=?;
+        WHERE r.lista_id = ?;
     `;
 
-    db.query(query, (err, data) => {
+    db.query(query, [listaId], (err, data) => {
         if (err) return res.json(err);
     
         const resultados = data.map(item => ({
@@ -106,6 +118,5 @@ export const checkAnswers = (req, res) => {
             topTags: sortedTags
         });
     });
-    
-    
 };
+
