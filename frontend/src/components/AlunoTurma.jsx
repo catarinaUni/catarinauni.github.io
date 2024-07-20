@@ -4,9 +4,10 @@ import SideBar from "./SideBar";
 import Resultado from "./Resultado";
 import Header from './Header'
 import Turma from './Turma'
+import Lista from "./Lista";
 import AlunoTurmaInscrito from "./AlunoTurmaInscrito";
 import { Contents } from "./AlunoTurma.style";
-import { Main, MainContent, Title, Alunos, Titulo, Listas, Materiais, MainItems, Image, ButtonNew} from "./Turma.style";
+import { Main} from "./Turma.style";
 
 // TELA PRINCIPAL DO ALUNO
 
@@ -37,26 +38,22 @@ function AlunoTurma() {
     };
 
     const handleSetFlagResposta = (flag, resposta) => {
-        setFlagResposta(true)
+        setFlagResposta(flag)
+        setFlagLista(false)
         setSelectecResposta(resposta)
     }
     const renderContent = () => {
         if (flagTurma) {
             console.log("TELA DA TURMA", selectedTurma)
+            
             return <AlunoTurmaInscrito user={user} turma={selectedTurma} handleSetFlagLista={handleSetFlagLista} handleSetFlagResposta={handleSetFlagResposta}/> 
         }
         if(flagLista){
-            return console.log("TELA DA LISTA", selectedLista);
+            return <Lista lista={selectedLista} aluno={user} turma={selectedTurma} handleSetFlagResposta={handleSetFlagResposta} />
         }
         if(flagResposta){
-            return console.log("TELA DE RESPOSTAS ", selectedResposta)
+            return <Resultado  lista={selectedLista} aluno={user} turma={selectedTurma} respostas={selectedResposta}/>
         }
-
-        return (
-            <div>
-                
-            </div>
-        );
     };
 
     return (

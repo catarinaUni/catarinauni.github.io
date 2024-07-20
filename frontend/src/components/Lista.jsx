@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "./SideBar";
-import { Main, MainContent, Header, Title, MainItems, FormAluno } from "./Turma.style";
-import { ListaNome } from "./Lista.style";
+import { Main, MainContent, MainItems } from "./Turma.style";
+import { ListaNome, FormAluno } from "./Lista.style";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -26,6 +25,7 @@ function QuestionForm({ questions, responses, setResponses }) {
                                 value={altKey}
                                 checked={responses[question.id] === altKey}
                                 onChange={() => handleRadioChange(question.id, altKey)}
+                                className="alterButton"
                             />
                             {question.alternatives[altKey]}
                         </div>
@@ -36,70 +36,66 @@ function QuestionForm({ questions, responses, setResponses }) {
     );
 }
 
-function Lista() {
+function Lista(props) {
     const navigate = useNavigate();
     const [responses, setResponses] = useState({});
     const [questions, setQuestions] = useState([]);
 
+    //ACESSAR INFO DA LISTA, ALUNO E TURMA:
+    console.log("LISTAi:", props.lista);
+    console.log(props.aluno);
+    console.log(props.turma);
+
     useEffect(() => {
-        axios.get('http://localhost:8800/aluno/turma/lista')
+        const listaId = props.lista.id; // Supondo que o ID da lista está em props.lista.id
+        axios.get(`http://localhost:8800/aluno/turma/lista/${listaId}`)
             .then(response => {
                 setQuestions(response.data);
             })
             .catch(error => {
                 console.error("Houve um erro ao buscar as perguntas!", error);
             });
-    }, []);
+    }, [props.lista.id]);
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-
-        const alunoId = 1; // Substitua pelo ID do aluno real
+    
+        const alunoId = props.aluno.id; 
+        const listaId = props.lista.id;
         const respostas = Object.keys(responses).map(perguntaId => ({
             perguntaId: Number(perguntaId),
             respostaAluno: responses[perguntaId]
         }));
-
-        console.log("Enviando respostas:", { alunoId, respostas });
-
-        // Enviar as respostas do aluno para o backend
-        axios.post('http://localhost:8800/aluno/turma/resultado', { alunoId, respostas })
+    
+        console.log("Enviando respostas:", { alunoId, listaId, respostas });
+    
+        axios.post('http://localhost:8800/aluno/turma/resultado', { alunoId, listaId, respostas })
             .then(response => {
                 console.log("Respostas salvas com sucesso:", response.data);
-                // Remova a navegação temporariamente para depuração
-                // return navigate(-1);
+                return props.handleSetFlagResposta(true, respostas);
             })
             .catch(error => {
                 console.error("Houve um erro ao salvar as respostas do aluno:", error);
             });
-
-        navigate("/aluno/turma/lista/resultado")
     };
+    
 
     return (
         <Main>
-            <SideBar />
             <MainContent>
-                <Header>
-                    <Title>Inteligência Artificial</Title>
-                    <p>Código: 1234567</p>
-                </Header>
                 <MainItems>
                     <ListaNome>LISTA</ListaNome>
                     <form onSubmit={handleFormSubmit} className="formAluno">
-                        <FormAluno >
-                        <QuestionForm
-                            questions={questions}
-                            responses={responses}
-                            setResponses={setResponses}
-                        />
+                        <FormAluno>
+                            <QuestionForm
+                                questions={questions}
+                                responses={responses}
+                                setResponses={setResponses}
+                            />
                         </FormAluno>
-                        
-                        
                         <button type="submit" className="botao">
-                        Enviar
+                            Enviar
                         </button>
-                        
                     </form>
                 </MainItems>
             </MainContent>

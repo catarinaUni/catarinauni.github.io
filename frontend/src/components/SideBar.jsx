@@ -89,7 +89,6 @@ function SideBar(props) {
                     </UserItems>
                     <TurmasItems>
                         <h5>Turmas</h5>
-                        <p></p>
                         <TurmasList>
                             {turmas.map((turma) => (
                                 <TurmaButton key={turma.id} onClick={() => handleTurmaClick(turma)}>

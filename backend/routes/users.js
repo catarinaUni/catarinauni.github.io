@@ -14,10 +14,10 @@ router.get("/", getUsers);
 router.post("/professor/turma/novalista", addQuestion);
 
 //rota para obter todas as perguntas
-router.get("/aluno/turma/lista", getQuestions);
+router.get("/aluno/turma/lista/:listaId", getQuestions);
 // Rota para verificar as respostas do aluno
 router.post("/aluno/turma/resultado", saveAnswers);
-router.get("/aluno/turma/lista/resultado", checkAnswers);
+router.get("/aluno/turma/:alunoId/lista/:listaId/resultado", checkAnswers);
 
 //rota para verificação de login
 router.post("/login", checkLogin);
@@ -114,7 +114,7 @@ router.get('/turma/:turmaId/ListarAlunos', (req, res) => {
 });
 
 // para o professor criar turma
-router.post('/criar-turma', criarTurma);
+router.post('/turmas/criar-turma', criarTurma);
 
 
 

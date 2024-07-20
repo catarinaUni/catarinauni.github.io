@@ -41,13 +41,14 @@ function Cadastro() {
                         <Label>Username:</Label>
                         <Input type="text" name="username" value={formData.username} onChange={handleChange} />
                     </FormGroup>
-                    <FormGroup>
-                        <Label>Password:</Label>
-                        <Input type="password" name="password" value={formData.password} onChange={handleChange} />
-                    </FormGroup>
+                    
                     <FormGroup>
                         <Label>Email:</Label>
                         <Input type="email" name="email" value={formData.email} onChange={handleChange} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label>Password:</Label>
+                        <Input type="password" name="password" value={formData.password} onChange={handleChange} />
                     </FormGroup>
                     <FormGroup>
                         <Label>Type:</Label>
@@ -57,7 +58,7 @@ function Cadastro() {
                         </select>
                     </FormGroup>
                     <FormGroup>
-                        <Label>Preferência de formato para conteúdos:</Label>
+                        <Label>Preferência de formato:</Label>
                         <select name="userFormatPref" onChange={handleChange} value={formData.userFormatPref}>
                             <option value="Video">Video</option>
                             <option value="Livro">Livro</option>

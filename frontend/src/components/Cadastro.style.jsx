@@ -6,21 +6,19 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 height: 100vh;
-background-color: #3F3F3F;
-color: white;
+background-color: #EEEEEE;
+color: #222831;
 `;
 
 export const CadastroItems = styled.div` 
-display: flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #8F8787;
     border-radius: 4px;
-    padding: 30px;
 
     h1 {
-        margin-bottom: 50px;
+        padding-bottom: 50px;
     }
 
 
@@ -29,30 +27,38 @@ display: flex;
 export const CadastroForm = styled.form`
 display: flex;
 flex-direction: column;
-width: 300px;
+width: 270px;
 `;
 
 export const FormGroup = styled.div`
-margin-bottom: 25px;
+margin-bottom: 15px;
 display: flex;
 flex-direction: column;
 
     select{
         color: #3F3F3F;
         height: 30px;
+        background-color: #E3E3E3;
+        color: #222831;
+        font-size: 14px;
+        border-radius: 14px;
+        padding: 5px;
+
     }
 `;
 
 export const Label = styled.label`
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
+
 `;
 
 export const Input = styled.input`
-    padding: 10px;
+    padding: 8px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 15px;
+    background-color: #E3E3E3;
 `;
 
 
@@ -64,6 +70,7 @@ export const SubmitButton = styled.button`
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 20px;
     
     &:hover {
         background-color: #0056b3;

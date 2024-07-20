@@ -3,10 +3,13 @@ import styled from 'styled-components';
 
 export const Main = styled.div`
 
-    background-color:#00A4CC;
+    background-color:#E3E3E3;
+    border-radius: 50px 0 0 50px;
+    margin-top: 5vh;
     width:100%;
-    height: 30vh;
-    color: white;
+    height: 25vh;
+    color: #222831;
+    font-weight: bold;
     display: flex;
     justify-content: space-around;
     align-items: center;

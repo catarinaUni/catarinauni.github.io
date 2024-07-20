@@ -26,7 +26,6 @@ class QuestionForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission (e.g., send data to server)
     console.log(this.state);
   };
 
@@ -42,8 +41,6 @@ class QuestionForm extends Component {
             onChange={this.handleChange}
           />
         </label>
-        {/* Render alternatives input fields */}
-        {/* Render toggle buttons for subjects */}
         <button type="submit">Enviar</button>
       </form>
     );

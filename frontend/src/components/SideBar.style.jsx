@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const Side = styled.div`
     font-size:16px;
-    color: white;
     height: 100%; 
-    width: 18vw; 
+    width: 15vw; 
     position: fixed; 
     z-index: 1; 
     top: 0; 
     left: 0;
-    background-color: #3F3F3F; 
+    background-color: #EEEEEE;
+color: #222831;
     overflow-x: hidden; 
     display: flex;
     align-items: center;
@@ -44,7 +44,7 @@ export const TurmasItems = styled.div`
     align-items: right;
     justify-content: center;
     flex-direction: column;
-    margin-top:30px;
+    margin-top:50px;
     width: 100%;
     
     p{
@@ -74,6 +74,7 @@ export const TurmasList = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-top: 20px;
 `;
 
 export const NewTurmaButton = styled.div`
