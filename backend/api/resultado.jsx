@@ -42,9 +42,6 @@ const recomendarMateriais = (alunoid, topTags, formato) => {
     let allFormats = []; 
     let oneFormat = []; 
     materiais.forEach(material => {
-        if (!material.Disciplina || !material.Formato) {
-            return;
-        }
         const tagsDisc = material.Disciplina.split(',');
         const tagsFormt = material.Formato.split(',');
 

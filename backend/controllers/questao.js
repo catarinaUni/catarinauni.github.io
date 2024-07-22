@@ -4,7 +4,7 @@ export const getQuestions = (req, res) => {
     const listaId = req.params.listaId; // Obtendo o lista_id dos parâmetros da rota
 
     const q = `
-        SELECT p.id, p.pergunta, p.alternativa_a, p.alternativa_b, p.alternativa_c, p.alternativa_d 
+        SELECT p.id, p.pergunta, p.alternativa_a, p.alternativa_b, p.alternativa_c, p.alternativa_d, p.ref 
         FROM perguntas as p
         JOIN lista_perguntas as lp on p.id = lp.pergunta_id
         JOIN listas as l on l.id = lp.lista_id
@@ -22,7 +22,8 @@ export const getQuestions = (req, res) => {
                 b: row.alternativa_b,
                 c: row.alternativa_c,
                 d: row.alternativa_d
-            }
+            },
+            ref: row.ref
         }));
 
         return res.status(200).json(questions);
@@ -50,6 +51,7 @@ export const saveAnswers = (req, res) => {
         return res.status(200).json("Respostas salvas com sucesso.");
     });
 };
+
 
 
 

@@ -6,8 +6,8 @@ export const MainHero = styled.div`
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #3F3F3F;
-    color: white;
+    background-color: #EEEEEE;
+    color: #2e2e2e;
 `;
 
 export const HeroItems = styled.div`
@@ -42,5 +42,6 @@ export const Buttons = styled.div`
         height: 30px;
         border-radius: 4px;
         border: none;
+        background-color: #cccccc;
     }
 `;

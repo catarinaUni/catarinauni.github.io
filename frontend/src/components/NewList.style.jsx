@@ -35,12 +35,36 @@ export const Form = styled.div`
 
 		}
 
+		.addRef{
+			margin-top: 50px;
+		}
+
 		.resref{
 		display: flex;
 		width: 100%;
 		align-items: center;
 		justify-content: space-around;
-		margin-bottom: 100px;
+		 &>.tags{
+			margin: 0;
+			
+			padding: 0;
+			width: auto;
+			&>label{
+				margin-right: 15px;
+			}
+			
+		 }
+		 &>.resposta{
+			
+			margin:0;
+
+			&>select{
+				width: 80px;
+				font-size: 14px;
+			}
+			
+			
+		 }
 		}
 	
 
@@ -101,6 +125,7 @@ export const Form = styled.div`
 		}
 
 		.resposta{
+			margin-bottom: 50px;
 
 
 				& > select{
@@ -123,9 +148,13 @@ export const Form = styled.div`
 				display: flex;
 				width: 100%;
 				justify-content: space-around;
+				align-items: center;
 				padding-right: 50px;
 				padding-left: 50px;
 				margin-bottom: 60px;
+
+				
+				
 
 				& > div{
 						& > input {
@@ -147,10 +176,10 @@ export const Form = styled.div`
 
 		.ref{
 			& > input{
-						margin-left: 10px;
+						
 				border-radius: 30px;
 				outline: none;
-				width: 300px;
+				width: 250px;
 				height: 30px;
 				padding: 8px;
 				border: none;
@@ -178,6 +207,7 @@ export const Form = styled.div`
 				background-color: #D9D9D9;
 				border: none;
 				border-radius: 30px;
+				margin-bottom: 100px;
 				
 
 
@@ -185,10 +215,10 @@ export const Form = styled.div`
 		}
 
 		.finalizar{
-				width: 250px;
+				width: 300px;
 				height: 35px;
-				margin-top: 50px;
-				background-color: #D5E2E5;
+				margin-bottom: 50px;
+				background-color: #c3dadf;
 				border: none;
 				border-radius: 30px;
 

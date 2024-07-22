@@ -1,7 +1,7 @@
 import React from "react";
 import SideBar from "./SideBar";
-import { Main, MainContent, Header, Title, Alunos, Titulo, Listas, Materiais, MainItems, Image, ButtonNew} from "./Turma.style";
-import {Form, Question} from './NewList.style';
+import { Main, MainContent, Header, Title, Alunos, Titulo, Listas, Materiais, MainItems, Image, ButtonNew } from "./Turma.style";
+import { Form, Question } from './NewList.style';
 import { useState } from 'react';
 import { json } from "react-router-dom";
 import axios from 'axios';
@@ -63,7 +63,7 @@ const QuestionForm = () => {
     return (
         <div className="questionForm">
 
-                <input
+            <input
                 type="text"
                 placeholder="Untitled"
                 //value={}
@@ -113,8 +113,20 @@ const QuestionForm = () => {
                     />
                 </div>
             </div>
+            <div className="resposta">
+                <label>Alternativa correta:</label>
+                <select
+                    value={newQuestion.resposta}
+                    onChange={(e) => setNewQuestion({ ...newQuestion, resposta: e.target.value })}
+                >
+                    <option value="a">a</option>
+                    <option value="b">b</option>
+                    <option value="c">c</option>
+                    <option value="d">d</option>
+                </select>
+            </div>
 
-           
+
 
             <div className="tags">
                 <p>Tags:</p>
@@ -139,64 +151,81 @@ const QuestionForm = () => {
                         onChange={(e) => handleChangeTag(e, 2)}
                     />
                 </div>
+
             </div>
+
+
+
+
+
+            <button onClick={handleAddQuestion} className="addPergunta">Adicionar Pergunta</button>
+
+
+
+
+          
 
             <div className="resref">
-            <div className="resposta">
-                <label>Alternativa correta:</label>
-                <select
-                    value={newQuestion.resposta}
-                    onChange={(e) => setNewQuestion({ ...newQuestion, resposta: e.target.value })}
-                >
-                    <option value="a">a</option>
-                    <option value="b">b</option>
-                    <option value="c">c</option>
-                    <option value="d">d</option>
-                </select>
-            </div>
 
-            <div className="ref">
-                <label>Adicionar referência: </label>
-                <input
-                    type="text"
-                    value={newQuestion.ref}
-                    onChange={handleChangeRef}
-                />
-            </div>
-            </div>
-            
 
-            <div className="paiAddP">
-                <button onClick={handleAddQuestion} className="addPergunta">Adicionar Pergunta</button>
-                <button onClick={handleSaveToJson} className="finalizar">Finalizar</button>
-            </div>
+                <div className="ref">
+                    <label>Referência: </label>
+                    <input
+                        type="text"
+                        value={newQuestion.ref}
+                        onChange={handleChangeRef}
+                    />
+                </div>
+                <div className="tags">
+                    <label>Tag:</label>
+                    <div>
+                        <input
+                            type="text"
+                            value={newQuestion.tags[0]}
+                            onChange={(e) => handleChangeTag(e, 0)}
+                        />
+                    </div>
+                </div>
 
-            <h3>Perguntas adicionadas:</h3>
-            <ul>
-                {questions.map((q, index) => (
-                    <li key={index}>
-                        {q.pergunta} - Resposta correta: {q.resposta}
-                    </li>
-                ))}
-            </ul>
+                <div className="resposta">
+                    <label>Formato:</label>
+                    <select
+                        value={newQuestion.resposta}
+                        onChange={(e) => setNewQuestion({ ...newQuestion, resposta: e.target.value })}
+                    >
+                        <option value="a">Vídeo</option>
+                        <option value="b">Livro</option>
+                        <option value="b">Artigo</option>
+                        <option value="c">Podcast</option>
+                        
+                    </select>
+                </div>
+
+            </div>
+            <button onClick={handleAddQuestion} className="addPergunta addRef">Adicionar Referência</button>
+
+            <button onClick={handleSaveToJson} className="finalizar">Finalizar</button>
+
+
+
         </div>
     );
 };
-function NewList(props){
+function NewList(props) {
 
 
 
 
-    return(
+    return (
         <>
 
             <Main>
                 <MainContent>
 
                     <MainItems>
-                   
+
                         <Form>
-                            <QuestionForm/>
+                            <QuestionForm />
 
                         </Form>
 

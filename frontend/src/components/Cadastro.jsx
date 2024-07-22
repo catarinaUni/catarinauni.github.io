@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CadastroContainer, CadastroForm, FormGroup, Label, Input, SubmitButton, CadastroItems } from "./Cadastro.style";
 import axios from 'axios';
 
 function Cadastro() {
+    const [userAluno, setUserAluno] = useState(false);
 
     // Estado para armazenar os valores do formulário
     const [formData, setFormData] = useState({
@@ -10,7 +11,14 @@ function Cadastro() {
         password: '',
         email: '',
         userType: 'aluno', // valor padrão
+        userFormatPref: '',
+        userTurno: ''
     });
+
+    // Atualiza o estado de userAluno quando userType muda
+    useEffect(() => {
+        setUserAluno(formData.userType === 'aluno');
+    }, [formData.userType]);
 
     // Atualiza o estado do formData quando os inputs mudam
     const handleChange = (e) => {
@@ -32,6 +40,7 @@ function Cadastro() {
             console.error('Erro ao realizar cadastro:', error);
         }
     };
+
     return (
         <CadastroContainer>
             <CadastroItems>
@@ -57,16 +66,28 @@ function Cadastro() {
                             <option value="aluno">Aluno</option>
                         </select>
                     </FormGroup>
-                    <FormGroup>
-                        <Label>Preferência de formato:</Label>
-                        <select name="userFormatPref" onChange={handleChange} value={formData.userFormatPref}>
-                            <option value="Video">Video</option>
-                            <option value="Livro">Livro</option>
-                            <option value="Artigo">Artigo</option>
-                            <option value="Quiz">Quiz</option>
-                            <option value="Podcast">Podcast</option>
-                        </select>
-                    </FormGroup>
+                    {userAluno && (
+                        <>
+                            <FormGroup>
+                                <Label>Preferência de formato de materiais:</Label>
+                                <select name="userFormatPref" onChange={handleChange} value={formData.userFormatPref}>
+                                    <option value="Video">Video</option>
+                                    <option value="Livro">Livro</option>
+                                    <option value="Artigo">Artigo</option>
+                                    <option value="Quiz">Quiz</option>
+                                    <option value="Podcast">Podcast</option>
+                                </select>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Turno disponível:</Label>
+                                <select name="userTurno" onChange={handleChange} value={formData.userTurno}>
+                                    <option value="Manhã">Manhã</option>
+                                    <option value="Tarde">Tarde</option>
+                                    <option value="Noite">Noite</option>
+                                </select>
+                            </FormGroup>
+                        </>
+                    )}
                     <SubmitButton type="submit">Cadastrar</SubmitButton>
                 </CadastroForm>
             </CadastroItems>
