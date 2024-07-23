@@ -8,7 +8,7 @@ const CheckAnswersComponent = ({ listaId, alunoId, setMateriaisRecomendados }) =
   const [resultados, setResultados] = useState([]);
   const [topTags, setTopTags] = useState([]);
   let score = 0;
-  
+
   useEffect(() => {
     axios.get(`http://localhost:8800/aluno/turma/lista/${listaId}`)
       .then(response => {
@@ -24,18 +24,22 @@ const CheckAnswersComponent = ({ listaId, alunoId, setMateriaisRecomendados }) =
         .then(response => {
             setResultados(response.data.resultados);
             setTopTags(response.data.topTags);
+
+            // Chama a rota para armazenar os resultados no resultado_listas
+            return axios.post(`http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/salvarTags`, {
+                alunoId,
+                listaId,
+                tags: response.data.topTags
+            });
         })
         .catch(error => console.error('Error fetching data:', error));
-}, [alunoId, listaId]);
+  }, [alunoId, listaId]);
 
-console.log(resultados)
-
-resultados.forEach((resultado) => {
-  if (resultado.correta) {
-    score++;
-  }
-});
-
+  resultados.forEach((resultado) => {
+    if (resultado.correta) {
+      score++;
+    }
+  });
 
   return (
     <Result>

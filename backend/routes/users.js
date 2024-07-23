@@ -1,6 +1,6 @@
 import express from "express";
 import { getUsers, addQuestion } from "../controllers/user.js";
-import { checkAnswers, getQuestions, saveAnswers } from '../controllers/questao.js';
+import { checkAnswers, getQuestions, saveAnswers,  saveResultTags } from '../controllers/questao.js';
 import { inserirAluno, inserirProfessor } from '../controllers/cadastro.js';
 import { checkLogin } from "../controllers/login.js";
 import { participarTurma } from "../controllers/participarTurma.js";
@@ -18,6 +18,7 @@ router.get("/aluno/turma/lista/:listaId", getQuestions);
 // Rota para verificar as respostas do aluno
 router.post("/aluno/turma/resultado", saveAnswers);
 router.get("/aluno/turma/:alunoId/lista/:listaId/resultado", checkAnswers);
+router.post('/aluno/turma/:alunoId/lista/:listaId/salvarTags', saveResultTags);
 
 //rota para verificação de login
 router.post("/login", checkLogin);
@@ -25,12 +26,12 @@ router.post("/login", checkLogin);
 //rota para cadastro seja aluno, ou professor
 router.post('/cadastro', async (req, res) => {
     console.log("vindo da rota:", req.body);
-    const { username, password, email, userType } = req.body;
+    const { username, password, email, userType, userFormatPref, userTurno } = req.body;
   
     try {
       if (userType === 'aluno') {
         // Insere no banco de dados de alunos
-        await inserirAluno({ username, password, email });
+        await inserirAluno({ username, password, email, userFormatPref, userTurno});
       } else if (userType === 'professor') {
         // Insere no banco de dados de professores
         await inserirProfessor({ username, password, email });

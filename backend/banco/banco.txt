@@ -86,3 +86,28 @@ CREATE TABLE IF NOT EXISTS respostas (
 );
 
 ALTER TABLE `perguntas` ADD `ref` TEXT NOT NULL AFTER `tag_3`;
+
+-- Alteração do Banco
+
+ALTER TABLE `questaoai`.`alunos` 
+ADD COLUMN `material_formato` VARCHAR(45) NOT NULL AFTER `senha`,
+ADD COLUMN `turno` VARCHAR(45) NOT NULL AFTER `material_formato`;
+
+CREATE TABLE IF NOT EXISTS resultado_listas (
+  id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
+  aluno_id INT NOT NULL,
+  lista_id INT NOT NULL,
+  tag_1 VARCHAR(255),
+  tag_2 VARCHAR(255),
+  tag_3 VARCHAR(255),
+  FOREIGN KEY (aluno_id) REFERENCES alunos(id),
+  FOREIGN KEY (lista_id) REFERENCES listas(id)
+  );
+  
+  CREATE TABLE IF NOT EXISTS referencias (
+  id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
+  turma_id INT NOT NULL,
+  tag VARCHAR(255),
+  formato VARCHAR(255),
+  FOREIGN KEY (turma_id) REFERENCES turmas(id)
+  );

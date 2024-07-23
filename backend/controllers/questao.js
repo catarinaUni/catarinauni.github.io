@@ -121,4 +121,22 @@ export const checkAnswers = (req, res) => {
         });
     });
 };
+//  função para armazenar os resultados no resultado_listas
+export const saveResultTags = (req, res) => {
+    const { alunoId, listaId, tags } = req.body;
+
+    const insertQuery = `
+        INSERT INTO resultado_listas (aluno_id, lista_id, tag_1, tag_2, tag_3)
+        VALUES (?, ?, ?, ?, ?)
+    `;
+
+    db.query(insertQuery, [alunoId, listaId, tags[0], tags[1], tags[2]], (err, data) => {
+        if (err) {
+            console.error("Erro ao inserir no resultado_listas:", err);
+            return res.status(500).json(err);
+        }
+
+        return res.status(200).json("Resultados salvos com sucesso.");
+    });
+};
 
