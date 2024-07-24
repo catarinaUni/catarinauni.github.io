@@ -154,16 +154,8 @@ const QuestionForm = () => {
 
             </div>
 
-
-
-
-
             <button onClick={handleAddQuestion} className="addPergunta">Adicionar Pergunta</button>
 
-
-
-
-          
 
             <div className="resref">
 
@@ -197,7 +189,7 @@ const QuestionForm = () => {
                         <option value="b">Livro</option>
                         <option value="b">Artigo</option>
                         <option value="c">Podcast</option>
-                        
+
                     </select>
                 </div>
 

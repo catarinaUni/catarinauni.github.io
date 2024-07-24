@@ -23,9 +23,10 @@ export const Form = styled.div`
 		font-size: 20px;
 		text-align: center;
 
-		&:focus {
-		border: none;
-		}
+		
+		&:focus{
+    		outline: none;
+}
 		
 		
 		}

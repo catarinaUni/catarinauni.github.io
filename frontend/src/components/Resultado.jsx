@@ -4,20 +4,12 @@ import { ListaNome, Question } from "./Lista.style";
 import { Score, Result } from './Resultado.style';
 import axios from "axios";
 
-const CheckAnswersComponent = ({ listaId, alunoId, setMateriaisRecomendados }) => {
+const CheckAnswersComponent = ({ listaId, alunoId}) => {
   const [resultados, setResultados] = useState([]);
   const [topTags, setTopTags] = useState([]);
   let score = 0;
 
-  useEffect(() => {
-    axios.get(`http://localhost:8800/aluno/turma/lista/${listaId}`)
-      .then(response => {
-        console.log("PERGUNTAS:", response);
-        const materiais = response.data.map(quest => quest.ref);
-        setMateriaisRecomendados(materiais);
-      })
-      .catch(error => console.log(error));
-  }, [listaId, setMateriaisRecomendados]);
+  
 
   useEffect(() => {
     axios.get(`http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/resultado`)
@@ -55,8 +47,60 @@ const CheckAnswersComponent = ({ listaId, alunoId, setMateriaisRecomendados }) =
   );
 };
 
+
+function RecomendarMateriais({listaId, alunoid, topTags, formato}){
+  const [materiais, setMateriais] = useState([])
+
+  useEffect(() => {
+    axios.get(`http://localhost:8800/aluno/turma/lista/${listaId}`)
+      .then(response => {
+        console.log("PERGUNTAS:", response);
+        const materiaisRes = response.data.map(quest => quest.ref);
+        setMateriais(materiaisRes);
+      })
+      .catch(error => console.log(error));
+  }, []);
+
+    let allFormats = []; 
+    let oneFormat = []; 
+    materiais.forEach(material => {
+        const tagsDisc = material.Disciplina.split(',');
+        const tagsFormt = material.Formato.split(',');
+
+        const matchDisc = tagsDisc.some(tag => topTags.includes(tag));
+        const matchFormt = tagsFormt.includes(formato);
+
+        if (matchDisc) {
+            if (matchFormt) {
+                oneFormat.push(material);
+            } else {
+                allFormats.push(material);
+            }
+        }
+    });
+
+    allFormats.sort(() => Math.random() - 0.5);
+    const materiaisRelevantes = oneFormat.concat(allFormats).slice(0, 30);
+    let materiais1 = []
+    materiaisRelevantes.forEach((material) => {
+      materiais1.push(material.Formato)
+    })
+    console.log(alunoid, materiais1)
+
+}
+
 function Resultado({ lista, aluno, respostas }) {
-  const [materiaisRecomendados, setMateriaisRecomendados] = useState([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8800/aluno/turma/lista/${lista.id}`)
+      .then(response => {
+        console.log("PERGUNTAS:", response);
+        const materiaisRes = response.data.map(quest => quest.ref);
+        console.log("MateriaisRes: ", materiaisRes)
+      })
+      .catch(error => console.log(error));
+  }, []);
+
 
   return (
     <>
@@ -65,14 +109,10 @@ function Resultado({ lista, aluno, respostas }) {
           <MainItems>
             <ListaNome>Algoritmos e Programação 1</ListaNome>
             <div>
-              <CheckAnswersComponent listaId={lista.id} alunoId={aluno.id} setMateriaisRecomendados={setMateriaisRecomendados} />
+              <CheckAnswersComponent listaId={lista.id} alunoId={aluno.id} />
             </div>
             <h3>Materiais Recomendados</h3>
-            <ul>
-              {materiaisRecomendados.map((ref, index) => (
-                <li key={index}>{ref}</li>
-              ))}
-            </ul>
+            
           </MainItems>
         </MainContent>
       </Main>
