@@ -2,13 +2,13 @@ import { db } from "../db.js";
 
 export const getQuestions = (req, res) => {
     const listaId = req.params.listaId; // Obtendo o lista_id dos parâmetros da rota
-
+    console.log("listId no back: ", listaId);
     const q = `
-        SELECT p.id, p.pergunta, p.alternativa_a, p.alternativa_b, p.alternativa_c, p.alternativa_d, p.ref 
+        SELECT p.id, p.pergunta, p.alternativa_a, p.alternativa_b, p.alternativa_c, p.alternativa_d 
         FROM perguntas as p
         JOIN lista_perguntas as lp on p.id = lp.pergunta_id
         JOIN listas as l on l.id = lp.lista_id
-        WHERE l.id = ?
+        WHERE lista_id = ?
     `;
 
     db.query(q, [listaId], (err, data) => {
@@ -69,7 +69,7 @@ export const checkAnswers = (req, res) => {
 
     db.query(query, [listaId], (err, data) => {
         if (err) return res.json(err);
-    
+
         const resultados = data.map(item => ({
             perguntaId: item.pergunta_id,
             respostaAluno: item.resposta,
@@ -79,10 +79,10 @@ export const checkAnswers = (req, res) => {
             tag2: item.tag_2,
             tag3: item.tag_3
         }));
-    
+
         const totalTagCounts = {};
         const wrongTagCounts = {};
-    
+
         // Calcular o total de questões por tag
         resultados.forEach(item => {
             const tags = [item.tag1, item.tag2, item.tag3].filter(Boolean);
@@ -90,7 +90,7 @@ export const checkAnswers = (req, res) => {
                 totalTagCounts[tag] = (totalTagCounts[tag] || 0) + 1;
             });
         });
-    
+
         // Calcular o total de questões erradas por tag
         resultados.forEach(item => {
             if (!item.correta) {
@@ -100,21 +100,21 @@ export const checkAnswers = (req, res) => {
                 });
             }
         });
-    
+
         // Calcular a taxa de erro ponderada por tag
         const tagErrorRates = Object.keys(wrongTagCounts).reduce((acc, tag) => {
             acc[tag] = wrongTagCounts[tag] / totalTagCounts[tag];
             return acc;
         }, {});
-    
+
         // Ordenar as tags pela taxa de erro ponderada e pegar as top 4
         const sortedTags = Object.entries(tagErrorRates)
             .sort((a, b) => b[1] - a[1])
             .slice(0, 4)
             .map(entry => entry[0]);
-    
+
         console.log(sortedTags);
-    
+
         return res.status(200).json({
             resultados,
             topTags: sortedTags

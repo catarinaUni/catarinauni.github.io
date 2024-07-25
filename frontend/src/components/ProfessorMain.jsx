@@ -45,7 +45,7 @@ function ProfessorMain() {
             return <CriarTurma user={user} />;
         }
         if (flagNovaLista){
-            return <NewList />
+            return <NewList turmaId={selectedTurma?.id}  />
         }
 
     };

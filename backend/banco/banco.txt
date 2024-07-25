@@ -85,8 +85,6 @@ CREATE TABLE IF NOT EXISTS respostas (
     FOREIGN KEY (lista_id) REFERENCES listas(id)
 );
 
-ALTER TABLE `perguntas` ADD `ref` TEXT NOT NULL AFTER `tag_3`;
-
 -- Alteração do Banco
 
 ALTER TABLE `questaoai`.`alunos` 

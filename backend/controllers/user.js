@@ -11,7 +11,12 @@ export const getUsers = (_, res) => {
 };
 
 export const addQuestion = (req, res) => {
-    const { questions, turmaId } = req.body;
+    const { questions, references, turmaId } = req.body;
+
+    // Log para verificar os dados recebidos
+    console.log("Questions:", questions);
+    console.log("References:", references);
+    console.log("Turma ID:", turmaId);
 
     if (!Array.isArray(questions)) {
         return res.status(400).json({ error: "Data should be an array of questions" });
@@ -81,10 +86,25 @@ export const addQuestion = (req, res) => {
                         return res.json(err);
                     }
 
-                    return res.status(200).json("Lista e perguntas adicionadas e associadas à turma com sucesso.");
+                    // Inserir as referências na tabela referencias
+                    if (references && references.length > 0) {
+                        const insertReferencesQuery = "INSERT INTO referencias (turma_id, tag, formato) VALUES ?";
+                        const referenceValues = references.map(ref => [turmaId, ref.tag, ref.formato]);
+
+                        db.query(insertReferencesQuery, [referenceValues], (err, result) => {
+                            if (err) {
+                                return res.json(err);
+                            }
+
+                            return res.status(200).json("Lista, perguntas e referências adicionadas e associadas à turma com sucesso.");
+                        });
+                    } else {
+                        return res.status(200).json("Lista e perguntas adicionadas e associadas à turma com sucesso.");
+                    }
                 });
             });
         });
     });
 };
+
 

@@ -47,7 +47,8 @@ function Lista(props) {
     console.log(props.turma);
 
     useEffect(() => {
-        const listaId = props.lista.id; // Supondo que o ID da lista está em props.lista.id
+        const listaId = props.lista.id; 
+        //console.log("LISTA A QUAL ELE CLICOU: ", listaId);
         axios.get(`http://localhost:8800/aluno/turma/lista/${listaId}`)
             .then(response => {
                 setQuestions(response.data);
