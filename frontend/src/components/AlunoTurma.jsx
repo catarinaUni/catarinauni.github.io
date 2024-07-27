@@ -21,11 +21,6 @@ function AlunoTurma() {
     const [selectedLista, setSelectedLista] = useState([])
     const [selectedResposta, setSelectecResposta] = useState([])
 
-    if (!user) {
-       <h1>deu merda</h1>
-        return null;
-    }
-
     const handleSetFlagTurma = (flag, turma) => {
         setFlagTurma(flag);
         setSelectedTurma(turma);
