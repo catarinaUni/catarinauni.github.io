@@ -85,7 +85,7 @@ function Lista(props) {
         <Main>
             <MainContent>
                 <MainItems>
-                    <ListaNome>LISTA</ListaNome>
+                    <ListaNome>{props.lista.nome}</ListaNome>
                     <form onSubmit={handleFormSubmit} className="formAluno">
                         <FormAluno>
                             <QuestionForm

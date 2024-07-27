@@ -5,9 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [formData, setFormData] = useState({
-        username: '',
+        email: '',
         password: '',
-        userType: 'aluno',
     });
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
@@ -27,10 +26,10 @@ function Login() {
             console.log('Login realizado com sucesso:', response.data);
             
             // Redirecionar com base no tipo de usuário
-            if (formData.userType === 'aluno') {
+            if (response.data.user.userType == 'aluno') {
                 console.log(response.data.user);
                 navigate('/aluno/turma', { state: { user: response.data.user } });
-            } else if (formData.userType === 'professor') {
+            } else if (response.data.user.userType == 'professor') {
                 navigate('/professor', { state: { user: response.data.user } });
             }
             
@@ -51,21 +50,15 @@ function Login() {
                 <h1>Login</h1>
                 <LoginForm onSubmit={handleSubmit}>
                     <FormGroup>
-                        <Label>Username:</Label>
-                        <Input type="text" name="username" value={formData.username} onChange={handleChange} />
+                        <Label>Email:</Label>
+                        <Input type="text" name="email" value={formData.email} onChange={handleChange} />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Password:</Label>
+                        <Label>Senha:</Label>
                         <Input type="password" name="password" value={formData.password} onChange={handleChange} />
                     </FormGroup>
-                    <FormGroup>
-                        <Label>Tipo:</Label>
-                        <select name="userType" onChange={handleChange} value={formData.userType}>
-                            <option value="aluno">Aluno</option>
-                            <option value="professor">Professor</option>
-                        </select>
-                    </FormGroup>
-                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} {/* Exibe a mensagem de erro */}
+                    
+                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                     <SubmitButton type="submit">Entrar</SubmitButton>
                 </LoginForm>
             </LoginItems>
