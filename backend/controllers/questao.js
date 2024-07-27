@@ -22,13 +22,42 @@ export const getQuestions = (req, res) => {
                 b: row.alternativa_b,
                 c: row.alternativa_c,
                 d: row.alternativa_d
-            },
-            ref: row.ref
+            }
         }));
 
         return res.status(200).json(questions);
     });
 };
+
+export const getReferences = (req, res) => {
+  const listaId = req.params.listaId; 
+  console.log("listaId no back: ", listaId);
+
+
+  const q = `
+        SELECT id, turma_id, ref, tag, formato 
+        FROM referencias 
+        WHERE lista_id = ?
+    `;
+
+  db.query(q, [listaId], (err, data) => {
+    if (err) return res.status(500).json(err);
+
+
+    const references = data.map((row) => ({
+      id: row.id,
+      turmaId: row.turma_id,
+      ref: row.ref,
+      tag: row.tag,
+      formato: row.formato,
+    }));
+      
+    console.log(res)
+
+    return res.status(200).json(references);
+  });
+};
+
 
 
 export const saveAnswers = (req, res) => {

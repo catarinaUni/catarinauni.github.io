@@ -1,6 +1,6 @@
 import express from "express";
 import { getUsers, addQuestion } from "../controllers/user.js";
-import { checkAnswers, getQuestions, saveAnswers,  saveResultTags } from '../controllers/questao.js';
+import { checkAnswers, getQuestions, saveAnswers,  saveResultTags, getReferences } from '../controllers/questao.js';
 import { inserirAluno, inserirProfessor } from '../controllers/cadastro.js';
 import { checkLogin } from "../controllers/login.js";
 import { participarTurma } from "../controllers/participarTurma.js";
@@ -15,6 +15,7 @@ router.post("/professor/turma/novalista", addQuestion);
 
 //rota para obter todas as perguntas
 router.get("/aluno/turma/lista/:listaId", getQuestions);
+router.get("/aluno/turma/listaRef/:listaId", getReferences);
 // Rota para verificar as respostas do aluno
 router.post("/aluno/turma/resultado", saveAnswers);
 router.get("/aluno/turma/:alunoId/lista/:listaId/resultado", checkAnswers);

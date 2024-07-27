@@ -27,6 +27,8 @@ export const checkLogin = (req, res) => {
                     id: user.id,
                     name: user.nome,
                     email: user.email,
+                    formato: user.formato,
+                    turno: user.turno,
                     userType
                 }
             });

@@ -105,7 +105,10 @@ CREATE TABLE IF NOT EXISTS resultado_listas (
   CREATE TABLE IF NOT EXISTS referencias (
   id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
   turma_id INT NOT NULL,
+  lista_id INT NOT NULL,
+  ref VARCHAR(255),
   tag VARCHAR(255),
   formato VARCHAR(255),
   FOREIGN KEY (turma_id) REFERENCES turmas(id)
+  FOREIGN KEY (lista_id) REFERENCES listas(id)
   );
