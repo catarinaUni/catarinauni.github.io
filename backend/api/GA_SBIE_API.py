@@ -1,12 +1,28 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
-import numpy as np
 import random
 import ast
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type", "Authorization"]}})
+
+@app.route('/ga_python', methods=['POST'])
+def processar_json():
+    try:
+        dadosJson = request.json
+        
+        if not dadosJson:
+            return jsonify({'error': 'Nenhum JSON enviado'}), 400
+        
+        aluno_id = dadosJson[0].get('aluno_id')
+        if aluno_id is None:
+            return jsonify({'error': 'Chave "aluno_id" não encontrada'}), 400
+        
+        return jsonify({'aluno_id': aluno_id})
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 dataset = pd.read_csv('turma_AG.csv')

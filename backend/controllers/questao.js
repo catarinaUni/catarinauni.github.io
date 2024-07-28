@@ -85,6 +85,7 @@ export const saveAnswers = (req, res) => {
 
 export const checkAnswers = (req, res) => {
   const { listaId } = req.params;
+  const { alunoId } = req.params;
 
   console.log("Oi");
 
@@ -92,10 +93,10 @@ export const checkAnswers = (req, res) => {
         SELECT r.pergunta_id, r.resposta, p.tag_1, p.tag_2, p.tag_3, p.resposta_correta AS resposta_correta
         FROM respostas r
         JOIN perguntas p ON r.pergunta_id = p.id
-        WHERE r.lista_id = ?;
+        WHERE r.lista_id = ? AND r.aluno_id = ?;
     `;
 
-  db.query(query, [listaId], (err, data) => {
+  db.query(query, [listaId, alunoId], (err, data) => {
     if (err) return res.json(err);
 
     const resultados = data.map((item) => ({
@@ -163,17 +164,17 @@ export const checkAnswers = (req, res) => {
 
 //  função para armazenar os resultados no resultado_listas
 export const saveResultTags = (req, res) => {
-  const { alunoId, listaId, tags, tagsCons } = req.body;
+  const { alunoId, listaId, tags, tagsCons, turno } = req.body;
 
 
   const insertQuery = `
-        INSERT INTO resultado_listas (aluno_id, lista_id, tag_1, tag_2, tag_3, tagCons_1, tagCons_2, tagCons_3)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO resultado_listas (aluno_id, lista_id, tag_1, tag_2, tag_3, tagCons_1, tagCons_2, tagCons_3, turno)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
   db.query(
     insertQuery,
-    [alunoId, listaId, tags[0], tags[1], tags[2], tagsCons[0], tagsCons[1], tagsCons[2]],
+    [alunoId, listaId, tags[0], tags[1], tags[2], tagsCons[0], tagsCons[1], tagsCons[2], turno],
     (err, data) => {
       if (err) {
         console.error("Erro ao inserir no resultado_listas:", err);

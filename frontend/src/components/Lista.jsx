@@ -43,6 +43,7 @@ function Lista(props) {
 
   useEffect(() => {
     const listaId = props.lista.id;
+    
 
     axios
       .get(`http://localhost:8800/aluno/turma/lista/${listaId}`)
@@ -59,6 +60,7 @@ function Lista(props) {
 
     const alunoId = props.aluno.id;
     const listaId = props.lista.id;
+    const alunoTurno = props.aluno.turno;
     const respostas = Object.keys(responses).map((perguntaId) => ({
       perguntaId: Number(perguntaId),
       respostaAluno: responses[perguntaId],
@@ -89,6 +91,7 @@ function Lista(props) {
             listaId,
             tags: topWrongTags,
             tagsCons: topCorrectTags,
+            turno: alunoTurno,
           }
         );
       })
