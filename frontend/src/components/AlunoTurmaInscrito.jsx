@@ -48,7 +48,7 @@ function AlunoTurmaInscrito(props) {
             <Carousel
               items={listas}
               renderItem={(lista) => (
-                <div onClick={() => props.handleSetFlagLista(true, lista)}>
+                <div onClick={() => props.handleSetFlagLista(true, lista, user)}>
                   <StyledImage src={imageTest} alt={lista.nome} />
                   <p>{lista.nome}</p>
                 </div>

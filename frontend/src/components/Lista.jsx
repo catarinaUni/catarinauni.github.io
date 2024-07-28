@@ -41,14 +41,9 @@ function Lista(props) {
   const [responses, setResponses] = useState({});
   const [questions, setQuestions] = useState([]);
 
-  //ACESSAR INFO DA LISTA, ALUNO E TURMA:
-  console.log("LISTAi:", props.lista);
-  console.log(props.aluno);
-  console.log(props.turma);
-
   useEffect(() => {
     const listaId = props.lista.id;
-    //console.log("LISTA A QUAL ELE CLICOU: ", listaId);
+
     axios
       .get(`http://localhost:8800/aluno/turma/lista/${listaId}`)
       .then((response) => {
@@ -60,7 +55,7 @@ function Lista(props) {
   }, [props.lista.id]);
 
   const handleFormSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
 
     const alunoId = props.aluno.id;
     const listaId = props.lista.id;

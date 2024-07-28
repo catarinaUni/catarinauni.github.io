@@ -187,3 +187,19 @@ export const checkIfExists = (req, res) => {
     return res.status(200).json(results);
   });
 };
+
+export const checkIfExistsAluno = (req, res) => {
+  const listaId = req.query.listaId;
+  const alunoId = req.query.alunoId;
+
+  const query = "SELECT * FROM resultado_listas WHERE lista_id = ? AND aluno_id = ?;";
+
+  db.query(query, [listaId, alunoId], (err, results) => {
+    if (err) {
+      console.error("Erro ao verificar existência:", err);
+      return res.status(500).json(err);
+    }
+
+    return res.status(200).json(results);
+  });
+};
