@@ -110,6 +110,7 @@ export const checkAnswers = (req, res) => {
 
     const totalTagCounts = {};
     const wrongTagCounts = {};
+    const correctTagCounts = {};
 
     // Calcular o total de questões por tag
     resultados.forEach((item) => {
@@ -119,14 +120,16 @@ export const checkAnswers = (req, res) => {
       });
     });
 
-    // Calcular o total de questões erradas por tag
+    // Calcular o total de questões erradas e corretas por tag
     resultados.forEach((item) => {
-      if (!item.correta) {
-        const tags = [item.tag1, item.tag2, item.tag3].filter(Boolean);
-        tags.forEach((tag) => {
+      const tags = [item.tag1, item.tag2, item.tag3].filter(Boolean);
+      tags.forEach((tag) => {
+        if (!item.correta) {
           wrongTagCounts[tag] = (wrongTagCounts[tag] || 0) + 1;
-        });
-      }
+        } else {
+          correctTagCounts[tag] = (correctTagCounts[tag] || 0) + 1;
+        }
+      });
     });
 
     // Calcular a taxa de erro ponderada por tag
@@ -136,35 +139,47 @@ export const checkAnswers = (req, res) => {
     }, {});
 
     // Ordenar as tags pela taxa de erro ponderada e pegar as top 4
-    const sortedTags = Object.entries(tagErrorRates)
+    const sortedWrongTags = Object.entries(tagErrorRates)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 4)
       .map((entry) => entry[0]);
 
-    console.log(sortedTags);
+    // Ordenar as tags pelo número de acertos e pegar as top 4
+    const sortedCorrectTags = Object.entries(correctTagCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 4)
+      .map((entry) => entry[0]);
+
+    console.log("Tags erradas:", sortedWrongTags);
+    console.log("Tags corretas:", sortedCorrectTags);
 
     return res.status(200).json({
       resultados,
-      topTags: sortedTags,
+      topWrongTags: sortedWrongTags,
+      topCorrectTags: sortedCorrectTags,
     });
   });
 };
+
 //  função para armazenar os resultados no resultado_listas
 export const saveResultTags = (req, res) => {
-  const { alunoId, listaId, tags } = req.body;
+  const { alunoId, listaId, tags, tagsCons } = req.body;
+
 
   const insertQuery = `
-        INSERT INTO resultado_listas (aluno_id, lista_id, tag_1, tag_2, tag_3)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO resultado_listas (aluno_id, lista_id, tag_1, tag_2, tag_3, tagCons_1, tagCons_2, tagCons_3)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
   db.query(
     insertQuery,
-    [alunoId, listaId, tags[0], tags[1], tags[2]],
+    [alunoId, listaId, tags[0], tags[1], tags[2], tagsCons[0], tagsCons[1], tagsCons[2]],
     (err, data) => {
       if (err) {
         console.error("Erro ao inserir no resultado_listas:", err);
-        return res.status(500).json(err);
+        return res
+          .status(500)
+          .json({ message: "Erro ao salvar resultados", error: err });
       }
 
       return res.status(200).json("Resultados salvos com sucesso.");

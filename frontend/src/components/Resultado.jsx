@@ -15,25 +15,35 @@ function Resultado({ lista, aluno, respostas }) {
   let score = 0;
 
   useEffect(() => {
+    // Fetch results
     axios
       .get(
         `http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/resultado`
       )
       .then((response) => {
+        console.log("resutaaasasas", response)
         setResultados(response.data.resultados);
-        setTopTags(response.data.topTags);
+        setTopTags(response.data.topWrongTags);
 
+        // Save tags
         return axios.post(
           `http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/salvarTags`,
           {
             alunoId,
             listaId,
-            tags: response.data.topTags,
+            tags: response.data.topWrongTags,
+            tagsCons: response.data.topCorrectTags,
           }
         );
       })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, [aluno.id, lista.id]);
+      .then((postResponse) => {
+        // Handle success of the post request if needed
+        console.log("Tags saved successfully:", postResponse.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching or saving data:", error);
+      });
+  }, [alunoId, listaId]);
 
   resultados.forEach((resultado) => {
     if (resultado.correta) {
