@@ -1,98 +1,176 @@
 import React, { useEffect, useState } from "react";
-import { CadastroContainer, CadastroForm, FormGroup, Label, Input, SubmitButton, CadastroItems } from "./Cadastro.style";
-import axios from 'axios';
+import {
+  CadastroContainer,
+  CadastroForm,
+  FormGroup,
+  Label,
+  Input,
+  SubmitButton,
+  CadastroItems,
+} from "./Cadastro.style";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Cadastro() {
-    const [userAluno, setUserAluno] = useState(false);
+  const [userAluno, setUserAluno] = useState(false);
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    email: "",
+    userType: "aluno",
+    userFormatPref: "",
+    userTurno: "",
+  });
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const navigate = useNavigate();
 
-    // Estado para armazenar os valores do formulário
-    const [formData, setFormData] = useState({
-        username: '',
-        password: '',
-        email: '',
-        userType: 'aluno', // valor padrão
-        userFormatPref: '',
-        userTurno: ''
-    });
+  useEffect(() => {
+    setUserAluno(formData.userType === "aluno");
+  }, [formData.userType]);
 
-    // Atualiza o estado de userAluno quando userType muda
-    useEffect(() => {
-        setUserAluno(formData.userType === 'aluno');
-    }, [formData.userType]);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-    // Atualiza o estado do formData quando os inputs mudam
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8800/cadastro",
+        formData
+      );
+      console.log("Cadastro realizado com sucesso:", response.data);
+      setShowSuccessModal(true);
+    } catch (error) {
+      console.error("Erro ao realizar cadastro:", error);
+    }
+  };
 
-    // Envia os dados do formulário para o backend
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:8800/cadastro', formData);
-            console.log('Cadastro realizado com sucesso:', response.data);
-            // Aqui você pode redirecionar o usuário ou limpar o formulário
-        } catch (error) {
-            console.error('Erro ao realizar cadastro:', error);
-        }
-    };
+  const handleModalClose = () => {
+    setShowSuccessModal(false);
+    navigate("/login");
+  };
 
-    return (
-        <CadastroContainer>
-            <CadastroItems>
-                <h1>Cadastro</h1>
-                <CadastroForm onSubmit={handleSubmit}>
-                    <FormGroup>
-                        <Label>Username:</Label>
-                        <Input type="text" name="username" value={formData.username} onChange={handleChange} />
-                    </FormGroup>
-                    
-                    <FormGroup>
-                        <Label>Email:</Label>
-                        <Input type="email" name="email" value={formData.email} onChange={handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Password:</Label>
-                        <Input type="password" name="password" value={formData.password} onChange={handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Type:</Label>
-                        <select name="userType" onChange={handleChange} value={formData.userType}>
-                            <option value="professor">Professor</option>
-                            <option value="aluno">Aluno</option>
-                        </select>
-                    </FormGroup>
-                    {userAluno && (
-                        <>
-                            <FormGroup>
-                                <Label>Preferência de formato de materiais:</Label>
-                                <select name="userFormatPref" onChange={handleChange} value={formData.userFormatPref}>
-                                    <option value="Video">Video</option>
-                                    <option value="Livro">Livro</option>
-                                    <option value="Artigo">Artigo</option>
-                                    <option value="Quiz">Quiz</option>
-                                    <option value="Podcast">Podcast</option>
-                                </select>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Turno disponível:</Label>
-                                <select name="userTurno" onChange={handleChange} value={formData.userTurno}>
-                                    <option value="Manhã">Manhã</option>
-                                    <option value="Tarde">Tarde</option>
-                                    <option value="Noite">Noite</option>
-                                </select>
-                            </FormGroup>
-                        </>
-                    )}
-                    <SubmitButton type="submit">Cadastrar</SubmitButton>
-                </CadastroForm>
-            </CadastroItems>
-        </CadastroContainer>
-    );
+  return (
+    <CadastroContainer>
+      <CadastroItems>
+        <h1>Cadastro</h1>
+        <CadastroForm onSubmit={handleSubmit}>
+          <FormGroup>
+            <Label>Nome:</Label>
+            <Input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label>Email:</Label>
+            <Input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>Senha:</Label>
+            <Input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>Tipo do usuário:</Label>
+            <select
+              name="userType"
+              onChange={handleChange}
+              value={formData.userType}
+            >
+              <option value="professor">Professor</option>
+              <option value="aluno">Aluno</option>
+            </select>
+          </FormGroup>
+          {userAluno && (
+            <>
+              <FormGroup>
+                <Label>Preferência de formato de materiais:</Label>
+                <select
+                  name="userFormatPref"
+                  onChange={handleChange}
+                  value={formData.userFormatPref}
+                >
+                  <option value="Video">Video</option>
+                  <option value="Livro">Livro</option>
+                  <option value="Artigo">Artigo</option>
+                  <option value="Quiz">Quiz</option>
+                  <option value="Podcast">Podcast</option>
+                </select>
+              </FormGroup>
+              <FormGroup>
+                <Label>Turno disponível:</Label>
+                <select
+                  name="userTurno"
+                  onChange={handleChange}
+                  value={formData.userTurno}
+                >
+                  <option value="Manhã">Manhã</option>
+                  <option value="Tarde">Tarde</option>
+                  <option value="Noite">Noite</option>
+                </select>
+              </FormGroup>
+            </>
+          )}
+          <SubmitButton type="submit">Cadastrar</SubmitButton>
+        </CadastroForm>
+      </CadastroItems>
+
+      {showSuccessModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Cadastro realizado com sucesso!</h2>
+            <button onClick={handleModalClose}>Ir para Login</button>
+          </div>
+          <style jsx>{`
+            .modal {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: rgba(0, 0, 0, 0.5);
+            }
+            .modal-content {
+              background: white;
+              padding: 20px;
+              border-radius: 5px;
+              text-align: center;
+            }
+            button {
+              margin-top: 20px;
+              padding: 10px 20px;
+              border: none;
+              background-color: #007bff;
+              color: white;
+              cursor: pointer;
+              border-radius: 5px;
+            }
+          `}</style>
+        </div>
+      )}
+    </CadastroContainer>
+  );
 }
 
 export default Cadastro;

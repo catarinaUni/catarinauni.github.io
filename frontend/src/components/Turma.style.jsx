@@ -26,6 +26,8 @@ export const MainContent = styled.div`
     
 `;
 
+
+
 export const Header = styled.div`
 
     background-color:#00A4CC;

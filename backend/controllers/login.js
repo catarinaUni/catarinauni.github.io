@@ -1,38 +1,36 @@
 import { db } from "../db.js";
 
 export const checkLogin = (req, res) => {
-    const { username, password, userType } = req.body;
+  const { email, password } = req.body;
 
-    let query = '';
-    if (userType === 'aluno') {
-        query = 'SELECT * FROM alunos WHERE nome = ? AND senha = ?';
-    } else if (userType === 'professor') {
-        query = 'SELECT * FROM professores WHERE nome = ? AND senha = ?';
-    } else {
-        return res.status(400).json({ message: 'Tipo de usuário inválido' });
+  const query = `
+        SELECT id, nome AS name, email, senha AS password, material_formato, turno, 'aluno' AS userType
+        FROM alunos
+        WHERE email = ? AND senha = ?
+        UNION ALL
+        SELECT id, nome AS name, email, senha AS password, NULL AS material_formato, NULL AS turno, 'professor' AS userType
+        FROM professores
+        WHERE email = ? AND senha = ?
+    `;
+
+  db.query(query, [email, password, email, password], (err, results) => {
+    if (err) {
+      console.error("Erro ao consultar o banco de dados:", err);
+      return res.status(500).json({ message: "Erro interno do servidor" });
     }
 
-    db.query(query, [username, password], (err, results) => {
-        if (err) {
-            console.error('Erro ao consultar o banco de dados:', err);
-            return res.status(500).json({ message: 'Erro interno do servidor' });
-        }
-
-        if (results.length > 0) {
-            // Extrair informações do usuário
-            const user = results[0]; // Primeiro resultado
-            res.status(200).json({
-                message: 'Login realizado com sucesso!',
-                user: {
-                    id: user.id,
-                    name: user.nome,
-                    email: user.email,
-                    userType
-                }
-            });
-        } else {
-            // Credenciais inválidas
-            res.status(401).json({ message: 'Senha ou login invalido' });
-        }
-    });
+    if (results.length > 0) {
+      const user = results[0]; 
+      res.status(200).json({
+        message: "Login realizado com sucesso!",
+        user: {
+          id: user.id,
+          email: user.email,
+          userType: results[0].userType, 
+        }, 
+      });
+    } else {
+      res.status(401).json({ message: "Senha ou email inválido" });
+    }
+  });
 };

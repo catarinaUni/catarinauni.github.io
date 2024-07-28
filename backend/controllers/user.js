@@ -11,12 +11,13 @@ export const getUsers = (_, res) => {
 };
 
 export const addQuestion = (req, res) => {
-    const { questions, references, turmaId } = req.body;
+    const { newList, questions, references, turmaId } = req.body;
 
     // Log para verificar os dados recebidos
     console.log("Questions:", questions);
     console.log("References:", references);
     console.log("Turma ID:", turmaId);
+    console.log("Lista:", newList);
 
     if (!Array.isArray(questions)) {
         return res.status(400).json({ error: "Data should be an array of questions" });
@@ -27,7 +28,7 @@ export const addQuestion = (req, res) => {
     }
 
     // Nome fixo para todas as listas
-    const listName = "Lista";
+    const listName = newList.nome;
 
     // Inserir a nova lista na tabela listas
     const insertListQuery = "INSERT INTO listas (nome) VALUES (?)";
@@ -88,8 +89,9 @@ export const addQuestion = (req, res) => {
 
                     // Inserir as referências na tabela referencias
                     if (references && references.length > 0) {
-                        const insertReferencesQuery = "INSERT INTO referencias (turma_id, tag, formato) VALUES ?";
-                        const referenceValues = references.map(ref => [turmaId, ref.tag, ref.formato]);
+                        console.log("REFESSSSSSSS",references)
+                        const insertReferencesQuery = "INSERT INTO referencias (turma_id, lista_id, ref, tag, formato) VALUES ?";
+                        const referenceValues = references.map(ref => [turmaId, listId, ref.ref , ref.tag, ref.formato]);
 
                         db.query(insertReferencesQuery, [referenceValues], (err, result) => {
                             if (err) {
