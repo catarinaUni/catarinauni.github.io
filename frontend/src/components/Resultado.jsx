@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
 import { ListaNome, Question } from "./Lista.style";
-import { Score, Result } from "./Resultado.style";
+import { Score, Result, ResultContent, Subtitulo } from "./Resultado.style";
 import axios from "axios";
 
 function Resultado({ lista, aluno, respostas }) {
@@ -90,25 +90,39 @@ function Resultado({ lista, aluno, respostas }) {
       <Main>
         <MainContent>
           <MainItems>
-            <ListaNome>Algoritmos e Programação 1</ListaNome>
-            <div>
-              <Result>
-                <h2>Resultados</h2>
-                <h4>Você acertou {score} questões!</h4>
-                <h3>Assuntos recomendados para estudo</h3>
+            <ListaNome>{lista.nome}</ListaNome>
+            <Subtitulo>
+              <p className="subtitulo">Veja aqui os resultados</p>
+            </Subtitulo>
+
+            <Result>
+              <ResultContent>
+                <p>Média de acertos: </p>
+                <div>
+                  <h4>{score}</h4>
+                </div>
+              </ResultContent>
+              <ResultContent>
+                <p>Assuntos recomendados para estudo</p>
+                <div>
+                  <ul>
+                    {topTags.map((tag, index) => (
+                      <li key={index}>{tag}</li>
+                    ))}
+                  </ul>
+                </div>
+              </ResultContent>
+              <ResultContent>
+                <p>Materiais Recomendados</p>
+                <div>
                 <ul>
-                  {topTags.map((tag, index) => (
-                    <li key={index}>{tag}</li>
+                  {materiaisRelevantes.map((ref, index) => (
+                    <li key={index}>{ref}</li>
                   ))}
-                </ul>
-              </Result>
-            </div>
-            <h3>Materiais Recomendados</h3>
-            <ul>
-              {materiaisRelevantes.map((ref, index) => (
-                <li key={index}>{ref}</li>
-              ))}
-            </ul>
+                  </ul>
+                  </div>
+              </ResultContent>
+            </Result>
           </MainItems>
         </MainContent>
       </Main>
