@@ -55,7 +55,7 @@ function Lista(props) {
   }, [props.lista.id]);
 
   const handleFormSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const alunoId = props.aluno.id;
     const listaId = props.lista.id;
@@ -74,10 +74,30 @@ function Lista(props) {
       })
       .then((response) => {
         console.log("Respostas salvas com sucesso:", response.data);
+
+        // Depois de salvar as respostas, buscamos os resultados e salvamos as tags
+        return axios.get(`http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/resultado`);
+      })
+      .then((response) => {
+        const { topWrongTags, topCorrectTags } = response.data;
+
+        // Salvar as tags
+        return axios.post(
+          `http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/salvarTags`,
+          {
+            alunoId,
+            listaId,
+            tags: topWrongTags,
+            tagsCons: topCorrectTags,
+          }
+        );
+      })
+      .then((postResponse) => {
+        console.log("Tags salvas com sucesso:", postResponse.data);
         return props.handleSetFlagResposta(true, respostas);
       })
       .catch((error) => {
-        console.error("Houve um erro ao salvar as respostas do aluno:", error);
+        console.error("Houve um erro ao processar os dados:", error);
       });
   };
 
