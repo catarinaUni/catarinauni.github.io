@@ -9,6 +9,7 @@ function ResultadosProf({ lista, aluno, respostas }) {
 
   const [dadosJson, setDadosJson] = useState(null);
   const [error, setError] = useState(null);
+  const [grupos, setGrupos] = useState(null)
   
   useEffect(() => {
     axios
@@ -17,7 +18,48 @@ function ResultadosProf({ lista, aluno, respostas }) {
       })
       .then((response) => {
         console.log("Resposta recebida JSON:", response.data);
-        setDadosJson(response.data); // Armazena o objeto, não a string JSON
+        setDadosJson([
+          {
+            id: 1,
+            aluno_id: 101,
+            lista_id: 5,
+            tags: "matematica,programacao",
+            tagCons: "matematica",
+            turno: "manha",
+          },
+          {
+            id: 2,
+            aluno_id: 102,
+            lista_id: 5,
+            tags: "programacao,algoritmos",
+            tagCons: "algoritmos",
+            turno: "tarde",
+          },
+          {
+            id: 3,
+            aluno_id: 103,
+            lista_id: 5,
+            tags: "matematica,estatistica",
+            tagCons: "estatistica",
+            turno: "manha",
+          },
+          {
+            id: 4,
+            aluno_id: 104,
+            lista_id: 5,
+            tags: "programacao,matematica",
+            tagCons: "matematica,programacao",
+            turno: "noite",
+          },
+          {
+            id: 5,
+            aluno_id: 105,
+            lista_id: 5,
+            tags: "algoritmos,estatistica",
+            tagCons: "algoritmos",
+            turno: "tarde",
+          },
+        ]); // Armazena o objeto, não a string JSON
         setError(null); // Limpa erro, se houver
       })
       .catch((error) => {
@@ -28,18 +70,19 @@ function ResultadosProf({ lista, aluno, respostas }) {
   }, [listaId]);
 
   // Send data to the Flask API when dadosJson changes
-  useEffect(() => {
+  const gerarGrupos = () => {
     if (dadosJson) {
       axios
         .post("http://127.0.0.1:5000/ga_python", dadosJson)
         .then((response) => {
           console.log("Resposta da API AG:", response.data);
+          setGrupos(response.data);
         })
         .catch((error) => {
           console.error("Erro:", error);
         });
     }
-  }, [dadosJson]);
+  };
 
   return (
     <Main>
@@ -70,7 +113,7 @@ function ResultadosProf({ lista, aluno, respostas }) {
               <p>Média de acertos: </p>
               <div>
                 <p>9/10</p>
-                <p>criar grupos</p>
+                <button onClick={gerarGrupos}>Gerar Grupos</button>
               </div>
             </ResultContent>
           </Result>

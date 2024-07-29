@@ -166,15 +166,18 @@ export const checkAnswers = (req, res) => {
 export const saveResultTags = (req, res) => {
   const { alunoId, listaId, tags, tagsCons, turno } = req.body;
 
-
   const insertQuery = `
-        INSERT INTO resultado_listas (aluno_id, lista_id, tag_1, tag_2, tag_3, tagCons_1, tagCons_2, tagCons_3, turno)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+    INSERT INTO resultado_listas (aluno_id, lista_id, tags, tagCons, turno)
+    VALUES (?, ?, ?, ?, ?)
+  `;
+
+  // Converter arrays para strings separadas por vírgulas
+  const tagsString = tags.join(",");
+  const tagsConsString = tagsCons.join(",");
 
   db.query(
     insertQuery,
-    [alunoId, listaId, tags[0], tags[1], tags[2], tagsCons[0], tagsCons[1], tagsCons[2], turno],
+    [alunoId, listaId, tagsString, tagsConsString, turno],
     (err, data) => {
       if (err) {
         console.error("Erro ao inserir no resultado_listas:", err);
@@ -187,6 +190,7 @@ export const saveResultTags = (req, res) => {
     }
   );
 };
+
 
 export const checkIfExists = (req, res) => {
   const listaId = req.query.listaId; 
