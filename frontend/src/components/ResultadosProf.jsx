@@ -6,19 +6,21 @@ import axios from "axios";
 
 function ResultadosProf({ lista, aluno, respostas }) {
   const listaId = lista.id;
+  const turmaId = lista.turma_id
 
   const [dadosJson, setDadosJson] = useState(null);
   const [error, setError] = useState(null);
   const [grupos, setGrupos] = useState(null)
-  
+
   useEffect(() => {
     axios
       .get(`http://localhost:8800/aluno/turma/resultado/verificar`, {
         params: { listaId },
       })
       .then((response) => {
-        console.log("Resposta recebida JSON:", response.data);
+        console.log("Resposta recebida JSON:", response);
         setDadosJson([
+          //response.data
           {
             id: 1,
             aluno_id: 101,
@@ -59,17 +61,17 @@ function ResultadosProf({ lista, aluno, respostas }) {
             tagCons: "algoritmos",
             turno: "tarde",
           },
-        ]); // Armazena o objeto, não a string JSON
-        setError(null); // Limpa erro, se houver
+        ]);
+        setError(null); 
       })
       .catch((error) => {
         console.error("Erro ao buscar dados:", error);
-        setDadosJson(null); // Limpa dados, se houver erro
+        setDadosJson(null);
         setError("Erro ao buscar dados.");
       });
   }, [listaId]);
 
-  // Send data to the Flask API when dadosJson changes
+
   const gerarGrupos = () => {
     if (dadosJson) {
       axios
@@ -77,12 +79,41 @@ function ResultadosProf({ lista, aluno, respostas }) {
         .then((response) => {
           console.log("Resposta da API AG:", response.data);
           setGrupos(response.data);
+
+
+          Object.entries(response.data).forEach(([key, alunos]) => {
+            console.log(`Grupo ${key}:`);
+
+             const grupoId = parseInt(key, 10);
+
+            alunos.forEach((aluno) => {
+              var alunoId = aluno.aluno_id
+              console.log(`  aluno_id: ${aluno.aluno_id}`);
+              axios
+                .post(`http://localhost:8800/professor/salvarGrupos`, {
+                  alunoId,
+                  turmaId,
+                  listaId,
+                  grupoId
+                })
+                .then((response) => {
+                  console.log(response);
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+            });
+          });
+
+          
         })
         .catch((error) => {
           console.error("Erro:", error);
         });
     }
   };
+
+
 
   return (
     <Main>
