@@ -81,7 +81,7 @@ function Lista(props) {
         return axios.get(`http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/resultado`);
       })
       .then((response) => {
-        const { topWrongTags, topCorrectTags } = response.data;
+        const { topWrongTags, topCorrectTags, score } = response.data;
 
         // Salvar as tags
         return axios.post(
@@ -92,6 +92,7 @@ function Lista(props) {
             tags: topWrongTags,
             tagsCons: topCorrectTags,
             turno: alunoTurno,
+            score: score,
           }
         );
       })

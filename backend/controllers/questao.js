@@ -86,6 +86,7 @@ export const saveAnswers = (req, res) => {
 export const checkAnswers = (req, res) => {
   const { listaId } = req.params;
   const { alunoId } = req.params;
+  var score = 0;
 
   console.log("Oi");
 
@@ -129,6 +130,7 @@ export const checkAnswers = (req, res) => {
           wrongTagCounts[tag] = (wrongTagCounts[tag] || 0) + 1;
         } else {
           correctTagCounts[tag] = (correctTagCounts[tag] || 0) + 1;
+          score++
         }
       });
     });
@@ -158,17 +160,18 @@ export const checkAnswers = (req, res) => {
       resultados,
       topWrongTags: sortedWrongTags,
       topCorrectTags: sortedCorrectTags,
+      score: score,
     });
   });
 };
 
 //  função para armazenar os resultados no resultado_listas
 export const saveResultTags = (req, res) => {
-  const { alunoId, listaId, tags, tagsCons, turno } = req.body;
+  const { alunoId, listaId, tags, tagsCons, turno, score } = req.body;
 
   const insertQuery = `
-    INSERT INTO resultado_listas (aluno_id, lista_id, tags, tagCons, turno)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO resultado_listas (aluno_id, lista_id, tags, tagCons, turno, score)
+    VALUES (?, ?, ?, ?, ?, ?)
   `;
 
   // Converter arrays para strings separadas por vírgulas
@@ -177,7 +180,7 @@ export const saveResultTags = (req, res) => {
 
   db.query(
     insertQuery,
-    [alunoId, listaId, tagsString, tagsConsString, turno],
+    [alunoId, listaId, tagsString, tagsConsString, turno, score],
     (err, data) => {
       if (err) {
         console.error("Erro ao inserir no resultado_listas:", err);

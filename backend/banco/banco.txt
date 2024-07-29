@@ -97,7 +97,8 @@ CREATE TABLE IF NOT EXISTS resultado_listas (
   lista_id INT NOT NULL,
   tags TEXT,
   tagCons TEXT,
-  turno VARCHAR(45) NOT NULL,
+  turno VARCHAR(45),
+  score INT,
   FOREIGN KEY (aluno_id) REFERENCES alunos(id),
   FOREIGN KEY (lista_id) REFERENCES listas(id)
   );
