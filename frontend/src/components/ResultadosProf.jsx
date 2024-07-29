@@ -97,7 +97,21 @@ function ResultadosProf({ lista, aluno, respostas }) {
                   grupoId
                 })
                 .then((response) => {
+                  const call = true;
                   console.log(response);
+                  console.log(call, turmaId, listaId)
+                  axios
+                    .post(`http://localhost:8800/professor/salvarGrupos/api`, {
+                      acao_chamada:call,
+                      turmaId,
+                      listaId,
+                    })
+                    .then((response) => {
+                      console.log(response);
+                    })
+                    .catch((error) => {
+                      console.error(error);
+                    });
                 })
                 .catch((error) => {
                   console.error(error);

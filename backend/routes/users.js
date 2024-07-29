@@ -6,7 +6,7 @@ import { checkLogin } from "../controllers/login.js";
 import { participarTurma } from "../controllers/participarTurma.js";
 import { criarTurma } from "../controllers/Turma.js";
 import { db } from "../db.js";
-import { salvarGrupos } from "../controllers/grupos.js";
+import { salvarChamada, salvarGrupos } from "../controllers/grupos.js";
 
 
 const router = express.Router();
@@ -14,6 +14,7 @@ const router = express.Router();
 router.get("/", getUsers);
 router.post("/professor/turma/novalista", addQuestion);
 router.post("/professor/salvarGrupos", salvarGrupos);
+router.post("/professor/salvarGrupos/api", salvarChamada)
 
 //rota para obter todas as perguntas
 router.get("/aluno/turma/lista/:listaId", getQuestions);

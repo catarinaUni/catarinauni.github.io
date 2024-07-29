@@ -23,3 +23,26 @@ export const salvarGrupos = (req, res) => {
       }
     );
 }
+
+
+
+export const salvarChamada = (req, res) => {
+  const { acao_chamada, turmaId, listaId } = req.body;
+  console.log("AAAAAAAAAA",acao_chamada)
+
+  const insertQuery = `
+    INSERT INTO chamada_API (acao_chamada, turma_id, lista_id)
+    VALUES (?, ?, ?)
+  `;
+
+  db.query(insertQuery, [acao_chamada, turmaId, listaId], (err, data) => {
+    if (err) {
+      console.error("Erro ao inserir no resultado_listas:", err);
+      return res
+        .status(500)
+        .json({ message: "Erro ao salvar resultados", error: err });
+    }
+
+    return res.status(200).json("Chamada salvos com sucesso.");
+  });
+};
