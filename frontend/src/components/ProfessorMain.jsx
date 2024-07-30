@@ -8,16 +8,19 @@ import { Contents } from "./AlunoTurma.style";
 import { Main } from "./Turma.style";
 import NewList from "./NewList.jsx";
 import ResultadosProf from "./ResultadosProf.jsx";
+import NewRef from "./NewRef.jsx";
 
 function ProfessorMain() {
     const location = useLocation();
     const user = location.state?.user;
+    console.log(user)
     const [flagTurma, setFlagTurma] = useState(false);
     const [flagCriarTurma, setFlagCriarTurma] = useState(false);
     const [selectedTurma, setSelectedTurma] = useState([]);
     const [flagNovaLista, setFlagNovaLista] = useState(false);
     const [flagLista, setFlagLista] = useState(false);
     const [selectedLista, setSelectedLista] = useState([]);
+    const [flagNewRef, setFlagNewRef] = useState(false)
 
 
     const handleSetFlagLista = (flag, lista) => {
@@ -25,27 +28,48 @@ function ProfessorMain() {
         setFlagTurma(false)
         setFlagLista(flag);
         setSelectedLista(lista);
+        setFlagNewRef(false)
+        setFlagNovaLista(false)
     };
 
     const handleSetFlagTurma = (flag, turma) => {
         setFlagTurma(flag);
         setFlagCriarTurma(false);
         setSelectedTurma(turma);
+        setFlagCriarTurma(false)
+        setFlagLista(false)
+        setFlagNewRef(false)
     };
 
     const handleSetFlagCriarTurma = (flag) => {
         setFlagCriarTurma(flag);
         setFlagTurma(false);
+        setFlagLista(false)
+        setFlagNewRef(false)
+        setFlagNovaLista(false)
     };
 
     const handleSetFlagNovaLista = (flag) => {
         setFlagNovaLista(flag)
         setFlagTurma(false)
+        setFlagCriarTurma(false)
+        setFlagLista(false)
+        setFlagNewRef(false)
+        
     }
+
+    const handleSetFlagNovaRef = (flag) => {
+        setFlagNewRef(flag);
+        setFlagNovaLista(false)
+        setFlagTurma(false);
+        setFlagLista(false)
+        setFlagCriarTurma(false)
+    };
+
 
     const renderContent = () => {
         if (flagTurma) {
-            return <Turma user={user} turma={selectedTurma} handleSetFlagNovaLista={handleSetFlagNovaLista} handleSetFlagLista={ handleSetFlagLista} />;
+            return <Turma user={user} turma={selectedTurma} handleSetFlagNovaLista={handleSetFlagNovaLista} handleSetFlagLista={handleSetFlagLista} handleSetFlagNovaRef={handleSetFlagNovaRef } />;
         }
         if (flagCriarTurma) {
             return <CriarTurma user={user} />;
@@ -58,6 +82,9 @@ function ProfessorMain() {
               <ResultadosProf lista={selectedLista} />
           );
         }
+        if (flagNewRef) {
+            return <NewRef turmaId={selectedTurma?.id} />;
+        }
 
     };
 
@@ -65,7 +92,7 @@ function ProfessorMain() {
         <>
             <Main>
                 <SideBar 
-                    userName={user.name} 
+                    userName={user.userName} 
                     userType={user.userType} 
                     userId={user.id} 
                     handleSetFlagTurma={handleSetFlagTurma} 

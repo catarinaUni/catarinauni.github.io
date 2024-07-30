@@ -9,68 +9,162 @@ function Resultado({ lista, aluno }) {
   const [topTags, setTopTags] = useState([]);
   const alunoId = aluno.id;
   const listaId = lista.id;
+  const turmaId = lista.turma_id;
   const [materiais, setMateriais] = useState([]);
-  const formato = aluno.formato;
+  const [formato, setFormato] = useState()
+  const [grupos, setGrupos] = useState([]);
+  const [chamada, setChamada] = useState(false);
+  const [matRelev, setMatRelev] = useState([])
 
-  let score = 0;
+  const [score, setScore] = useState(0);
+  const [alunosMap, setAlunosMap] = useState({});
 
   useEffect(() => {
-    // Fetch results
+    console.log(turmaId, listaId);
     axios
-      .get(
-        `http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/resultado`
-      )
+      .get(`http://localhost:8800/grupos/chamada`, {
+        params: {
+          turmaId,
+          listaId,
+        },
+      })
       .then((response) => {
-        setResultados(response.data.resultados);
-        setTopTags(response.data.topWrongTags);
+        console.log("CHAMADA: ", response.data.exists);
+        setChamada(response.data.exists);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [alunoId, listaId]);
-
-  resultados.forEach((resultado) => {
-    if (resultado.correta) {
-      score++;
-    }
-  });
+  }, [turmaId, listaId]);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8800/aluno/turma/listaRef/${listaId}`)
-      .then((response) => {
-        setMateriais(response.data);
-      })
-      .catch((error) => console.log(error));
-  }, [listaId]);
-
-  let allFormats = [];
-  let oneFormat = [];
-
-  materiais.forEach((material) => {
-    const tagsDisc = material.tag;
-    const tagsFormt = material.formato;
-    let matchDisc = "";
-    let matchFormt = "";
-
-    if (topTags.includes(tagsDisc)) {
-      matchDisc = tagsDisc;
-    }
-    if (tagsFormt.includes(formato)) {
-      matchFormt = tagsFormt;
-    }
-
-    if (matchDisc) {
-      if (matchFormt) {
-        oneFormat.push(material.ref);
-      } else {
-        allFormats.push(material.ref);
+    const fetchAlunos = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8800/turma/${turmaId}/ListarAlunos`
+        ); // Ajuste a URL conforme necessário
+        const alunosData = response.data["alunos"];
+        console.log(alunosData["alunos"]);
+        const alunosMapping = alunosData.reduce((acc, aluno) => {
+          acc[aluno.id] = aluno.nome; // Ajuste conforme o nome da propriedade
+          console.log(aluno.nome);
+          return acc;
+        }, {});
+        setAlunosMap(alunosMapping);
+      } catch (error) {
+        console.error("Erro ao buscar dados dos alunos:", error);
       }
-    }
-  });
+    };
 
-  allFormats.sort(() => Math.random() - 0.5);
-  const materiaisRelevantes = oneFormat.concat(allFormats).slice(0, 30);
+    fetchAlunos();
+  }, []);
+
+  useEffect(() => {
+    if (chamada) {
+      axios
+        .get("http://localhost:8800/grupos/getGrupos", {
+          params: {
+            turmaId,
+            listaId,
+          },
+        })
+        .then((response) => {
+          console.log("grupos:", response.data);
+          const data = response.data;
+          const groupedData = data.reduce((acc, item) => {
+            const { grupo_id, aluno_id } = item;
+            if (!acc[grupo_id]) {
+              acc[grupo_id] = [];
+            }
+            acc[grupo_id].push(aluno_id);
+            return acc;
+          }, {});
+
+          // Transformar o objeto em um array de grupos
+          const gruposArray = Object.keys(groupedData).map((grupo_id) => ({
+            grupo_id,
+            alunos: groupedData[grupo_id],
+          }));
+
+          setGrupos(gruposArray);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [chamada]);
+
+
+
+  
+ useEffect(() => {
+   axios
+     .get(`http://localhost:8800/aluno/turma/resultado/verificarAluno`, {
+       params: {
+         listaId: lista.id,
+         alunoId: aluno.id,
+       },
+     })
+     .then((response) => {
+       console.log("aluno", response.data);
+       setScore(response.data[0]["score"]);
+       setFormato(response.data[0]["formato"]);
+       const tagsString = response.data[0]["tags"];
+
+       const tagsArray = tagsString.split(",").map((tag) => tag.trim());
+       console.log(tagsArray);
+
+       setTopTags(tagsArray);
+     })
+     .catch((error) => {
+       console.error(error);
+     });
+ }, [lista.id, aluno.id]);
+
+ // Processar materiais quando topTags ou formato mudarem
+ useEffect(() => {
+   if (topTags.length === 0 || !formato) return; // Verifique se as tags e o formato estão disponíveis
+
+   axios
+     .get(`http://localhost:8800/aluno/turma/turmaRef/${turmaId}`)
+     .then((response) => {
+       console.log("resssss", response.data);
+       setMateriais(response.data);
+
+       let allFormats = [];
+       let oneFormat = [];
+
+       response.data.forEach((material) => {
+         const tagsDisc = material.tag;
+         const tagsFormt = material.formato;
+
+         console.log("Processing Material:", material, topTags);
+
+         if (topTags.includes(tagsDisc)) {
+           if (tagsFormt === formato) {
+             oneFormat.push(material.ref);
+             console.log("Added to oneFormat:", material.ref);
+           } else {
+             allFormats.push(material.ref);
+             console.log("Added to allFormats:", material.ref);
+           }
+         }
+       });
+
+       console.log("All Formats:", allFormats);
+       console.log("One Format:", oneFormat);
+
+       allFormats.sort(() => Math.random() - 0.5);
+       const materiaisRelevantes = oneFormat.concat(allFormats).slice(0, 30);
+       setMatRelev(materiaisRelevantes);
+
+       console.log("Materiais Relevantes:", materiaisRelevantes);
+     })
+     .catch((error) => console.log(error));
+ }, [topTags, formato, listaId]);
+
+  
+
 
   return (
     <Main>
@@ -101,13 +195,38 @@ function Resultado({ lista, aluno }) {
               <p>Materiais Recomendados</p>
               <div>
                 <ul>
-                  {materiaisRelevantes.map((ref, index) => (
+                  {matRelev.map((ref, index) => (
                     <li key={index}>{ref}</li>
                   ))}
                 </ul>
               </div>
             </ResultContent>
           </Result>
+          <h2>Grupos:</h2>
+          {chamada ? (
+            grupos.length > 0 ? (
+              grupos.map((grupo) => (
+                <div key={grupo.grupo_id}>
+                  <h3>Grupo {grupo.grupo_id}</h3>
+                  <ul>
+                    {grupo.alunos.length > 0 ? (
+                      grupo.alunos.map((aluno_id, index) => (
+                        <li key={index}>
+                          {alunosMap[aluno_id] || `Aluno ID: ${aluno_id}`}
+                        </li>
+                      ))
+                    ) : (
+                      <li>Nenhum aluno disponível.</li>
+                    )}
+                  </ul>
+                </div>
+              ))
+            ) : (
+              <div>Não há grupos para mostrar.</div>
+            )
+          ) : (
+            <div>Não há grupos para mostrar.</div>
+          )}
         </MainItems>
       </MainContent>
     </Main>

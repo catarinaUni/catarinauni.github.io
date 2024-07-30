@@ -30,21 +30,19 @@ export const getQuestions = (req, res) => {
 };
 
 export const getReferences = (req, res) => {
-  const listaId = req.params.listaId;
-  console.log("listaId no back: ", listaId);
+  const turmaId = req.params.turmaId;
 
   const q = `
-        SELECT id, turma_id, ref, tag, formato 
+        SELECT id, ref, tag, formato 
         FROM referencias 
-        WHERE lista_id = ?
+        WHERE turma_id = ?
     `;
 
-  db.query(q, [listaId], (err, data) => {
+  db.query(q, [turmaId], (err, data) => {
     if (err) return res.status(500).json(err);
 
     const references = data.map((row) => ({
       id: row.id,
-      turmaId: row.turma_id,
       ref: row.ref,
       tag: row.tag,
       formato: row.formato,
@@ -87,8 +85,6 @@ export const checkAnswers = (req, res) => {
   const { listaId } = req.params;
   const { alunoId } = req.params;
   var score = 0;
-
-  console.log("Oi");
 
   const query = `
         SELECT r.pergunta_id, r.resposta, p.tag_1, p.tag_2, p.tag_3, p.resposta_correta AS resposta_correta
@@ -170,8 +166,8 @@ export const saveResultTags = (req, res) => {
   const { alunoId, listaId, tags, tagsCons, turno, score } = req.body;
 
   const insertQuery = `
-    INSERT INTO resultado_listas (aluno_id, lista_id, tags, tagCons, turno, score)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO resultado_listas (aluno_id, lista_id, tags, tagCons, turno, score, formato)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
 
   // Converter arrays para strings separadas por vírgulas
@@ -196,18 +192,33 @@ export const saveResultTags = (req, res) => {
 
 
 export const checkIfExists = (req, res) => {
-  const listaId = req.query.listaId; 
+  const listaId = req.query.listaId;
   console.log("IDDDDDDD", listaId);
 
   const query = "SELECT * FROM resultado_listas WHERE lista_id = ?;";
+  const queryCount =
+    "SELECT COUNT(*) AS total_perguntas FROM lista_perguntas WHERE lista_id = ?;";
 
+  // Executa a primeira consulta
   db.query(query, [listaId], (err, results) => {
     if (err) {
       console.error("Erro ao verificar existência:", err);
       return res.status(500).json(err);
     }
 
-    return res.status(200).json(results);
+    // Executa a segunda consulta para contar o número de perguntas
+    db.query(queryCount, [listaId], (errCount, countResults) => {
+      if (errCount) {
+        console.error("Erro ao contar perguntas:", errCount);
+        return res.status(500).json(errCount);
+      }
+
+      // Retorna os resultados combinados
+      return res.status(200).json({
+        results,
+        total_perguntas: countResults[0].total_perguntas,
+      });
+    });
   });
 };
 

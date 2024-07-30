@@ -21,12 +21,14 @@ export const checkLogin = (req, res) => {
 
     if (results.length > 0) {
       const user = results[0]; 
+      console.log("user aqui", user)
       res.status(200).json({
         message: "Login realizado com sucesso!",
         user: {
           id: user.id,
           email: user.email,
           userType: results[0].userType, 
+          userName: results[0].name
         }, 
       });
     } else {
