@@ -9,13 +9,37 @@ function Resultado({ lista, aluno }) {
   const [topTags, setTopTags] = useState([]);
   const alunoId = aluno.id;
   const listaId = lista.id;
+  const turmaId = lista.turma_id
   const [materiais, setMateriais] = useState([]);
   const formato = aluno.formato;
+  const [chamada, setChamada] = useState(false);
+    const [grupos, setGrupos] = useState([]); 
 
   let score = 0;
 
+
+
   useEffect(() => {
-    // Fetch results
+    console.log(turmaId, listaId)
+    axios
+      .get(`http://localhost:8800/grupos/chamada`, {
+        params: {
+          turmaId,
+          listaId,
+        },
+      })
+      .then((response) => {
+        console.log("CHAMADA: ", response.data.exists);
+        setChamada(response.data.exists)
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+
+
+  useEffect(() => {
     axios
       .get(
         `http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/resultado`
@@ -29,11 +53,13 @@ function Resultado({ lista, aluno }) {
       });
   }, [alunoId, listaId]);
 
-  resultados.forEach((resultado) => {
-    if (resultado.correta) {
-      score++;
-    }
-  });
+  useEffect(() => {
+    resultados.forEach((resultado) => {
+      if (resultado.correta) {
+        score++;
+      }
+    });
+  }, [resultados]);
 
   useEffect(() => {
     axios
@@ -72,6 +98,23 @@ function Resultado({ lista, aluno }) {
   allFormats.sort(() => Math.random() - 0.5);
   const materiaisRelevantes = oneFormat.concat(allFormats).slice(0, 30);
 
+
+
+ useEffect(() => {
+   if (chamada) {
+     axios
+       .get(`http://localhost:8800/grupos/getGrupos`, {
+         params: { turmaId, listaId },
+       })
+       .then((response) => {
+         setGrupos(response.data);
+       })
+       .catch((error) => console.log(error));
+   }
+ }, [chamada, turmaId, listaId]);
+    
+
+
   return (
     <Main>
       <MainContent>
@@ -108,6 +151,24 @@ function Resultado({ lista, aluno }) {
               </div>
             </ResultContent>
           </Result>
+          {chamada ? (
+            <div>
+              {grupos.length > 0 ? (
+                <div>
+                  <h2>Grupos:</h2>
+                  <ul>
+                    {grupos.map((grupo, index) => (
+                      <li key={index}>{JSON.stringify(grupo)}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <div>Não há grupos para mostrar.</div>
+              )}
+            </div>
+          ) : (
+            <div>Não há chamada ainda.</div>
+          )}
         </MainItems>
       </MainContent>
     </Main>

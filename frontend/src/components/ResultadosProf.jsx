@@ -11,6 +11,49 @@ function ResultadosProf({ lista, aluno, respostas }) {
   const [dadosJson, setDadosJson] = useState(null);
   const [error, setError] = useState(null);
   const [grupos, setGrupos] = useState(null)
+  const [chamada, setChamada] = useState(false)
+
+  const [scoreGeral, setScoreGeral] = useState(0);
+  const [qntPer, setQntPer] = useState(0);
+  const [qntAluno, setQntAluno] = useState(0)
+  const [topTags, setTopTags] = useState([])
+
+
+  useEffect(() => {
+    console.log(turmaId, listaId);
+    axios
+      .get(`http://localhost:8800/grupos/chamada`, {
+        params: {
+          turmaId,
+          listaId,
+        },
+      })
+      .then((response) => {
+        console.log("CHAMADA: ", response.data.exists);
+        setChamada(response.data.exists);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log(turmaId, listaId);
+    axios
+      .get(`http://localhost:8800/grupos/chamada`, {
+        params: {
+          turmaId,
+          listaId,
+        },
+      })
+      .then((response) => {
+        console.log("CHAMADA: ", response.data.exists);
+        setChamada(response.data.exists);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [turmaId, listaId]);
 
   useEffect(() => {
     axios
@@ -19,50 +62,39 @@ function ResultadosProf({ lista, aluno, respostas }) {
       })
       .then((response) => {
         console.log("Resposta recebida JSON:", response);
-        setDadosJson([
-          //response.data
-          {
-            id: 1,
-            aluno_id: 101,
-            lista_id: 5,
-            tags: "matematica,programacao",
-            tagCons: "matematica",
-            turno: "manha",
-          },
-          {
-            id: 2,
-            aluno_id: 102,
-            lista_id: 5,
-            tags: "programacao,algoritmos",
-            tagCons: "algoritmos",
-            turno: "tarde",
-          },
-          {
-            id: 3,
-            aluno_id: 103,
-            lista_id: 5,
-            tags: "matematica,estatistica",
-            tagCons: "estatistica",
-            turno: "manha",
-          },
-          {
-            id: 4,
-            aluno_id: 104,
-            lista_id: 5,
-            tags: "programacao,matematica",
-            tagCons: "matematica,programacao",
-            turno: "noite",
-          },
-          {
-            id: 5,
-            aluno_id: 105,
-            lista_id: 5,
-            tags: "algoritmos,estatistica",
-            tagCons: "algoritmos",
-            turno: "tarde",
-          },
-        ]);
-        setError(null); 
+
+        const results = response.data.results;
+        let totalScore = 0;
+        let totalAlunos = 0;
+        const tagFrequency = {};
+        setQntPer(response.data.total_perguntas)
+
+        results.forEach((data) => {
+          totalScore += data["score"];
+          totalAlunos += 1;
+
+          const tags = data["tags"] ? data["tags"].split(",") : [];
+          tags.forEach((tag) => {
+            const trimmedTag = tag.trim();
+            if (trimmedTag) {
+              tagFrequency[trimmedTag] = (tagFrequency[trimmedTag] || 0) + 1;
+            }
+          });
+
+        });
+
+        // Calcular a média do score
+        setQntAluno(totalAlunos)
+        setScoreGeral(totalScore / totalAlunos);
+
+        // Ordenar as tags pela frequência e pegar as 5 mais frequentes
+        const sortedTags = Object.entries(tagFrequency)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5);
+
+        setTopTags(sortedTags.map(([tag, frequency]) => ({ tag, frequency })));
+
+        setError(null);
       })
       .catch((error) => {
         console.error("Erro ao buscar dados:", error);
@@ -71,8 +103,13 @@ function ResultadosProf({ lista, aluno, respostas }) {
       });
   }, [listaId]);
 
+  console.log("Média do score: ", scoreGeral);
+  console.log(topTags)
+
+
 
   const gerarGrupos = () => {
+    setChamada(true)
     if (dadosJson) {
       axios
         .post("http://127.0.0.1:5000/ga_python", dadosJson)
@@ -142,23 +179,32 @@ function ResultadosProf({ lista, aluno, respostas }) {
             <ResultContent>
               <p>Média de acertos: </p>
               <div>
-                <p>9/10</p>
+                <p>
+                  {scoreGeral} / {qntPer}
+                </p>
+              </div>
+            </ResultContent>
+            <ResultContent>
+              <p>Tags</p>
+              <div>
+                <ul>
+                  {topTags.map((tagItem, index) => (
+                    <li key={index}>
+                      {tagItem.tag} ({tagItem.frequency})
+                    </li>
+                  ))}
+                </ul>
               </div>
             </ResultContent>
             <ResultContent>
               <p>Média de acertos: </p>
               <div>
-                <p>matematica discreta</p>
-                <p>matematica discreta</p>
-                <p>matematica discreta</p>
-                <p>matematica discreta</p>
-              </div>
-            </ResultContent>
-            <ResultContent>
-              <p>Média de acertos: </p>
-              <div>
-                <p>9/10</p>
-                <button onClick={gerarGrupos}>Gerar Grupos</button>
+                <p>{qntAluno}</p>
+                {chamada ? (
+                  <button disabled>Gerar Grupos</button>
+                ) : (
+                  <button onClick={gerarGrupos}>Gerar Grupos</button>
+                )}
               </div>
             </ResultContent>
           </Result>
