@@ -30,21 +30,19 @@ export const getQuestions = (req, res) => {
 };
 
 export const getReferences = (req, res) => {
-  const listaId = req.params.listaId;
-  console.log("listaId no back: ", listaId);
+  const turmaId = req.params.turmaId;
 
   const q = `
-        SELECT id, turma_id, ref, tag, formato 
+        SELECT id, ref, tag, formato 
         FROM referencias 
-        WHERE lista_id = ?
+        WHERE turma_id = ?
     `;
 
-  db.query(q, [listaId], (err, data) => {
+  db.query(q, [turmaId], (err, data) => {
     if (err) return res.status(500).json(err);
 
     const references = data.map((row) => ({
       id: row.id,
-      turmaId: row.turma_id,
       ref: row.ref,
       tag: row.tag,
       formato: row.formato,

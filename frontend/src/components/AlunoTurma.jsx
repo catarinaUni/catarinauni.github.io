@@ -13,6 +13,7 @@ import { Main } from "./Turma.style";
 function AlunoTurma() {
   const location = useLocation();
   const user = location.state?.user;
+  console.log("USEEERRRRR",user)
   const [flagTurma, setFlagTurma] = useState(false);
   const [flagLista, setFlagLista] = useState(false);
   const [flagResposta, setFlagResposta] = useState(false);
@@ -23,6 +24,8 @@ function AlunoTurma() {
   const handleSetFlagTurma = (flag, turma) => {
     setFlagTurma(flag);
     setSelectedTurma(turma);
+    setFlagLista(false)
+    setFlagResposta(false)
   };
 
   const handleSetFlagLista = async (flag, lista, aluno) => {
@@ -49,12 +52,14 @@ function AlunoTurma() {
       console.error("Erro ao buscar dados:", error);
     }
       
-      setFlagLista(flag);
+    setFlagLista(flag);
+    setFlagResposta(false)
   };
 
   const handleSetFlagResposta = (flag, resposta) => {
     setFlagResposta(flag);
     setFlagLista(false);
+    setFlagTurma(false)
     setSelectecResposta(resposta);
   };
 
@@ -91,7 +96,7 @@ function AlunoTurma() {
     <>
       <Main>
         <SideBar
-          userName={user.name}
+          userName={user.userName}
           userType={user.userType}
           userId={user?.id}
           handleSetFlagTurma={handleSetFlagTurma}

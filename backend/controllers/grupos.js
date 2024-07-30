@@ -22,8 +22,7 @@ export const salvarGrupos = (req, res) => {
 
 
 export const getGrupos = (req, res) => {
-  const { turmaId, listaId } = req.query; // Usar req.query para parâmetros GET
-
+  const { turmaId, listaId } = req.query;
   const query = `
     SELECT *
     FROM grupos_AG

@@ -1,5 +1,5 @@
 import express from "express";
-import { getUsers, addQuestion } from "../controllers/user.js";
+import { getUsers, addQuestion, saveRef } from "../controllers/user.js";
 import { checkAnswers, getQuestions, saveAnswers,  saveResultTags, getReferences, checkIfExists, checkIfExistsAluno } from '../controllers/questao.js';
 import { inserirAluno, inserirProfessor } from '../controllers/cadastro.js';
 import { checkLogin } from "../controllers/login.js";
@@ -17,10 +17,11 @@ router.post("/professor/salvarGrupos", salvarGrupos);
 router.get("/grupos/getGrupos", getGrupos);
 router.post("/professor/salvarGrupos/api", salvarChamada)
 router.get("/grupos/chamada", getChamada)
+router.post("/professor/adicionarRef", saveRef);
 
 //rota para obter todas as perguntas
 router.get("/aluno/turma/lista/:listaId", getQuestions);
-router.get("/aluno/turma/listaRef/:listaId", getReferences);
+router.get("/aluno/turma/turmaRef/:turmaId", getReferences);
 // Rota para verificar as respostas do aluno
 router.post("/aluno/turma/resultado", saveAnswers);
 router.get("/aluno/turma/resultado/verificar", checkIfExists);

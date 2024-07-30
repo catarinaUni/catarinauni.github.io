@@ -10,13 +10,14 @@ function ResultadosProf({ lista, aluno, respostas }) {
 
   const [dadosJson, setDadosJson] = useState(null);
   const [error, setError] = useState(null);
-  const [grupos, setGrupos] = useState(null)
+  const [grupos, setGrupos] = useState([])
   const [chamada, setChamada] = useState(false)
 
   const [scoreGeral, setScoreGeral] = useState(0);
   const [qntPer, setQntPer] = useState(0);
   const [qntAluno, setQntAluno] = useState(0)
   const [topTags, setTopTags] = useState([])
+  const [alunosMap, setAlunosMap] = useState({});
 
 
 
@@ -37,6 +38,69 @@ function ResultadosProf({ lista, aluno, respostas }) {
         console.error("Error fetching data:", error);
       });
   }, [turmaId, listaId]);
+
+  useEffect(() => {
+    const fetchAlunos = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8800/turma/${turmaId}/ListarAlunos`
+        ); // Ajuste a URL conforme necessário
+        const alunosData = response.data["alunos"];
+        console.log(alunosData["alunos"])
+        const alunosMapping = alunosData.reduce((acc, aluno) => {
+          acc[aluno.id] = aluno.nome; // Ajuste conforme o nome da propriedade
+          console.log(aluno.nome)
+          return acc;
+        }, {});
+        setAlunosMap(alunosMapping);
+        
+      } catch (error) {
+        console.error("Erro ao buscar dados dos alunos:", error);
+      }
+    };
+
+    fetchAlunos();
+  }, []);
+
+  useEffect(() => {
+
+    if (chamada) {
+      
+      axios
+        .get("http://localhost:8800/grupos/getGrupos", {
+          params: {
+            turmaId,
+            listaId,
+          },
+        })
+        .then((response) => {
+          console.log("grupos:", response.data);
+          const data = response.data
+          const groupedData = data.reduce((acc, item) => {
+            const { grupo_id, aluno_id } = item;
+            if (!acc[grupo_id]) {
+              acc[grupo_id] = [];
+            }
+            acc[grupo_id].push(aluno_id);
+            return acc;
+          }, {});
+
+          // Transformar o objeto em um array de grupos
+          const gruposArray = Object.keys(groupedData).map((grupo_id) => ({
+            grupo_id,
+            alunos: groupedData[grupo_id],
+          }));
+
+          setGrupos(gruposArray);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
+  }, [chamada])
+
+
 
   useEffect(() => {
     axios
@@ -109,7 +173,6 @@ function ResultadosProf({ lista, aluno, respostas }) {
               items,
             })
           );
-          setGrupos(gruposData);
 
           // Salvar grupos no backend
           const salvarGruposPromises = [];
@@ -203,17 +266,27 @@ function ResultadosProf({ lista, aluno, respostas }) {
             </ResultContent>
           </Result>
           <h2>Grupos:</h2>
-          {grupos ? (
-            grupos.map((grupo) => (
-              <div key={grupo.id}>
-                <h3>Grupo ID: {grupo.id}</h3>
-                <ul>
-                  {grupo.items.map((item, index) => (
-                    <li key={index}>{JSON.stringify(item)}</li>
-                  ))}
-                </ul>
-              </div>
-            ))
+          {chamada ? (
+            grupos.length > 0 ? (
+              grupos.map((grupo) => (
+                <div key={grupo.grupo_id}>
+                  <h3>Grupo {grupo.grupo_id}</h3>
+                  <ul>
+                    {grupo.alunos.length > 0 ? (
+                      grupo.alunos.map((aluno_id, index) => (
+                        <li key={index}>
+                          {alunosMap[aluno_id] || `Aluno ID: ${aluno_id}`}
+                        </li>
+                      ))
+                    ) : (
+                      <li>Nenhum aluno disponível.</li>
+                    )}
+                  </ul>
+                </div>
+              ))
+            ) : (
+              <div>Não há grupos para mostrar.</div>
+            )
           ) : (
             <div>Não há grupos para mostrar.</div>
           )}

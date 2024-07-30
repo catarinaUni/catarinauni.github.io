@@ -1,5 +1,8 @@
 
 
+
+
+
 drop database questaoai;
 
 select * from
@@ -107,19 +110,22 @@ CREATE TABLE IF NOT EXISTS resultado_listas (
     FOREIGN KEY (lista_id) REFERENCES listas(id)
 );
 
+drop table referencias;
+
 -- Tabela de Referências
 CREATE TABLE IF NOT EXISTS referencias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     turma_id INT NOT NULL,
-    lista_id INT NOT NULL,
     ref VARCHAR(255),
     tag VARCHAR(255),
     formato VARCHAR(255),
-    FOREIGN KEY (turma_id) REFERENCES turmas(id),
-    FOREIGN KEY (lista_id) REFERENCES listas(id)
+    FOREIGN KEY (turma_id) REFERENCES turmas(id)
 );
 
+select * from referencias;
+
 -- Tabela de Grupos
+drop table grupos_AG;
 CREATE TABLE IF NOT EXISTS grupos_AG (
     id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT NOT NULL,
@@ -132,6 +138,7 @@ CREATE TABLE IF NOT EXISTS grupos_AG (
 );
 
 -- Tabela de Chamada
+use questaoai;
 CREATE TABLE IF NOT EXISTS chamada_API (
     id INT AUTO_INCREMENT PRIMARY KEY,
     acao_chamada BOOLEAN NOT NULL,
@@ -140,7 +147,7 @@ CREATE TABLE IF NOT EXISTS chamada_API (
     FOREIGN KEY (turma_id) REFERENCES turmas(id),
     FOREIGN KEY (lista_id) REFERENCES listas(id)
 );
-
+ use questaoai;
 drop table chamada_API;
 
 INSERT INTO alunos (nome, email, senha, material_formato, turno) VALUES
@@ -339,7 +346,6 @@ INSERT INTO resultado_listas (aluno_id, lista_id, tags, tagCons, turno, score, f
 ('8', '1', 'Estruturas de Controle,Memória,Frameworks', "Conceitos,Variáveis,Fundamentos", 'Noite', 0, 'Artigo'),
 ('9', '1', 'Estruturas de Controle,Fundamentos,Programação Orientada a Objetos', "Frameworks,Desenvolvimento,Ferramentas", 'Manhã', 6, 'Vídeo'),
 ('10', '1', 'Conceitos,Memória,Frameworks', "Estruturas de Controle,Loops,Fundamentos", 'Tarde', 7, 'Quiz');
-
 
 
 

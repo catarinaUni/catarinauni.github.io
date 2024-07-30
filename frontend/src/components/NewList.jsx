@@ -72,24 +72,18 @@ const QuestionForm = ({ turmaId }) => {
     try {
       const response = await axios.post(
         "http://localhost:8800/professor/turma/novalista",
-        { newList, questions, references, turmaId }
+        { newList, questions, turmaId }
       );
       console.log("Data saved to database:", response.data);
       // Reset the form after saving
       setList([]);
       setQuestions([]);
-      setReferences([]);
       setNewList({ nome: "" });
       setNewQuestion({
         pergunta: "",
         alternativa: { a: "", b: "", c: "", d: "" },
         resposta: "a",
         tags: ["", "", ""],
-      });
-      setNewReference({
-        ref: "",
-        tag: "",
-        formato: "",
       });
     } catch (error) {
       console.error("Error saving data to database:", error);
@@ -113,20 +107,6 @@ const QuestionForm = ({ turmaId }) => {
     });
   };
 
-  const handleChangeRef = (e) => {
-    setNewQuestion({
-      ...newQuestion,
-      ref: e.target.value,
-    });
-  };
-
-  const handleChangeReference = (e, key) => {
-    setNewReference({
-      ...newReference,
-      [key]: e.target.value,
-    });
-    console.log(e.target.value, key)
-  };
 
   return (
     <div className="questionForm">
@@ -224,42 +204,6 @@ const QuestionForm = ({ turmaId }) => {
 
       <button onClick={handleAddQuestion} className="addPergunta">
         Adicionar Pergunta
-      </button>
-
-      <div className="resref">
-        <div className="ref">
-          <label>Referência: </label>
-          <input
-            type="text"
-            value={newReference.ref}
-            onChange={(e) => handleChangeReference(e, "ref")}
-          />
-        </div>
-        <div className="tags">
-          <label>Tag:</label>
-          <div>
-            <input
-              type="text"
-              value={newReference.tag}
-              onChange={(e) => handleChangeReference(e, "tag")}
-            />
-          </div>
-        </div>
-        <div className="resposta">
-          <label>Formato:</label>
-          <select
-            value={newReference.formato}
-            onChange={(e) => handleChangeReference(e, "formato")}
-          >
-            <option value="Vídeo">Vídeo</option>
-            <option value="Livro">Livro</option>
-            <option value="Artigo">Artigo</option>
-            <option value="Podcast">Podcast</option>
-          </select>
-        </div>
-      </div>
-      <button onClick={handleAddReference} className="addPergunta addRef">
-        Adicionar Referência
       </button>
 
       <button onClick={handleSaveToJson} className="finalizar">
