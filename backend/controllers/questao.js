@@ -163,7 +163,7 @@ export const checkAnswers = (req, res) => {
 
 //  função para armazenar os resultados no resultado_listas
 export const saveResultTags = (req, res) => {
-  const { alunoId, listaId, tags, tagsCons, turno, score } = req.body;
+  const { alunoId, listaId, tags, tagsCons, turno, score, formato } = req.body;
 
   const insertQuery = `
     INSERT INTO resultado_listas (aluno_id, lista_id, tags, tagCons, turno, score, formato)
@@ -176,7 +176,7 @@ export const saveResultTags = (req, res) => {
 
   db.query(
     insertQuery,
-    [alunoId, listaId, tagsString, tagsConsString, turno, score],
+    [alunoId, listaId, tagsString, tagsConsString, turno, score, formato],
     (err, data) => {
       if (err) {
         console.error("Erro ao inserir no resultado_listas:", err);

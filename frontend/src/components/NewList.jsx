@@ -17,16 +17,17 @@ import { Form, Question } from "./NewList.style";
 import { useState } from "react";
 import { json } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const QuestionForm = ({ turmaId }) => {
-  const [list, setList] = useState([])
+const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
+  const [list, setList] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [references, setReferences] = useState([]);
   const [newList, setNewList] = useState({
-    nome: ""
+    nome: "",
   });
   const [newQuestion, setNewQuestion] = useState({
-
     pergunta: "",
     alternativa: { a: "", b: "", c: "", d: "" },
     resposta: "a",
@@ -38,7 +39,6 @@ const QuestionForm = ({ turmaId }) => {
     formato: "",
   });
 
- 
   const handleAddQuestion = () => {
     setQuestions([...questions, newQuestion]);
     setNewQuestion({
@@ -47,48 +47,48 @@ const QuestionForm = ({ turmaId }) => {
       resposta: "a",
       tags: ["", "", ""],
     });
+    toast.success("Pergunta adicionada com sucesso!");
+    console.log("oiiiiiiiiiiii");
   };
 
-  const handleAddReference = () => {
-    setReferences([...references, newReference]);
-    setNewReference({
-      ref: "",
-      tag: "",
-      formato: "",
-    });
-    console.log(newReference)
-  };
+const handleSaveToJson = () => {
 
-  const handleSaveToJson = async () => {
+  try {
+    // Show success toast
+    toast.success("Lista finalizada com sucesso! Você será redirecionado");
 
-    console.log(newList)
-    if (newList.nome.trim() === "") {
-      alert("O nome da lista não pode estar vazio.");
-      return;
-    }
+    // Delay the execution of the following code by 2 seconds
+    setTimeout(async () => {
+      try {
+        const response = axios.post(
+          "http://localhost:8800/professor/turma/novalista",
+          { newList, questions, turmaId }
+        );
+        console.log("Data saved to database:", response.data);
+
+        // Reset the form after saving
+        setList([]);
+        setQuestions([]);
+        setNewList({ nome: "" });
+        setNewQuestion({
+          pergunta: "",
+          alternativa: { a: "", b: "", c: "", d: "" },
+          resposta: "a",
+          tags: ["", "", ""],
+        });
 
 
+        handleSetFlagTurma(true, turma);
+      } catch (error) {
+        console.error("Error saving data to database:", error);
+        toast.error("Erro ao salvar a lista.");
+      }
+    }, 2000); // Delay in milliseconds
+  } catch (error) {
+    console.error("Error displaying success toast:", error);
+  }
+};
 
-    try {
-      const response = await axios.post(
-        "http://localhost:8800/professor/turma/novalista",
-        { newList, questions, turmaId }
-      );
-      console.log("Data saved to database:", response.data);
-      // Reset the form after saving
-      setList([]);
-      setQuestions([]);
-      setNewList({ nome: "" });
-      setNewQuestion({
-        pergunta: "",
-        alternativa: { a: "", b: "", c: "", d: "" },
-        resposta: "a",
-        tags: ["", "", ""],
-      });
-    } catch (error) {
-      console.error("Error saving data to database:", error);
-    }
-  };
 
   const handleChangeAlternative = (e, key) => {
     setNewQuestion({
@@ -96,7 +96,6 @@ const QuestionForm = ({ turmaId }) => {
       alternativa: { ...newQuestion.alternativa, [key]: e.target.value },
     });
   };
-
 
   const handleChangeTag = (e, index) => {
     const newTags = [...newQuestion.tags];
@@ -107,9 +106,9 @@ const QuestionForm = ({ turmaId }) => {
     });
   };
 
-
   return (
     <div className="questionForm">
+      <ToastContainer />
       <input
         type="text"
         placeholder="Untitled"
@@ -207,19 +206,21 @@ const QuestionForm = ({ turmaId }) => {
       </button>
 
       <button onClick={handleSaveToJson} className="finalizar">
-        Finalizar
+        Finalizar lista
       </button>
     </div>
   );
 };
 
-function NewList({ turmaId }) {
+function NewList({ turma, handleSetFlagTurma }) {
+  console.log(turma)
+
   return (
     <Main>
       <MainContent>
         <MainItems>
           <Form>
-            <QuestionForm turmaId={turmaId} />
+            <QuestionForm turmaId={turma.id} handleSetFlagTurma={handleSetFlagTurma} turma={turma } />
           </Form>
         </MainItems>
       </MainContent>

@@ -62,6 +62,7 @@ function Lista(props) {
     const listaId = props.lista.id;
     const alunoTurno = props.aluno.turno;
     const formato = props.aluno.formato;
+    console.log(props.aluno)
     const respostas = Object.keys(responses).map((perguntaId) => ({
       perguntaId: Number(perguntaId),
       respostaAluno: responses[perguntaId],

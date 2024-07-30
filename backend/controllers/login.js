@@ -28,7 +28,9 @@ export const checkLogin = (req, res) => {
           id: user.id,
           email: user.email,
           userType: results[0].userType, 
-          userName: results[0].name
+          userName: results[0].name,
+          formato: results[0].material_formato,
+          turno: results[0].turno,
         }, 
       });
     } else {

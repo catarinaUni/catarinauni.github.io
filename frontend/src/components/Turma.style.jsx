@@ -10,20 +10,25 @@ export const Main= styled.div`
 `;
 
 export const MainContent = styled.div`
-    width: 70vw;
-    background-color: #EEEEEE;
-    color: #222831;
-    margin-left: 5vw;
-    margin-top: 50px;
+  width: 70vw;
+  background-color: #eeeeee;
+  color: #222831;
+  margin-left: 5vw;
+  margin-top: 50px;
 
-    h5{
-    color: #AFAFAF;
+  h5 {
+    color: #afafaf;
     font-size: 14px;
-    }
-    
-    
+  }
 
-    
+  .seta {
+    display: inline-block;
+    font-size: 36px;
+    line-height: 1;
+    text-align: center;
+    color: #616161;
+    cursor: pointer;
+  }
 `;
 
 

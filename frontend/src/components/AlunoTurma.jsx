@@ -87,7 +87,7 @@ function AlunoTurma() {
     }
     if (flagResposta) {
       return (
-        <Resultado lista={selectedLista} aluno={user} turma={selectedTurma} />
+        <Resultado lista={selectedLista} aluno={user} turma={selectedTurma} handleSetFlagTurma={handleSetFlagTurma} />
       );
     }
   };
