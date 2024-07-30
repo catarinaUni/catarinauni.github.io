@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Form } from "./NewList.style";
 import { Main, MainContent, MainItems } from "./Turma.style";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const QuestionFormRef = ({ turmaId }) => {
   const [references, setReferences] = useState([]);
@@ -27,6 +29,7 @@ const QuestionFormRef = ({ turmaId }) => {
         tag: "",
         formato: "",
       });
+       toast.success("Referência adicionada!");
     } catch (error) {
       console.error("Error saving data to database:", error);
     }
@@ -41,6 +44,7 @@ const QuestionFormRef = ({ turmaId }) => {
 
   return (
     <div className="questionForm">
+      <ToastContainer />
       <div className="resref">
         <div className="ref">
           <label>Referência: </label>

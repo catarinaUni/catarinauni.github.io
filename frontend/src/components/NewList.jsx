@@ -20,9 +20,11 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
   const [list, setList] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [disableButton, setDisableButton] = useState(true)
   const [references, setReferences] = useState([]);
   const [newList, setNewList] = useState({
     nome: "",
@@ -48,7 +50,7 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
       tags: ["", "", ""],
     });
     toast.success("Pergunta adicionada com sucesso!");
-    console.log("oiiiiiiiiiiii");
+    setDisableButton(false)
   };
 
 const handleSaveToJson = () => {
@@ -83,7 +85,7 @@ const handleSaveToJson = () => {
         console.error("Error saving data to database:", error);
         toast.error("Erro ao salvar a lista.");
       }
-    }, 2000); // Delay in milliseconds
+    }, 3000); // Delay in milliseconds
   } catch (error) {
     console.error("Error displaying success toast:", error);
   }
@@ -205,7 +207,8 @@ const handleSaveToJson = () => {
         Adicionar Pergunta
       </button>
 
-      <button onClick={handleSaveToJson} className="finalizar">
+      
+      <button onClick={handleSaveToJson} className="finalizar" disabled={disableButton}>
         Finalizar lista
       </button>
     </div>
