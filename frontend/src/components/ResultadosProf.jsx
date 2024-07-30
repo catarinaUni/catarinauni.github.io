@@ -19,23 +19,6 @@ function ResultadosProf({ lista, aluno, respostas }) {
   const [topTags, setTopTags] = useState([])
 
 
-  useEffect(() => {
-    console.log(turmaId, listaId);
-    axios
-      .get(`http://localhost:8800/grupos/chamada`, {
-        params: {
-          turmaId,
-          listaId,
-        },
-      })
-      .then((response) => {
-        console.log("CHAMADA: ", response.data.exists);
-        setChamada(response.data.exists);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
 
   useEffect(() => {
     console.log(turmaId, listaId);
@@ -62,6 +45,7 @@ function ResultadosProf({ lista, aluno, respostas }) {
       })
       .then((response) => {
         console.log("Resposta recebida JSON:", response);
+        setDadosJson(response.data.results)
 
         const results = response.data.results;
         let totalScore = 0;
@@ -86,6 +70,7 @@ function ResultadosProf({ lista, aluno, respostas }) {
         // Calcular a média do score
         setQntAluno(totalAlunos)
         setScoreGeral(totalScore / totalAlunos);
+        
 
         // Ordenar as tags pela frequência e pegar as 5 mais frequentes
         const sortedTags = Object.entries(tagFrequency)
@@ -109,58 +94,67 @@ function ResultadosProf({ lista, aluno, respostas }) {
 
 
   const gerarGrupos = () => {
-    setChamada(true)
+
+
+    
+    setChamada(true);
+
     if (dadosJson) {
       axios
         .post("http://127.0.0.1:5000/ga_python", dadosJson)
         .then((response) => {
-          console.log("Resposta da API AG:", response.data);
-          setGrupos(response.data);
+          const gruposData = Object.entries(response.data).map(
+            ([id, items]) => ({
+              id,
+              items,
+            })
+          );
+          setGrupos(gruposData);
 
-
+          // Salvar grupos no backend
+          const salvarGruposPromises = [];
           Object.entries(response.data).forEach(([key, alunos]) => {
-            console.log(`Grupo ${key}:`);
-
-             const grupoId = parseInt(key, 10);
+            const grupoId = parseInt(key, 10);
 
             alunos.forEach((aluno) => {
-              var alunoId = aluno.aluno_id
-              console.log(`  aluno_id: ${aluno.aluno_id}`);
-              axios
-                .post(`http://localhost:8800/professor/salvarGrupos`, {
-                  alunoId,
+              salvarGruposPromises.push(
+                axios.post(`http://localhost:8800/professor/salvarGrupos`, {
+                  alunoId: aluno.aluno_id,
                   turmaId,
                   listaId,
-                  grupoId
+                  grupoId,
                 })
-                .then((response) => {
-                  const call = true;
-                  console.log(response);
-                  console.log(call, turmaId, listaId)
-                  axios
-                    .post(`http://localhost:8800/professor/salvarGrupos/api`, {
-                      acao_chamada:call,
-                      turmaId,
-                      listaId,
-                    })
-                    .then((response) => {
-                      console.log(response);
-                    })
-                    .catch((error) => {
-                      console.error(error);
-                    });
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
+              );
             });
           });
 
-          
+          // Esperar todas as requisições serem concluídas
+          Promise.all(salvarGruposPromises)
+            .then(() => {
+              return axios.post(
+                `http://localhost:8800/professor/salvarGrupos/api`,
+                {
+                  acao_chamada: true,
+                  turmaId,
+                  listaId,
+                }
+              );
+            })
+            .then(() => {
+              console.log("Grupos salvos com sucesso.");
+            })
+            .catch((error) => {
+              console.error("Erro ao salvar grupos:", error);
+            })
+
         })
         .catch((error) => {
           console.error("Erro:", error);
+          
         });
+    } else {
+      console.log("Dados JSON não disponíveis.");
+     
     }
   };
 
@@ -197,7 +191,7 @@ function ResultadosProf({ lista, aluno, respostas }) {
               </div>
             </ResultContent>
             <ResultContent>
-              <p>Média de acertos: </p>
+              <p>Respostas recebidas: </p>
               <div>
                 <p>{qntAluno}</p>
                 {chamada ? (
@@ -208,6 +202,21 @@ function ResultadosProf({ lista, aluno, respostas }) {
               </div>
             </ResultContent>
           </Result>
+          <h2>Grupos:</h2>
+          {grupos ? (
+            grupos.map((grupo) => (
+              <div key={grupo.id}>
+                <h3>Grupo ID: {grupo.id}</h3>
+                <ul>
+                  {grupo.items.map((item, index) => (
+                    <li key={index}>{JSON.stringify(item)}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          ) : (
+            <div>Não há grupos para mostrar.</div>
+          )}
         </MainItems>
       </MainContent>
     </Main>

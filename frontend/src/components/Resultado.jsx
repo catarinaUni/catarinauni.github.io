@@ -9,18 +9,17 @@ function Resultado({ lista, aluno }) {
   const [topTags, setTopTags] = useState([]);
   const alunoId = aluno.id;
   const listaId = lista.id;
-  const turmaId = lista.turma_id
+  const turmaId = lista.turma_id;
   const [materiais, setMateriais] = useState([]);
-  const formato = aluno.formato;
+  const [formato, setFormato] = useState()
   const [chamada, setChamada] = useState(false);
-    const [grupos, setGrupos] = useState([]); 
+  const [grupos, setGrupos] = useState([]);
+  const [matRelev, setMatRelev] = useState([])
 
-  let score = 0;
-
-
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
-    console.log(turmaId, listaId)
+    console.log(turmaId, listaId);
     axios
       .get(`http://localhost:8800/grupos/chamada`, {
         params: {
@@ -30,90 +29,95 @@ function Resultado({ lista, aluno }) {
       })
       .then((response) => {
         console.log("CHAMADA: ", response.data.exists);
-        setChamada(response.data.exists)
+        setChamada(response.data.exists);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
-
-
-  useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/resultado`
-      )
-      .then((response) => {
-        setResultados(response.data.resultados);
-        setTopTags(response.data.topWrongTags);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [alunoId, listaId]);
-
-  useEffect(() => {
-    resultados.forEach((resultado) => {
-      if (resultado.correta) {
-        score++;
-      }
-    });
-  }, [resultados]);
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8800/aluno/turma/listaRef/${listaId}`)
-      .then((response) => {
-        setMateriais(response.data);
-      })
-      .catch((error) => console.log(error));
-  }, [listaId]);
-
-  let allFormats = [];
-  let oneFormat = [];
-
-  materiais.forEach((material) => {
-    const tagsDisc = material.tag;
-    const tagsFormt = material.formato;
-    let matchDisc = "";
-    let matchFormt = "";
-
-    if (topTags.includes(tagsDisc)) {
-      matchDisc = tagsDisc;
-    }
-    if (tagsFormt.includes(formato)) {
-      matchFormt = tagsFormt;
-    }
-
-    if (matchDisc) {
-      if (matchFormt) {
-        oneFormat.push(material.ref);
-      } else {
-        allFormats.push(material.ref);
-      }
-    }
-  });
-
-  allFormats.sort(() => Math.random() - 0.5);
-  const materiaisRelevantes = oneFormat.concat(allFormats).slice(0, 30);
-
-
-
+  
  useEffect(() => {
-   if (chamada) {
-     axios
-       .get(`http://localhost:8800/grupos/getGrupos`, {
-         params: { turmaId, listaId },
-       })
-       .then((response) => {
-         setGrupos(response.data);
-       })
-       .catch((error) => console.log(error));
-   }
- }, [chamada, turmaId, listaId]);
-    
+   axios
+     .get(`http://localhost:8800/aluno/turma/resultado/verificarAluno`, {
+       params: {
+         listaId: lista.id,
+         alunoId: aluno.id,
+       },
+     })
+     .then((response) => {
+       console.log("aluno", response.data);
+       setScore(response.data[0]["score"]);
+       setFormato(response.data[0]["formato"]);
+       const tagsString = response.data[0]["tags"];
 
+       const tagsArray = tagsString.split(",").map((tag) => tag.trim());
+       console.log(tagsArray);
+
+       setTopTags(tagsArray);
+     })
+     .catch((error) => {
+       console.error(error);
+     });
+ }, [lista.id, aluno.id]);
+
+ // Processar materiais quando topTags ou formato mudarem
+ useEffect(() => {
+   if (topTags.length === 0 || !formato) return; // Verifique se as tags e o formato estão disponíveis
+
+   axios
+     .get(`http://localhost:8800/aluno/turma/listaRef/${listaId}`)
+     .then((response) => {
+       console.log("resssss", response.data);
+       setMateriais(response.data);
+
+       let allFormats = [];
+       let oneFormat = [];
+
+       response.data.forEach((material) => {
+         const tagsDisc = material.tag;
+         const tagsFormt = material.formato;
+
+         console.log("Processing Material:", material, topTags);
+
+         if (topTags.includes(tagsDisc)) {
+           if (tagsFormt === formato) {
+             oneFormat.push(material.ref);
+             console.log("Added to oneFormat:", material.ref);
+           } else {
+             allFormats.push(material.ref);
+             console.log("Added to allFormats:", material.ref);
+           }
+         }
+       });
+
+       console.log("All Formats:", allFormats);
+       console.log("One Format:", oneFormat);
+
+       allFormats.sort(() => Math.random() - 0.5);
+       const materiaisRelevantes = oneFormat.concat(allFormats).slice(0, 30);
+       setMatRelev(materiaisRelevantes);
+
+       console.log("Materiais Relevantes:", materiaisRelevantes);
+     })
+     .catch((error) => console.log(error));
+ }, [topTags, formato, listaId]);
+
+  
+
+  useEffect(() => {
+    if (chamada) {
+      axios
+        .get(`http://localhost:8800/grupos/getGrupos`, {
+          params: { turmaId, listaId },
+        })
+        .then((response) => {
+          
+          setGrupos(response.data);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [chamada, turmaId, listaId]);
 
   return (
     <Main>
@@ -144,31 +148,14 @@ function Resultado({ lista, aluno }) {
               <p>Materiais Recomendados</p>
               <div>
                 <ul>
-                  {materiaisRelevantes.map((ref, index) => (
+                  {matRelev.map((ref, index) => (
                     <li key={index}>{ref}</li>
                   ))}
                 </ul>
               </div>
             </ResultContent>
           </Result>
-          {chamada ? (
-            <div>
-              {grupos.length > 0 ? (
-                <div>
-                  <h2>Grupos:</h2>
-                  <ul>
-                    {grupos.map((grupo, index) => (
-                      <li key={index}>{JSON.stringify(grupo)}</li>
-                    ))}
-                  </ul>
-                </div>
-              ) : (
-                <div>Não há grupos para mostrar.</div>
-              )}
-            </div>
-          ) : (
-            <div>Não há chamada ainda.</div>
-          )}
+          
         </MainItems>
       </MainContent>
     </Main>

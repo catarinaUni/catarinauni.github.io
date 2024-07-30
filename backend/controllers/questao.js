@@ -168,8 +168,8 @@ export const saveResultTags = (req, res) => {
   const { alunoId, listaId, tags, tagsCons, turno, score } = req.body;
 
   const insertQuery = `
-    INSERT INTO resultado_listas (aluno_id, lista_id, tags, tagCons, turno, score)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO resultado_listas (aluno_id, lista_id, tags, tagCons, turno, score, formato)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
 
   // Converter arrays para strings separadas por vírgulas

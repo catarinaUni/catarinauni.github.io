@@ -22,8 +22,7 @@ def processar_json():
         if dataset.empty:
             return jsonify({'error': 'Nenhum JSON enviado'}), 400
 
-        print("Antes da transformação:")
-        print(dataset['tags'])
+
 
         # Verifique o tipo de dados antes da transformação
         print("Tipo de dados da coluna 'tags':", dataset['tags'].dtype)
@@ -36,9 +35,7 @@ def processar_json():
 
         dataset['tagCons'] = dataset['tagCons'].apply(convert_to_list)
         dataset['tags'] = dataset['tags'].apply(convert_to_list)
-        
-        print("Após transformação:")
-        print(dataset['tags'])
+
         
 
 
