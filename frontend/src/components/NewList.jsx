@@ -35,11 +35,6 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
     resposta: "a",
     tags: ["", "", ""],
   });
-  const [newReference, setNewReference] = useState({
-    ref: "",
-    tag: "",
-    formato: "",
-  });
 
   const handleAddQuestion = () => {
     setQuestions([...questions, newQuestion]);

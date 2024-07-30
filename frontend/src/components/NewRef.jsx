@@ -11,7 +11,7 @@ const QuestionFormRef = ({ turmaId }) => {
     turmaId: turmaId,
     ref: "",
     tag: "",
-    formato: "",
+    formato: "Vídeo",
   });
 
   const handleAddReference = async () => {
@@ -27,7 +27,7 @@ const QuestionFormRef = ({ turmaId }) => {
         turmaId: turmaId,
         ref: "",
         tag: "",
-        formato: "",
+        formato: "Vídeo",
       });
        toast.success("Referência adicionada!");
     } catch (error) {
