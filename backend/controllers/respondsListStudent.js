@@ -1,5 +1,6 @@
 import { db } from "../db.js";
 
+// pega a as questao da qual lista foi selecionado
 export const getQuestions = (req, res) => {
   const listaId = req.params.listaId; // Obtendo o lista_id dos parâmetros da rota
   console.log("listId no back: ", listaId);
@@ -29,6 +30,7 @@ export const getQuestions = (req, res) => {
   });
 };
 
+// pega as referencias da turma e retorna para o aluno
 export const getReferences = (req, res) => {
   const turmaId = req.params.turmaId;
 
@@ -54,6 +56,8 @@ export const getReferences = (req, res) => {
   });
 };
 
+
+// salva as respostas do aluno
 export const saveAnswers = (req, res) => {
   const { alunoId, listaId, respostas } = req.body;
 
@@ -81,6 +85,7 @@ export const saveAnswers = (req, res) => {
   });
 };
 
+// verifica as resposta do aluno, e  retorna seu score
 export const checkAnswers = (req, res) => {
   const { listaId } = req.params;
   const { alunoId } = req.params;
@@ -163,7 +168,7 @@ export const checkAnswers = (req, res) => {
 
 //  função para armazenar os resultados no resultado_listas
 export const saveResultTags = (req, res) => {
-  const { alunoId, listaId, tags, tagsCons, turno, score } = req.body;
+  const { alunoId, listaId, tags, tagsCons, turno, score, formato } = req.body;
 
   const insertQuery = `
     INSERT INTO resultado_listas (aluno_id, lista_id, tags, tagCons, turno, score, formato)
@@ -176,7 +181,7 @@ export const saveResultTags = (req, res) => {
 
   db.query(
     insertQuery,
-    [alunoId, listaId, tagsString, tagsConsString, turno, score],
+    [alunoId, listaId, tagsString, tagsConsString, turno, score, formato],
     (err, data) => {
       if (err) {
         console.error("Erro ao inserir no resultado_listas:", err);
@@ -222,6 +227,7 @@ export const checkIfExists = (req, res) => {
   });
 };
 
+// verifica se o aluno = (respondeu a lista) ? exibi a lista : exibe a tela de resultado;
 export const checkIfExistsAluno = (req, res) => {
   const listaId = req.query.listaId;
   const alunoId = req.query.alunoId;

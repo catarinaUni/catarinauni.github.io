@@ -4,7 +4,7 @@ import { ListaNome, Question } from "./Lista.style";
 import { Score, Result, ResultContent, Subtitulo } from "./Resultado.style";
 import axios from "axios";
 
-function Resultado({ lista, aluno }) {
+function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
   const [resultados, setResultados] = useState([]);
   const [topTags, setTopTags] = useState([]);
   const alunoId = aluno.id;
@@ -169,6 +169,9 @@ function Resultado({ lista, aluno }) {
   return (
     <Main>
       <MainContent>
+        <span onClick={() => handleSetFlagTurma(true, turma)} className="seta">
+          &#x2B05;
+        </span>
         <MainItems>
           <ListaNome>{lista.nome}</ListaNome>
           <Subtitulo>

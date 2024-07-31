@@ -75,11 +75,16 @@ function ProfessorMain() {
             return <CriarTurma user={user} />;
         }
         if (flagNovaLista){
-            return <NewList turmaId={selectedTurma?.id}  />
+            return (
+              <NewList
+                turma={selectedTurma}
+                handleSetFlagTurma={handleSetFlagTurma}
+              />
+            );
         }
         if (flagLista) {
           return (
-              <ResultadosProf lista={selectedLista} />
+              <ResultadosProf lista={selectedLista} handleSetFlagTurma={handleSetFlagTurma} turma={selectedTurma} />
           );
         }
         if (flagNewRef) {

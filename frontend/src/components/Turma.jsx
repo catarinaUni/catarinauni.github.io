@@ -49,7 +49,7 @@ function Turma({
         const response = await axios.get(
           `http://localhost:8800/turma/${turma.id}/listas`
         );
-        setListas(response.data.listas);
+        setListas(response.data.listas.reverse());
       } catch (error) {
         console.error("Erro ao buscar listas da turma:", error);
       }
@@ -60,7 +60,7 @@ function Turma({
         const response = await axios.get(
           `http://localhost:8800/aluno/turma/turmaRef/${turmaId}`
         );
-        setRefs(response.data);
+        setRefs(response.data.reverse());
         console.log(response.data)
       } catch (error) {
         console.error("Erro ao buscar refs da turma:", error);
