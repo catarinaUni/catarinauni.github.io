@@ -133,7 +133,12 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
 
         // Calcular a média do score
         setQntAluno(totalAlunos)
-        setScoreGeral(totalScore / totalAlunos);
+        if (totalScore == 0) {
+          setScoreGeral(0)
+        } else {
+          
+          setScoreGeral(totalScore / totalAlunos);
+        }
         
 
         // Ordenar as tags pela frequência e pegar as 5 mais frequentes
