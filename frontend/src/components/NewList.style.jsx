@@ -230,16 +230,22 @@ export const Form = styled.div`
   .addPergunta {
     width: 170px;
     height: 35px;
-    background-color: #8f8f8f22;
+    background-color: #8f8f8f5e;
     border: none;
     border-radius: 30px;
-    margin-bottom: 100px;
+    margin-bottom: 80px;
     font-size: 14px;
-    color: #2e2c2f;
+    color: #4d4d4d;
+    cursor: pointer;
   }
 
   .addRef {
     width: 300px;
+  }
+
+  .nQ {
+    margin-bottom: 10px;
+    color: #a1a1a1e6;
   }
 
   .finalizar {
@@ -252,6 +258,7 @@ export const Form = styled.div`
     font-size: 14px;
 
     color: #2e2c2f;
+    cursor: pointer;
 
     &:disabled {
       background-color: #a1a1a121;

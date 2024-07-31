@@ -221,7 +221,7 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
       <button onClick={handleAddQuestion} className="addPergunta">
         Adicionar Pergunta
       </button>
-
+      <p className="nQ">Questões adicionadas: { questions.length}</p>
       <button
         onClick={handleSaveToJson}
         className="finalizar"
