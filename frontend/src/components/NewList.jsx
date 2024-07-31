@@ -106,15 +106,19 @@ const handleSaveToJson = () => {
   return (
     <div className="questionForm">
       <ToastContainer />
+      <p className="textTitle">
+        Adicione uma nova lista para a turma. Comece adicionando algumas
+        questões!
+      </p>
       <input
         type="text"
-        placeholder="Untitled"
+        placeholder="Nome da Lista"
         className="lista_titulo"
         value={newList.nome}
         onChange={(e) => setNewList({ nome: e.target.value })}
       />
       <p className="enunciado">Enunciado</p>
-      <input
+      <textarea
         type="text"
         placeholder="Digite a pergunta"
         value={newQuestion.pergunta}
@@ -126,7 +130,7 @@ const handleSaveToJson = () => {
 
       <div className="alternativas">
         <div>
-          <label>a):</label>
+          <label>a)</label>
           <input
             type="text"
             value={newQuestion.alternativa.a}
@@ -134,7 +138,7 @@ const handleSaveToJson = () => {
           />
         </div>
         <div>
-          <label>b):</label>
+          <label>b)</label>
           <input
             type="text"
             value={newQuestion.alternativa.b}
@@ -142,7 +146,7 @@ const handleSaveToJson = () => {
           />
         </div>
         <div>
-          <label>c):</label>
+          <label>c)</label>
           <input
             type="text"
             value={newQuestion.alternativa.c}
@@ -150,7 +154,7 @@ const handleSaveToJson = () => {
           />
         </div>
         <div>
-          <label>d):</label>
+          <label>d)</label>
           <input
             type="text"
             value={newQuestion.alternativa.d}
@@ -202,8 +206,11 @@ const handleSaveToJson = () => {
         Adicionar Pergunta
       </button>
 
-      
-      <button onClick={handleSaveToJson} className="finalizar" disabled={disableButton}>
+      <button
+        onClick={handleSaveToJson}
+        className="finalizar"
+        disabled={disableButton}
+      >
         Finalizar lista
       </button>
     </div>
