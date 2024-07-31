@@ -44,9 +44,12 @@ const QuestionFormRef = ({ turmaId }) => {
 
   return (
     <div className="questionForm">
+      <p className="textTitle">
+        Adicione aqui referências de estudos para a turma.
+      </p>
       <ToastContainer />
       <div className="resref">
-        <div className="ref">
+        <div className="ref refItem">
           <label>Referência: </label>
           <input
             type="text"
@@ -54,8 +57,8 @@ const QuestionFormRef = ({ turmaId }) => {
             onChange={(e) => handleChangeReference(e, "ref")}
           />
         </div>
-        <div className="tags">
-          <label>Tag:</label>
+        <div className="refTag refItem">
+          <label>Assunto:</label>
           <div>
             <input
               type="text"
@@ -74,6 +77,7 @@ const QuestionFormRef = ({ turmaId }) => {
             <option value="Livro">Livro</option>
             <option value="Artigo">Artigo</option>
             <option value="Podcast">Podcast</option>
+            <option value="Quiz">Quiz</option>
           </select>
         </div>
       </div>
@@ -84,10 +88,14 @@ const QuestionFormRef = ({ turmaId }) => {
   );
 };
 
-function NewRef({ turmaId }) {
+function NewRef({ turma, handleSetFlagTurma }) {
+  const turmaId = turma.id;
   return (
     <Main>
       <MainContent>
+        <span onClick={() => handleSetFlagTurma(true, turma)} className="seta">
+          &#x2B05;
+        </span>
         <MainItems>
           <Form>
             <QuestionFormRef turmaId={turmaId} />

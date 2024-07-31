@@ -88,7 +88,7 @@ function ProfessorMain() {
           );
         }
         if (flagNewRef) {
-            return <NewRef turmaId={selectedTurma?.id} />;
+            return <NewRef turma={selectedTurma} handleSetFlagTurma={ handleSetFlagTurma} />;
         }
 
     };

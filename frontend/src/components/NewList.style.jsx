@@ -27,6 +27,9 @@ export const Form = styled.div`
 
   .enunciado {
     width: 100%;
+    color: #5c5c5cc3;
+    padding-left: 10px;
+    padding-bottom: 5px;
   }
 
   .addRef {
@@ -35,7 +38,9 @@ export const Form = styled.div`
 
   .resref {
     display: flex;
+    flex-direction: column;
     width: 100%;
+    height: 30vh;
     align-items: center;
     justify-content: space-around;
     & > .tags {
@@ -44,7 +49,7 @@ export const Form = styled.div`
       padding: 0;
       width: auto;
       & > label {
-        margin-right: 15px;
+        margin-right: 10px;
       }
     }
     & > .resposta {
@@ -57,9 +62,42 @@ export const Form = styled.div`
     }
   }
 
+  .refItem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    & > label {
+      margin-bottom: 10px;
+    }
+  }
+
+  .refTag {
+    & > div {
+      & > input {
+        background-color: #8f8f8f22;
+        border-radius: 30px;
+        outline: none;
+        width: 300px;
+        border: none;
+        height: 30px;
+        padding: 8px;
+        &:focus {
+          border-color: white;
+        }
+      }
+    }
+  }
+
+  .textTitle {
+    font-size: 16px;
+    font-weight: 400;
+    padding-bottom: 30px;
+    color: #5c5c5cc3;
+  }
+
   .pergunta {
     padding: 20px;
-    resize: vertical;
+    resize: vertical; /* Permite redimensionar verticalmente */
     box-sizing: border-box;
     background-color: #d9d9d9;
     border-radius: 30px;
@@ -67,6 +105,12 @@ export const Form = styled.div`
     width: 100%;
     height: 150px;
     border: none;
+    text-align: left;
+    overflow: auto;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    /* A propriedade display: block; não é necessária aqui */
+    line-height: 1.5; /* Adiciona uma barra de rolagem se necessário */
 
     &:focus {
       border-color: white;
@@ -86,6 +130,11 @@ export const Form = styled.div`
 
     & > div {
       margin-bottom: 10px;
+
+      & > label {
+        color: #5c5c5cc3;
+        padding-right: 10px;
+      }
 
       & > input {
         width: 40%;
@@ -111,6 +160,10 @@ export const Form = styled.div`
   .resposta {
     margin-bottom: 50px;
 
+    & > label {
+      color: #5c5c5cc3;
+    }
+
     & > select {
       margin-left: 10px;
 
@@ -121,22 +174,27 @@ export const Form = styled.div`
       height: 25px;
       padding-left: 8px;
       border: none;
-      background-color: #d9d9d9;
+      background-color: #8f8f8f22;
+      color: #5c5c5cc3;
     }
   }
 
   .tags {
     display: flex;
-    width: 100%;
+    width: 80%;
     justify-content: space-around;
     align-items: center;
     padding-right: 50px;
     padding-left: 50px;
     margin-bottom: 60px;
 
+    & > p {
+      color: #5c5c5cc3;
+    }
+
     & > div {
       & > input {
-        background-color: #d5e2e5;
+        background-color: #8f8f8f22;
         border-radius: 10px;
         outline: none;
         width: 150px;
@@ -154,11 +212,11 @@ export const Form = styled.div`
     & > input {
       border-radius: 30px;
       outline: none;
-      width: 250px;
+      width: 300px;
       height: 30px;
       padding: 8px;
       border: none;
-      background-color: #d9d9d9;
+      background-color: #8f8f8f22;
     }
   }
 
@@ -173,19 +231,33 @@ export const Form = styled.div`
   .addPergunta {
     width: 170px;
     height: 35px;
-    background-color: #d9d9d9;
+    background-color: #8f8f8f22;
     border: none;
     border-radius: 30px;
     margin-bottom: 100px;
+    font-size: 14px;
+    color: #2e2c2f;
+  }
+
+  .addRef {
+    width: 300px;
   }
 
   .finalizar {
     width: 300px;
     height: 35px;
     margin-bottom: 50px;
-    background-color: #c3dadf;
+    background-color: #a1a1a183;
     border: none;
     border-radius: 30px;
+    font-size: 14px;
+
+    color: #2e2c2f;
+
+    &:disabled {
+      background-color: #a1a1a121;
+      color: #2e2c2f40;
+    }
   }
 `;
 
