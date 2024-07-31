@@ -84,6 +84,8 @@ function Lista(props) {
       })
       .then((response) => {
         const { topWrongTags, topCorrectTags, score } = response.data;
+        console.log(score)
+        
 
         // Salvar as tags
         return axios.post(

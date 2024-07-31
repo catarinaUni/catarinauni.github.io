@@ -96,10 +96,10 @@ function Turma({
             <Carousel
               items={alunos}
               renderItem={(aluno) => (
-                <>
+                <div>
                   <StyledImage src={imageTest} alt={aluno.nome} />
                   <p>{aluno.nome}</p>
-                </>
+                </div>
               )}
             />
           </Alunos>

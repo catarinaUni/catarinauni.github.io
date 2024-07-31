@@ -1,5 +1,6 @@
 import { db } from "../db.js";
 
+
 // pega a as questao da qual lista foi selecionado
 export const getQuestions = (req, res) => {
   const listaId = req.params.listaId; // Obtendo o lista_id dos parâmetros da rota
@@ -121,6 +122,9 @@ export const checkAnswers = (req, res) => {
       tags.forEach((tag) => {
         totalTagCounts[tag] = (totalTagCounts[tag] || 0) + 1;
       });
+      if (item.correta) {
+        score++;
+      }
     });
 
     // Calcular o total de questões erradas e corretas por tag
@@ -131,7 +135,7 @@ export const checkAnswers = (req, res) => {
           wrongTagCounts[tag] = (wrongTagCounts[tag] || 0) + 1;
         } else {
           correctTagCounts[tag] = (correctTagCounts[tag] || 0) + 1;
-          score++
+          console.log("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII", score)
         }
       });
     });
