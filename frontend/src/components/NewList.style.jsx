@@ -97,7 +97,7 @@ export const Form = styled.div`
 
   .pergunta {
     padding: 20px;
-    resize: vertical; /* Permite redimensionar verticalmente */
+    resize: vertical;
     box-sizing: border-box;
     background-color: #d9d9d9;
     border-radius: 30px;
@@ -108,9 +108,8 @@ export const Form = styled.div`
     text-align: left;
     overflow: auto;
     font-family: "Roboto", sans-serif;
-    font-size: 14px;
-    /* A propriedade display: block; não é necessária aqui */
-    line-height: 1.5; /* Adiciona uma barra de rolagem se necessário */
+    font-size: 16px;
+    line-height: 1.5;
 
     &:focus {
       border-color: white;
