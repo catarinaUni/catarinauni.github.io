@@ -66,6 +66,7 @@ export const Form = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    color: #5c5c5cc3;
     & > label {
       margin-bottom: 10px;
     }
@@ -81,6 +82,7 @@ export const Form = styled.div`
         border: none;
         height: 30px;
         padding: 8px;
+        font-size: 16px;
         &:focus {
           border-color: white;
         }
