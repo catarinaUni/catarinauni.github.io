@@ -11,11 +11,15 @@ export const Main = styled.div`
     color: #222831;
     font-weight: bold;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
+    padding-left: 15%;
 
     p{
-        padding-top:50px;
+        padding-top:1px;
+
+        color: #747474;
     }
 
 `;
