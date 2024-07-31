@@ -20,11 +20,10 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
   const [list, setList] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [disableButton, setDisableButton] = useState(true)
+  const [disableButton, setDisableButton] = useState(true);
   const [references, setReferences] = useState([]);
   const [newList, setNewList] = useState({
     nome: "",
@@ -36,56 +35,73 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
     tags: ["", "", ""],
   });
 
-  const handleAddQuestion = () => {
-    setQuestions([...questions, newQuestion]);
-    setNewQuestion({
-      pergunta: "",
-      alternativa: { a: "", b: "", c: "", d: "" },
-      resposta: "a",
-      tags: ["", "", ""],
-    });
-    toast.success("Pergunta adicionada com sucesso!");
-    setDisableButton(false)
+  const isQuestionValid = (question) => {
+    const { pergunta, alternativa, resposta, tags } = question;
+
+    if (!pergunta.trim()) return false;
+    for (const key in alternativa) {
+      if (!alternativa[key].trim()) return false;
+    }
+    if (!["a", "b", "c", "d"].includes(resposta)) return false;
+    if (!tags.some((tag) => tag.trim() !== "")) return false;
+
+    return true;
   };
 
-const handleSaveToJson = () => {
-
-  try {
-    // Show success toast
-    toast.success("Lista finalizada com sucesso! Você será redirecionado");
-
-    // Delay the execution of the following code by 2 seconds
-    setTimeout(async () => {
-      try {
-        const response = axios.post(
-          "http://localhost:8800/professor/turma/novalista",
-          { newList, questions, turmaId }
-        );
-        console.log("Data saved to database:", response.data);
-
-        // Reset the form after saving
-        setList([]);
-        setQuestions([]);
-        setNewList({ nome: "" });
-        setNewQuestion({
-          pergunta: "",
-          alternativa: { a: "", b: "", c: "", d: "" },
-          resposta: "a",
-          tags: ["", "", ""],
-        });
+  const handleAddQuestion = () => {
+    if (isQuestionValid(newQuestion)) {
+      setQuestions([...questions, newQuestion]);
+      setNewQuestion({
+        pergunta: "",
+        alternativa: { a: "", b: "", c: "", d: "" },
+        resposta: "a",
+        tags: ["", "", ""],
+      });
+      toast.success("Pergunta adicionada com sucesso!");
+      setDisableButton(false);
+    } else {
+      toast.error(
+        "Por favor, preencha todos os campos antes de adicionar a pergunta."
+      );
+    }
+  };
 
 
-        handleSetFlagTurma(true, turma);
-      } catch (error) {
-        console.error("Error saving data to database:", error);
-        toast.error("Erro ao salvar a lista.");
-      }
-    }, 3000); // Delay in milliseconds
-  } catch (error) {
-    console.error("Error displaying success toast:", error);
-  }
-};
+  const handleSaveToJson = () => {
+    try {
+      // Show success toast
+      toast.success("Lista finalizada com sucesso! Você será redirecionado");
 
+      // Delay the execution of the following code by 2 seconds
+      setTimeout(async () => {
+        try {
+          const response = axios.post(
+            "http://localhost:8800/professor/turma/novalista",
+            { newList, questions, turmaId }
+          );
+          console.log("Data saved to database:", response.data);
+
+          // Reset the form after saving
+          setList([]);
+          setQuestions([]);
+          setNewList({ nome: "" });
+          setNewQuestion({
+            pergunta: "",
+            alternativa: { a: "", b: "", c: "", d: "" },
+            resposta: "a",
+            tags: ["", "", ""],
+          });
+
+          handleSetFlagTurma(true, turma);
+        } catch (error) {
+          console.error("Error saving data to database:", error);
+          toast.error("Erro ao salvar a lista.");
+        }
+      }, 3000); // Delay in milliseconds
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
 
   const handleChangeAlternative = (e, key) => {
     setNewQuestion({
@@ -205,7 +221,7 @@ const handleSaveToJson = () => {
       <button onClick={handleAddQuestion} className="addPergunta">
         Adicionar Pergunta
       </button>
-
+      <p className="nQ">Questões adicionadas: { questions.length}</p>
       <button
         onClick={handleSaveToJson}
         className="finalizar"
@@ -218,14 +234,18 @@ const handleSaveToJson = () => {
 };
 
 function NewList({ turma, handleSetFlagTurma }) {
-  console.log(turma)
+  console.log(turma);
 
   return (
     <Main>
       <MainContent>
         <MainItems>
           <Form>
-            <QuestionForm turmaId={turma.id} handleSetFlagTurma={handleSetFlagTurma} turma={turma } />
+            <QuestionForm
+              turmaId={turma.id}
+              handleSetFlagTurma={handleSetFlagTurma}
+              turma={turma}
+            />
           </Form>
         </MainItems>
       </MainContent>
