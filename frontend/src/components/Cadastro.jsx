@@ -18,8 +18,8 @@ function Cadastro() {
     password: "",
     email: "",
     userType: "aluno",
-    userFormatPref: "",
-    userTurno: "",
+    userFormatPref: "vídeo",
+    userTurno: "manhã",
   });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
