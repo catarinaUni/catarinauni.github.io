@@ -1,17 +1,16 @@
 import express from "express";
-import { getUsers, addQuestion, saveRef } from "../controllers/user.js";
-import { checkAnswers, getQuestions, saveAnswers,  saveResultTags, getReferences, checkIfExists, checkIfExistsAluno } from '../controllers/questao.js';
+import { addQuestion, saveRef } from "../controllers/insertPerguntas.js";
+import { checkAnswers, getQuestions, saveAnswers,  saveResultTags, getReferences, checkIfExists, checkIfExistsAluno } from '../controllers/respondsListStudent.js';
 import { inserirAluno, inserirProfessor } from '../controllers/cadastro.js';
 import { checkLogin } from "../controllers/login.js";
-import { participarTurma } from "../controllers/participarTurma.js";
-import { criarTurma } from "../controllers/Turma.js";
+import { participarTurma } from "../controllers/participateTurma.js";
+import { criarTurma } from "../controllers/createTurma.js";
 import { db } from "../db.js";
 import { getChamada, getGrupos, salvarChamada, salvarGrupos } from "../controllers/grupos.js";
 
 
 const router = express.Router();
 
-router.get("/", getUsers);
 router.post("/professor/turma/novalista", addQuestion);
 router.post("/professor/salvarGrupos", salvarGrupos);
 router.get("/grupos/getGrupos", getGrupos);

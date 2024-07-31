@@ -1,5 +1,6 @@
 import { db } from "../db.js";
 
+// pega a as questao da qual lista foi selecionado
 export const getQuestions = (req, res) => {
   const listaId = req.params.listaId; // Obtendo o lista_id dos parâmetros da rota
   console.log("listId no back: ", listaId);
@@ -29,6 +30,7 @@ export const getQuestions = (req, res) => {
   });
 };
 
+// pega as referencias da turma e retorna para o aluno
 export const getReferences = (req, res) => {
   const turmaId = req.params.turmaId;
 
@@ -54,6 +56,8 @@ export const getReferences = (req, res) => {
   });
 };
 
+
+// salva as respostas do aluno
 export const saveAnswers = (req, res) => {
   const { alunoId, listaId, respostas } = req.body;
 
@@ -81,6 +85,7 @@ export const saveAnswers = (req, res) => {
   });
 };
 
+// verifica as resposta do aluno, e  retorna seu score
 export const checkAnswers = (req, res) => {
   const { listaId } = req.params;
   const { alunoId } = req.params;
@@ -222,6 +227,7 @@ export const checkIfExists = (req, res) => {
   });
 };
 
+// verifica se o aluno = (respondeu a lista) ? exibi a lista : exibe a tela de resultado;
 export const checkIfExistsAluno = (req, res) => {
   const listaId = req.query.listaId;
   const alunoId = req.query.alunoId;

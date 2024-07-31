@@ -18,8 +18,8 @@ function Cadastro() {
     password: "",
     email: "",
     userType: "aluno",
-    userFormatPref: "vídeo",
-    userTurno: "manhã",
+    userFormatPref: "Vídeo",
+    userTurno: "Manhã",
   });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
@@ -108,7 +108,7 @@ function Cadastro() {
                   onChange={handleChange}
                   value={formData.userFormatPref}
                 >
-                  <option value="Video">Video</option>
+                  <option value="Vídeo">Video</option>
                   <option value="Livro">Livro</option>
                   <option value="Artigo">Artigo</option>
                   <option value="Quiz">Quiz</option>

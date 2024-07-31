@@ -1,14 +1,5 @@
 import { db } from "../db.js";
 
-export const getUsers = (_, res) => {
-  const q = "SELECT * FROM perguntas";
-
-  db.query(q, (err, data) => {
-    if (err) return res.json(err);
-
-    return res.status(200).json(data);
-  });
-};
 
 export const addQuestion = (req, res) => {
   const { newList, questions, turmaId } = req.body;
@@ -21,16 +12,13 @@ export const addQuestion = (req, res) => {
   if (!Array.isArray(questions)) {
     return res
       .status(400)
-      .json({ error: "Data should be an array of questions" });
+      .json({ error: "Os dados devem ser uma série de perguntas" });
   }
 
   if (!turmaId) {
-    return res.status(400).json({ error: "Turma ID is required" });
+    return res.status(400).json({ error: "Turma id não esta definido" });
   }
-
-  // Nome fixo para todas as listas
   const listName = newList.nome;
-
   // Inserir a nova lista na tabela listas
   const insertListQuery = "INSERT INTO listas (nome) VALUES (?)";
 
@@ -96,23 +84,6 @@ export const addQuestion = (req, res) => {
           if (err) {
             return res.json(err);
           }
-
-          // Inserir as referências na tabela referencias
-          // if (references && references.length > 0) {
-          //     console.log("REFESSSSSSSS",references)
-          //     const insertReferencesQuery = "INSERT INTO referencias (turma_id, lista_id, ref, tag, formato) VALUES ?";
-          //     const referenceValues = references.map(ref => [turmaId, listId, ref.ref , ref.tag, ref.formato]);
-
-          //     db.query(insertReferencesQuery, [referenceValues], (err, result) => {
-          //         if (err) {
-          //             return res.json(err);
-          //         }
-
-          //         return res.status(200).json("Lista, perguntas e referências adicionadas e associadas à turma com sucesso.");
-          //     });
-          // } else {
-          //     return res.status(200).json("Lista e perguntas adicionadas e associadas à turma com sucesso.");
-          // }
         });
       });
     });
