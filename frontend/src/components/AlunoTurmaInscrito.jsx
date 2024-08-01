@@ -70,7 +70,7 @@ function AlunoTurmaInscrito(props) {
           <Listas>
             <Titulo>
               <div>
-                <h5>Listas</h5>
+                <p>Listas</p>
               </div>
             </Titulo>
             <Carousel
@@ -80,7 +80,7 @@ function AlunoTurmaInscrito(props) {
                   onClick={() => props.handleSetFlagLista(true, lista, user)}
                 >
                   <StyledImage src={imageTest} alt={lista.nome} />
-                  <p>{lista.nome}</p>
+                  <p style={{ color: "#494949" }}>{lista.nome}</p>
                 </div>
               )}
             />
@@ -89,16 +89,19 @@ function AlunoTurmaInscrito(props) {
           <Materiais>
             <Titulo>
               <div>
-                <h5>Referencias</h5>
+                <p>Referencias</p>
               </div>
+             
             </Titulo>
             <Carousel
               items={refs}
               renderItem={(ref) => (
                 <div onClick={() => openModal(ref)}>
                   <StyledImage src={imageTest} alt={ref.ref} />
-                  <p>{ref.tag}</p>
-                  <p>{ref.formato}</p>
+                  <p style={{ color: "#494949" }}>{ref.tag}</p>
+                  <p style={{ color: "#5c5c5cc3", "font-size": "12px" }}>
+                    {ref.formato}
+                  </p>
                 </div>
               )}
             />

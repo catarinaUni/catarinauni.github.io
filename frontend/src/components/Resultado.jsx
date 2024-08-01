@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
 import { ListaNome, Question } from "./Lista.style";
-import { Score, Result, ResultContent, Subtitulo } from "./Resultado.style";
+import { Score, Result, ResultContent, Subtitulo, Grupos } from "./Resultado.style";
 import axios from "axios";
 
 function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
@@ -181,7 +181,7 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
             <ResultContent>
               <p>Média de acertos: </p>
               <div>
-                <h4>{score}</h4>
+                <p>{score}</p>
               </div>
             </ResultContent>
             <ResultContent>
@@ -205,31 +205,32 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
               </div>
             </ResultContent>
           </Result>
-          <h2>Grupos:</h2>
-          {chamada ? (
-            grupos.length > 0 ? (
-              grupos.map((grupo) => (
-                <div key={grupo.grupo_id}>
-                  <h3>Grupo {grupo.grupo_id}</h3>
-                  <ul>
-                    {grupo.alunos.length > 0 ? (
-                      grupo.alunos.map((aluno_id, index) => (
-                        <li key={index}>
-                          {alunosMap[aluno_id] || `Aluno ID: ${aluno_id}`}
-                        </li>
-                      ))
-                    ) : (
-                      <li>Nenhum aluno disponível.</li>
-                    )}
-                  </ul>
-                </div>
-              ))
+          <Grupos>
+            {chamada ? (
+              grupos.length > 0 ? (
+                grupos.map((grupo) => (
+                  <div key={grupo.grupo_id}>
+                    <h4>Grupo {grupo.grupo_id}</h4>
+                    <ul>
+                      {grupo.alunos.length > 0 ? (
+                        grupo.alunos.map((aluno_id, index) => (
+                          <li key={index}>
+                            {alunosMap[aluno_id] || `Aluno ID: ${aluno_id}`}
+                          </li>
+                        ))
+                      ) : (
+                        <li>Nenhum aluno disponível.</li>
+                      )}
+                    </ul>
+                  </div>
+                ))
+              ) : (
+                <div>Não há grupos para mostrar.</div>
+              )
             ) : (
               <div>Não há grupos para mostrar.</div>
-            )
-          ) : (
-            <div>Não há grupos para mostrar.</div>
-          )}
+            )}
+          </Grupos>
         </MainItems>
       </MainContent>
     </Main>

@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 
 export const Side = styled.div`
-    font-size:16px;
-    height: 100%; 
-    width: 15vw; 
-    position: fixed; 
-    z-index: 1; 
-    top: 0; 
-    left: 0;
-    background-color: #EEEEEE;
-color: #222831;
-    overflow-x: hidden; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  font-size: 16px;
+  height: 100%;
+  width: 15vw;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #eeeeee;
+  color: #494949;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 export const SideBarItems = styled.div`
@@ -26,47 +26,51 @@ export const SideBarItems = styled.div`
 `;
 
 export const UserItems = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
-    h4 {
-        margin-top: 30px;
-    }
-    img {
-        height: 100px;
-    }
+  h4 {
+    margin-top: 30px;
+  }
+  img {
+    height: 100px;
+  }
+  p {
+    color: #494949c8;
+    font-size: 12px;
+    margin-top: 5px;
+  }
 `;
 
 export const TurmasItems = styled.div`
-    display: flex;
-    align-items: right;
-    justify-content: center;
-    flex-direction: column;
-    margin-top:50px;
-    width: 100%;
-    
-    p{
-        margin-bottom: 15px;
-        width: 80px;
-        background-color: white;
-        height: 1px;
-    }
+  display: flex;
+  align-items: right;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 50px;
+  width: 100%;
+
+  p {
+    margin-bottom: 15px;
+    color: #494949c8;
+    font-size: 14px;
+  }
 `;
 
 export const TurmaButton = styled.div`
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
 
-    &:hover {
-        background-color:#8F8787;
-        cursor: pointer;
-    }
+  &:hover {
+    background-color: #e3e3e3;
+    cursor: pointer;
+  }
 `;
 
 export const TurmasList = styled.div`
@@ -78,15 +82,16 @@ export const TurmasList = styled.div`
 `;
 
 export const NewTurmaButton = styled.div`
-    text-align: center;
-    margin-top:10px;
-    padding: 10px;
-    width:100%;
+  text-align: center;
+  margin-top: 50px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #bdbdbd;
 
-    &:hover {
-        color:#8F8787;
-        cursor: pointer;
-    }
+  &:hover {
+    background-color: #e3e3e3;
+    cursor: pointer;
+  }
 `;
 
 export const Modal = styled.div`
