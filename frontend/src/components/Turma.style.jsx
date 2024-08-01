@@ -29,6 +29,12 @@ export const MainContent = styled.div`
     color: #616161;
     cursor: pointer;
   }
+
+  .dataCaros {
+    display: flex;
+    flex-direction: column;
+    width: 80px;
+  }
 `;
 
 
@@ -56,12 +62,19 @@ export const Title = styled.div`
   
 `;
 
-export const StyledImage = styled.img`
-
-width: 80px;
-height:80px;
-
-`
+export const StyledImage = styled.div`
+  width: 80px;
+  height: 80px;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 5px;
+  border-radius: 15px;
+`;
 
 export const MainItems = styled.div`
     width: 100%;

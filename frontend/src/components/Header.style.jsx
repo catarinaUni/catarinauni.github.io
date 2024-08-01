@@ -3,12 +3,11 @@ import styled from 'styled-components';
 
 export const Main = styled.div`
 
-    background-color:#E3E3E3;
     border-radius: 50px 0 0 50px;
     margin-top: 5vh;
     width:100%;
     height: 25vh;
-    color: #222831;
+    color: white;
     font-weight: bold;
     display: flex;
     flex-direction: column;
@@ -17,9 +16,8 @@ export const Main = styled.div`
     padding-left: 15%;
 
     p{
-        padding-top:1px;
 
-        color: #747474;
+        color: white;
     }
 
 `;

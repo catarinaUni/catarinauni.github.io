@@ -37,7 +37,7 @@ function Turma({
         const response = await axios.get(
           `http://localhost:8800/turma/${turma.id}/ListarAlunos`
         );
-        console.log("Resposta da API:", response.data);
+        console.log("Resposta da API:", response.data.alunos);
         setAlunos(response.data.alunos);
       } catch (error) {
         console.error("Erro ao buscar alunos da turma:", error);
@@ -94,8 +94,13 @@ function Turma({
             <Carousel
               items={alunos}
               renderItem={(aluno) => (
-                <div>
-                  <StyledImage src={imageTest} alt={aluno.nome} />
+                <div className="dataCaros">
+                  <StyledImage
+                    style={{ backgroundColor: aluno.bgcolor || "#E3E3E3" }}
+                  >
+                    {aluno.nome[0]}
+                    {console.log(aluno.bgcolor)}
+                  </StyledImage>
                   <p style={{ color: "#494949" }}>{aluno.nome}</p>
                 </div>
               )}
@@ -117,7 +122,10 @@ function Turma({
             <Carousel
               items={listas}
               renderItem={(lista) => (
-                <div onClick={() => handleSetFlagLista(true, lista)}>
+                <div
+                  onClick={() => handleSetFlagLista(true, lista)}
+                  className="dataCaros"
+                >
                   <StyledImage src={imageTest} alt={lista.nome} />
                   <p style={{ color: "#494949" }}>{lista.nome}</p>
                 </div>
@@ -140,7 +148,7 @@ function Turma({
             <Carousel
               items={refs}
               renderItem={(ref) => (
-                <div onClick={() => openModal(ref)}>
+                <div onClick={() => openModal(ref)} className="dataCaros">
                   <StyledImage src={imageTest} alt={ref.ref} />
                   <p style={{ color: "#494949" }}>{ref.tag}</p>
                   <p style={{ color: "#5c5c5cc3", "font-size": "12px" }}>

@@ -19,7 +19,7 @@ function AlunoTurmaInscrito(props) {
   const [listas, setListas] = useState([]);
   const [refs, setRefs] = useState([]);
   const turmaId = turma.id;
-  const [selectedRef, setSelectedRef] = useState(null); // Estado para a referência selecionada
+  const [selectedRef, setSelectedRef] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   console.log("USER: ", user);

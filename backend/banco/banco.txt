@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS turmas (
     nome VARCHAR(255) NOT NULL,
     professor_id INT,
     codigo INT NOT NULL UNIQUE,
+    bgcolor VARCHAR(45), 
     FOREIGN KEY (professor_id) REFERENCES professores(id)
 );
 
