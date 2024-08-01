@@ -19,6 +19,7 @@ export const Form = styled.div`
     border: none;
     font-size: 20px;
     text-align: center;
+    color: #494949;
 
     &:focus {
       outline: none;
@@ -27,7 +28,7 @@ export const Form = styled.div`
 
   .enunciado {
     width: 100%;
-    color: #5c5c5cc3;
+    color: #494949;
     padding-left: 10px;
     padding-bottom: 5px;
   }
@@ -66,7 +67,7 @@ export const Form = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    color: #5c5c5cc3;
+    color: #494949;
     & > label {
       margin-bottom: 10px;
     }
@@ -75,11 +76,11 @@ export const Form = styled.div`
   .refTag {
     & > div {
       & > input {
-        background-color: #8f8f8f22;
+        background-color: white;
         border-radius: 30px;
         outline: none;
         width: 300px;
-        border: none;
+        border: 1px solid #cccccc;
         height: 30px;
         padding: 8px;
         font-size: 16px;
@@ -94,19 +95,19 @@ export const Form = styled.div`
     font-size: 16px;
     font-weight: 400;
     padding-bottom: 30px;
-    color: #5c5c5cc3;
+    color: #494949c8;
   }
 
   .pergunta {
     padding: 20px;
     resize: vertical;
     box-sizing: border-box;
-    background-color: #d9d9d9;
+    background-color: #ffffff;
     border-radius: 30px;
+    border: 1px solid #cccccc;
     outline: none;
     width: 100%;
     height: 150px;
-    border: none;
     text-align: left;
     overflow: auto;
     font-family: "Roboto", sans-serif;
@@ -133,7 +134,7 @@ export const Form = styled.div`
       margin-bottom: 10px;
 
       & > label {
-        color: #5c5c5cc3;
+        color: #494949;
         padding-right: 10px;
       }
 
@@ -142,10 +143,10 @@ export const Form = styled.div`
         padding: 8px;
         resize: vertical;
         box-sizing: border-box;
-        background-color: #d9d9d9;
+        background-color: white;
+        border: 1px solid #cccccc;
         border-radius: 30px;
         outline: none;
-        border: none;
 
         &:focus {
           border-color: white;
@@ -162,7 +163,7 @@ export const Form = styled.div`
     margin-bottom: 50px;
 
     & > label {
-      color: #5c5c5cc3;
+      color: #494949;
     }
 
     & > select {
@@ -174,9 +175,9 @@ export const Form = styled.div`
       width: 50px;
       height: 25px;
       padding-left: 8px;
-      border: none;
-      background-color: #8f8f8f22;
-      color: #5c5c5cc3;
+      border: 1px solid #cccccc;
+      background-color: white;
+      color: #494949;
     }
   }
 
@@ -190,16 +191,16 @@ export const Form = styled.div`
     margin-bottom: 60px;
 
     & > p {
-      color: #5c5c5cc3;
+      color: #494949;
     }
 
     & > div {
       & > input {
-        background-color: #8f8f8f22;
+        background-color: white;
         border-radius: 10px;
         outline: none;
         width: 150px;
-        border: none;
+        border: 1px solid #cccccc;
         height: 30px;
         padding: 8px;
         &:focus {
@@ -216,8 +217,8 @@ export const Form = styled.div`
       width: 300px;
       height: 30px;
       padding: 8px;
-      border: none;
-      background-color: #8f8f8f22;
+      border: 1px solid #cccccc;
+      background-color: white;
     }
   }
 
@@ -232,12 +233,12 @@ export const Form = styled.div`
   .addPergunta {
     width: 170px;
     height: 35px;
-    background-color: #8f8f8f5e;
+    background-color: #71e375;
     border: none;
     border-radius: 30px;
     margin-bottom: 80px;
     font-size: 14px;
-    color: #4d4d4d;
+    color: #494949;
     cursor: pointer;
   }
 
@@ -254,12 +255,12 @@ export const Form = styled.div`
     width: 300px;
     height: 35px;
     margin-bottom: 50px;
-    background-color: #a1a1a183;
+    background-color: #61b9ff;
     border: none;
     border-radius: 30px;
     font-size: 14px;
 
-    color: #2e2c2f;
+    color: #494949;
     cursor: pointer;
 
     &:disabled {

@@ -96,7 +96,7 @@ function Turma({
               renderItem={(aluno) => (
                 <div>
                   <StyledImage src={imageTest} alt={aluno.nome} />
-                  <p style={{ color: "#5c5c5cc3" }}>{aluno.nome}</p>
+                  <p style={{ color: "#494949" }}>{aluno.nome}</p>
                 </div>
               )}
             />
@@ -119,7 +119,7 @@ function Turma({
               renderItem={(lista) => (
                 <div onClick={() => handleSetFlagLista(true, lista)}>
                   <StyledImage src={imageTest} alt={lista.nome} />
-                  <p style={{ color: "#5c5c5cc3" }}>{lista.nome}</p>
+                  <p style={{ color: "#494949" }}>{lista.nome}</p>
                 </div>
               )}
             />
@@ -142,8 +142,10 @@ function Turma({
               renderItem={(ref) => (
                 <div onClick={() => openModal(ref)}>
                   <StyledImage src={imageTest} alt={ref.ref} />
-                  <p style={{ color: "#5c5c5cc3" }}>{ref.tag}</p>
-                  <p style={{ color: "#5c5c5cc3", "font-size": "12px"  }}>{ref.formato}</p>
+                  <p style={{ color: "#494949" }}>{ref.tag}</p>
+                  <p style={{ color: "#5c5c5cc3", "font-size": "12px" }}>
+                    {ref.formato}
+                  </p>
                 </div>
               )}
             />
