@@ -248,7 +248,7 @@ export const Form = styled.div`
 
   .nQ {
     margin-bottom: 10px;
-    color: #a1a1a1e6;
+    color: #999999;
   }
 
   .finalizar {
