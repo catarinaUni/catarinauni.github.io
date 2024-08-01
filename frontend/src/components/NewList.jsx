@@ -194,7 +194,7 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
       </div>
 
       <div className="tags">
-        <p>Tags:</p>
+        <p>Assuntos:</p>
         <div>
           <input
             type="text"
