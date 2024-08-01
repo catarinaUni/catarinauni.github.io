@@ -10,7 +10,7 @@ const Modal = ({ isOpen, onClose, refData }) => {
         <CloseButton onClick={onClose}>X</CloseButton>
         <h2>{refData.ref}</h2>
         <p>
-          <strong>Tag:</strong> {refData.tag}
+          <strong>Assunto:</strong> {refData.tag}
         </p>
         <p>
           <strong>Formato:</strong> {refData.formato}

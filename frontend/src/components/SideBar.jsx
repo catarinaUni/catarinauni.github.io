@@ -95,7 +95,7 @@ function SideBar(props) {
               <p>{props.userType}</p>
             </UserItems>
             <TurmasItems>
-              <h5>Turmas</h5>
+              <p className="turmas">Turmas</p>
               <TurmasList>
                 {turmas.map((turma) => (
                   <TurmaButton
@@ -122,7 +122,7 @@ function SideBar(props) {
         {showModal && (
           <ModalOverlay>
             <ModalContent>
-              <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
+              <CloseButton onClick={handleCloseModal}>X</CloseButton>
               {props.userType === "aluno" ? (
                 <>
                   <h2>Participar de Turma</h2>
@@ -131,8 +131,14 @@ function SideBar(props) {
                     value={turmaCode}
                     onChange={handleTurmaCodeChange}
                     placeholder="Código da Turma"
+                    className="criarTurma"
                   />
-                  <button onClick={handleParticiparSubmit}>Participar</button>
+                  <button
+                    onClick={handleParticiparSubmit}
+                    className="modelButton"
+                  >
+                    Participar
+                  </button>
                 </>
               ) : (
                 <>
@@ -142,11 +148,18 @@ function SideBar(props) {
                     value={turmaName}
                     onChange={handleTurmaNameChange}
                     placeholder="Nome da Turma"
+                    className="criarTurma"
                   />
-                  <button onClick={handleCreateTurma}>Criar</button>
+                  <button onClick={handleCreateTurma} className="modelButton">
+                    Criar
+                  </button>
                 </>
               )}
-              {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+              {errorMessage && (
+                <ErrorMessage className="modalError">
+                  {errorMessage}
+                </ErrorMessage>
+              )}
             </ModalContent>
           </ModalOverlay>
         )}

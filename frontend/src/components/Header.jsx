@@ -8,13 +8,18 @@ function Header(props){
     if(props.turma.codigo != undefined){
         textCod="Código: "
     }
+    var bgcolor = props.turma.bgcolor
+    console.log(props.turma.bgcolor)
 
-    return(
-        <Main>
-                    <Title>{props.turma.nome}</Title>
-                    <p>{textCod}{props.turma.codigo}</p>
-        </Main>
-    )
+    return (
+      <Main style={{ backgroundColor: bgcolor || "#E3E3E3" }}>
+        <Title>{props.turma.nome}</Title>
+        <p>
+          {textCod}
+          {props.turma.codigo}
+        </p>
+      </Main>
+    );
 }
 
 export default Header;
