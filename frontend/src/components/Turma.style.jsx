@@ -50,10 +50,10 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.div`
-    font-size: 45px;
-    padding-top: 50px;
-    padding-right: 100px;
-
+  font-size: 45px;
+  padding-top: 50px;
+  padding-right: 100px;
+  
 `;
 
 export const StyledImage = styled.img`
@@ -96,16 +96,24 @@ export const Alunos = styled.div`
 `;
 
 export const Titulo = styled.div`
-
-    p {
-        width: 60px;
-        height: 1px;
-        background-color:white;
-    }
-margin-bottom: 20px;
-display: flex;
-
+  color: #5c5c5cc3;
+  font-size: 16px;
+  p {
+    width: 60px;
+    margin-right: 30px;
+  }
+  margin-bottom: 20px;
+  display: flex;
+  .new {
+    border: 1px solid #5c5c5cc3;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
+  }
 `;
+
+
 
 export const Image = styled.img`
 

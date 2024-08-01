@@ -89,16 +89,14 @@ function Turma({
         <MainItems>
           <Alunos>
             <Titulo>
-              <div>
-                <h5>Alunos</h5>
-              </div>
+              <p>Alunos</p>
             </Titulo>
             <Carousel
               items={alunos}
               renderItem={(aluno) => (
                 <div>
                   <StyledImage src={imageTest} alt={aluno.nome} />
-                  <p>{aluno.nome}</p>
+                  <p style={{ color: "#494949" }}>{aluno.nome}</p>
                 </div>
               )}
             />
@@ -107,9 +105,12 @@ function Turma({
           <Listas>
             <Titulo>
               <div>
-                <h5>Listas</h5>
+                <p>Listas</p>
               </div>
-              <ButtonNew onClick={() => handleSetFlagNovaLista(true)}>
+              <ButtonNew
+                onClick={() => handleSetFlagNovaLista(true)}
+                className="new"
+              >
                 Nova lista
               </ButtonNew>
             </Titulo>
@@ -118,7 +119,7 @@ function Turma({
               renderItem={(lista) => (
                 <div onClick={() => handleSetFlagLista(true, lista)}>
                   <StyledImage src={imageTest} alt={lista.nome} />
-                  <p>{lista.nome}</p>
+                  <p style={{ color: "#494949" }}>{lista.nome}</p>
                 </div>
               )}
             />
@@ -127,10 +128,13 @@ function Turma({
           <Materiais>
             <Titulo>
               <div>
-                <h5>Referencias</h5>
+                <p>Referencias</p>
               </div>
-              <ButtonNew onClick={() => handleSetFlagNovaRef(true)}>
-                Nova Ref
+              <ButtonNew
+                onClick={() => handleSetFlagNovaRef(true)}
+                className="new"
+              >
+                Nova Referência
               </ButtonNew>
             </Titulo>
             <Carousel
@@ -138,8 +142,10 @@ function Turma({
               renderItem={(ref) => (
                 <div onClick={() => openModal(ref)}>
                   <StyledImage src={imageTest} alt={ref.ref} />
-                  <p>{ref.tag}</p>
-                  <p>{ref.formato}</p>
+                  <p style={{ color: "#494949" }}>{ref.tag}</p>
+                  <p style={{ color: "#5c5c5cc3", "font-size": "12px" }}>
+                    {ref.formato}
+                  </p>
                 </div>
               )}
             />
