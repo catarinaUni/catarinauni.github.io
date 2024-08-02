@@ -45,7 +45,6 @@ export const getGrupos = (req, res) => {
 
 export const salvarChamada = (req, res) => {
   const { acao_chamada, turmaId, listaId } = req.body;
-  console.log("AAAAAAAAAA", acao_chamada);
 
   const insertQuery = `
     INSERT INTO chamada_API (acao_chamada, turma_id, lista_id)
