@@ -13,6 +13,8 @@ import {
 } from "./Turma.style";
 import Carousel from "./Carousel";
 import imageTest from "../assets/imgt.png";
+import listLogo from "./listLogo.png";
+import refLogo from "./refLogo.png";
 
 function AlunoTurmaInscrito(props) {
   const { user, turma } = props;
@@ -77,9 +79,15 @@ function AlunoTurmaInscrito(props) {
               items={listas}
               renderItem={(lista) => (
                 <div
-                  onClick={() => props.handleSetFlagLista(true, lista, user)}
+                  onClick={() => handleSetFlagLista(true, lista, user)}
+                  className="dataCaros"
                 >
-                  <StyledImage src={imageTest} alt={lista.nome} />
+                  <StyledImage>
+                    <div className="listLogo">
+                      <img src={listLogo} alt="listLogo" />
+                    </div>
+                  </StyledImage>
+
                   <p style={{ color: "#494949" }}>{lista.nome}</p>
                 </div>
               )}
@@ -91,13 +99,16 @@ function AlunoTurmaInscrito(props) {
               <div>
                 <p>Referencias</p>
               </div>
-             
             </Titulo>
             <Carousel
               items={refs}
               renderItem={(ref) => (
-                <div onClick={() => openModal(ref)}>
-                  <StyledImage src={imageTest} alt={ref.ref} />
+                <div onClick={() => openModal(ref)} className="dataCaros">
+                  <StyledImage>
+                    <div className="listLogo refLogo">
+                      <img src={refLogo} alt="refLogo" />
+                    </div>
+                  </StyledImage>
                   <p style={{ color: "#494949" }}>{ref.tag}</p>
                   <p style={{ color: "#5c5c5cc3", "font-size": "12px" }}>
                     {ref.formato}

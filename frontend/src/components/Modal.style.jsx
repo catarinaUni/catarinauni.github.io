@@ -13,6 +13,7 @@ export const ModalOverlay = styled.div`
   justify-content: center;
   color: #494949;
   z-index: 1000000;
+  hyphens: auto;
 `;
 
 export const ModalContent = styled.div`
@@ -25,8 +26,15 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  hyphens: auto;
+
   h2 {
+    margin-top: 18px;
     margin-bottom: 20px;
+    hyphens: auto;
+    overflow-wrap: break-word; /* Garante a quebra de palavras longas */
+    word-break: break-word; /* Quebra palavras longas se necessário */
+    width: 100%;
   }
 
   .criarTurma {
@@ -53,7 +61,7 @@ export const ModalContent = styled.div`
     margin-bottom: 5px;
   }
 
-  .modalError{
+  .modalError {
     font-size: 12px;
   }
 `;

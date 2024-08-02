@@ -12,7 +12,7 @@ export const Main= styled.div`
 export const MainContent = styled.div`
   width: 70vw;
   background-color: #eeeeee;
-  color: #222831;
+  color: #333333;
   margin-left: 5vw;
   margin-top: 50px;
 
@@ -33,7 +33,11 @@ export const MainContent = styled.div`
   .dataCaros {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 80px;
+    p {
+      overflow-wrap: break-word;
+    }
   }
 `;
 
@@ -69,37 +73,61 @@ export const StyledImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   font-size: 40px;
   font-weight: bold;
   color: white;
   margin-bottom: 5px;
   border-radius: 15px;
+
+  .profFoto {
+    width: 100px;
+    height: 100px;
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .listLogo {
+    background-color: #92d3e9;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+  }
+
+  .refLogo {
+    background-color: #f0c87f;
+  }
 `;
 
 export const MainItems = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+
+  .formAluno {
     width: 100%;
-    display:flex;
-    flex-direction:column;
-    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .formAluno{
-        width: 100%;
-        display:flex;
-        flex-direction:column;
-        align-items: center;
-    }
-
-    .botao{
-        width: 170px;
-				height: 35px;
-				background-color: #D9D9D9;
-				border: none;
-				border-radius: 30px;
-                margin-bottom: 60px;
-                margin-top: 40px;
-}
-
-    
+  .botao {
+    width: 170px;
+    height: 35px;
+    color: #333333;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 30px;
+    margin-bottom: 60px;
+    margin-top: 40px;
+  }
 `;
 
 
@@ -111,18 +139,22 @@ export const Alunos = styled.div`
 export const Titulo = styled.div`
   color: #5c5c5cc3;
   font-size: 16px;
+  height: auto;
   p {
     width: 60px;
     margin-right: 30px;
   }
   margin-bottom: 20px;
   display: flex;
+  align-items: center;
   .new {
-    border: 1px solid #5c5c5cc3;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    cursor: pointer;
+    border: 1px solid #bdbdbd;
+    padding: 5px;
+
+    &:hover {
+      background-color: #e3e3e3;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -142,10 +174,12 @@ margin-bottom: 50px;
 `;
 
 export const Materiais = styled.div` 
-    width: 85%;
+
 `;
 
 export const ButtonNew = styled.div`
     margin-left:30px;
+    color: #333333;
+    
 
 `;

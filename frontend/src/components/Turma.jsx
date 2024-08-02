@@ -15,20 +15,24 @@ import {
 import Carousel from "./Carousel";
 import imageTest from "../assets/imgt.png";
 import Modal from "./Modal"; 
+import listLogo from "./listLogo.png"
+import refLogo from "./refLogo.png"
 
 function Turma({
   user,
   turma,
   handleSetFlagNovaLista,
   handleSetFlagLista,
-  handleSetFlagNovaRef,
+  handleSetFlagNovaRef
 }) {
   const [alunos, setAlunos] = useState([]);
   const [listas, setListas] = useState([]);
   const [refs, setRefs] = useState([])
   const turmaId = turma.id;
-    const [selectedRef, setSelectedRef] = useState(null); // Estado para a referência selecionada
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedRef, setSelectedRef] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
 
   useEffect(() => {
     const fetchAlunos = async () => {
@@ -73,6 +77,8 @@ function Turma({
   }, [turma.id]);
 
 
+  
+
    const openModal = (refData) => {
      setSelectedRef(refData);
      setIsModalOpen(true);
@@ -99,7 +105,7 @@ function Turma({
                     style={{ backgroundColor: aluno.bgcolor || "#E3E3E3" }}
                   >
                     {aluno.nome[0]}
-                    {console.log(aluno.bgcolor)}
+
                   </StyledImage>
                   <p style={{ color: "#494949" }}>{aluno.nome}</p>
                 </div>
@@ -126,7 +132,12 @@ function Turma({
                   onClick={() => handleSetFlagLista(true, lista)}
                   className="dataCaros"
                 >
-                  <StyledImage src={imageTest} alt={lista.nome} />
+                  <StyledImage>
+                    <div className="listLogo">
+                      <img src={listLogo} alt="listLogo" />
+                    </div>
+                  </StyledImage>
+
                   <p style={{ color: "#494949" }}>{lista.nome}</p>
                 </div>
               )}
@@ -149,7 +160,11 @@ function Turma({
               items={refs}
               renderItem={(ref) => (
                 <div onClick={() => openModal(ref)} className="dataCaros">
-                  <StyledImage src={imageTest} alt={ref.ref} />
+                  <StyledImage>
+                    <div className="listLogo refLogo">
+                      <img src={refLogo} alt="refLogo" />
+                    </div>
+                  </StyledImage>
                   <p style={{ color: "#494949" }}>{ref.tag}</p>
                   <p style={{ color: "#5c5c5cc3", "font-size": "12px" }}>
                     {ref.formato}

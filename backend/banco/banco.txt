@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS professores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    senha VARCHAR(255) NOT NULL
+    senha VARCHAR(255) NOT NULL,
+    bgcolor VARCHAR(10)
 );
 
 -- Tabela de Alunos
@@ -30,7 +31,8 @@ CREATE TABLE IF NOT EXISTS alunos (
     email VARCHAR(255) NOT NULL,
     senha VARCHAR(255) NOT NULL,
     material_formato VARCHAR(45) NOT NULL, -- Alteração
-    turno VARCHAR(45) NOT NULL -- Alteração
+    turno VARCHAR(45) NOT NULL, -- Alteração
+    bgcolor VARCHAR(10)
 );
 
 -- Tabela de Turmas

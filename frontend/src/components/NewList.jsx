@@ -48,6 +48,12 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
     return true;
   };
 
+  const ifListValid = (list) => {
+    if (!list.nome.trim()) return false;
+    if (questions.length === 0) return false;
+    return questions.every(isQuestionValid);
+  };
+
   const handleAddQuestion = () => {
     if (isQuestionValid(newQuestion)) {
       setQuestions([...questions, newQuestion]);
@@ -66,11 +72,17 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
     }
   };
 
+  const handleSaveToJson = async () => {
+    if (!ifListValid(newList)) {
+      toast.error(
+        "A lista ou perguntas são inválidas. Verifique todos os campos."
+      );
+      return;
+    }
 
-  const handleSaveToJson = () => {
     try {
       // Show success toast
-      toast.success("Lista finalizada com sucesso! Você será redirecionado");
+      toast.success("Lista finalizada com sucesso! Você será redirecionado em breve. Se a lista não aparecer, por favor atualize a página.");
 
       // Delay the execution of the following code by 2 seconds
       setTimeout(async () => {

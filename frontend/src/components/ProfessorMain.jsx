@@ -47,6 +47,7 @@ function ProfessorMain() {
         setFlagLista(false)
         setFlagNewRef(false)
         setFlagNovaLista(false)
+        
     };
 
     const handleSetFlagNovaLista = (flag) => {
@@ -55,6 +56,8 @@ function ProfessorMain() {
         setFlagCriarTurma(false)
         setFlagLista(false)
         setFlagNewRef(false)
+        
+
         
     }
 
@@ -100,6 +103,7 @@ function ProfessorMain() {
                     userName={user.userName} 
                     userType={user.userType} 
                     userId={user.id} 
+                    bgcolor={user.bgcolor}
                     handleSetFlagTurma={handleSetFlagTurma} 
                     handleSetFlagCriarTurma={handleSetFlagCriarTurma}
                 />
