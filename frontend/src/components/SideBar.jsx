@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Side, NewTurmaButton, SideBarItems, TurmaButton, TurmasItems, TurmasList, UserItems, ErrorMessage } from './SideBar.style';
 import imgt from "../assets/imgt.png";
+import { StyledImage } from "./Turma.style";
 
 import { ModalContent, ModalOverlay, CloseButton } from "./Modal.style";
 
@@ -90,7 +91,11 @@ function SideBar(props) {
         <Side>
           <SideBarItems>
             <UserItems>
-              <img src={imgt} alt="" />
+              <StyledImage 
+                style={{ backgroundColor: props.bgcolor || "#E3E3E3", width: "100px", height: "100px" }}
+              >
+                {props.userName[0]}
+              </StyledImage>
               <h4>{props.userName}</h4>
               <p>{props.userType}</p>
             </UserItems>

@@ -4,11 +4,11 @@ export const checkLogin = (req, res) => {
   const { email, password } = req.body;
 
   const query = `
-        SELECT id, nome AS name, email, senha AS password, material_formato, turno, 'aluno' AS userType
+        SELECT id, nome AS name, email, senha AS password, material_formato, turno, bgcolor,'aluno' AS userType
         FROM alunos
         WHERE email = ? AND senha = ?
         UNION ALL
-        SELECT id, nome AS name, email, senha AS password, NULL AS material_formato, NULL AS turno, 'professor' AS userType
+        SELECT id, nome AS name, email, senha AS password, NULL AS material_formato, NULL AS turno, bgcolor, 'professor' AS userType
         FROM professores
         WHERE email = ? AND senha = ?
     `;
@@ -20,18 +20,19 @@ export const checkLogin = (req, res) => {
     }
 
     if (results.length > 0) {
-      const user = results[0]; 
-      console.log("user aqui", user)
+      const user = results[0];
+      console.log("user aqui", user);
       res.status(200).json({
         message: "Login realizado com sucesso!",
         user: {
           id: user.id,
           email: user.email,
-          userType: results[0].userType, 
+          userType: results[0].userType,
           userName: results[0].name,
           formato: results[0].material_formato,
           turno: results[0].turno,
-        }, 
+          bgcolor: results[0].bgcolor,
+        },
       });
     } else {
       res.status(401).json({ message: "Senha ou email inválido" });

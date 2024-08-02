@@ -100,6 +100,7 @@ function ProfessorMain() {
                     userName={user.userName} 
                     userType={user.userType} 
                     userId={user.id} 
+                    bgcolor={user.bgcolor}
                     handleSetFlagTurma={handleSetFlagTurma} 
                     handleSetFlagCriarTurma={handleSetFlagCriarTurma}
                 />
