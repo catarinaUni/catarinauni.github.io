@@ -73,12 +73,12 @@ function Turma({
     fetchAlunos();
     fetchListas();
     fetchRefs();
-  }, [turma.id, ]);
+  }, [turma.id, control]);
 
 
   useEffect(() => {
-
-  })
+    setControl(!control)
+  }, [])
 
    const openModal = (refData) => {
      setSelectedRef(refData);
