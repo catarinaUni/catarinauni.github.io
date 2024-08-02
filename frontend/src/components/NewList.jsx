@@ -82,7 +82,7 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
 
     try {
       // Show success toast
-      toast.success("Lista finalizada com sucesso! Você será redirecionado");
+      toast.success("Lista finalizada com sucesso! Você será redirecionado em breve. Se a lista não aparecer, por favor atualize a página.");
 
       // Delay the execution of the following code by 2 seconds
       setTimeout(async () => {
