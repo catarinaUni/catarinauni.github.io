@@ -7,7 +7,9 @@ const CarouselContainer = styled.div`
   overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: #c0c0c0 transparent;
-  padding-bottom:10px;
+  padding-bottom: 10px;
+  padding-left: 50px;
+  
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -28,6 +30,9 @@ const CarouselItem = styled.div`
   flex: 0 0 auto;
   width: 13%; // Ajuste para mostrar 6 itens por vez
   text-align: center;
+  
+  hyphens: auto;
+
 `;
 
 

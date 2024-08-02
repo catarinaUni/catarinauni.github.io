@@ -23,15 +23,16 @@ function Turma({
   turma,
   handleSetFlagNovaLista,
   handleSetFlagLista,
-  handleSetFlagNovaRef,
+  handleSetFlagNovaRef
 }) {
   const [alunos, setAlunos] = useState([]);
   const [listas, setListas] = useState([]);
   const [refs, setRefs] = useState([])
   const turmaId = turma.id;
-    const [selectedRef, setSelectedRef] = useState(null); // Estado para a referência selecionada
+    const [selectedRef, setSelectedRef] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [control, setControl] = useState(false)
+
+
 
   useEffect(() => {
     const fetchAlunos = async () => {
@@ -73,12 +74,10 @@ function Turma({
     fetchAlunos();
     fetchListas();
     fetchRefs();
-  }, [turma.id, control]);
+  }, [turma.id]);
 
 
-  useEffect(() => {
-    setControl(!control)
-  }, [])
+  
 
    const openModal = (refData) => {
      setSelectedRef(refData);

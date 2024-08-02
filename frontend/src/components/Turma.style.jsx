@@ -35,6 +35,9 @@ export const MainContent = styled.div`
     flex-direction: column;
     align-items: center;
     width: 80px;
+    p {
+      overflow-wrap: break-word;
+    }
   }
 `;
 
@@ -171,7 +174,7 @@ margin-bottom: 50px;
 `;
 
 export const Materiais = styled.div` 
-    width: 85%;
+
 `;
 
 export const ButtonNew = styled.div`
