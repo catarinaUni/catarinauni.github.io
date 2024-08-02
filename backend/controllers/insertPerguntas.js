@@ -4,11 +4,6 @@ import { db } from "../db.js";
 export const addQuestion = (req, res) => {
   const { newList, questions, turmaId } = req.body;
 
-  // Log para verificar os dados recebidos
-  console.log("Questions:", questions);
-  console.log("Turma ID:", turmaId);
-  console.log("Lista:", newList);
-
   if (!Array.isArray(questions)) {
     return res
       .status(400)

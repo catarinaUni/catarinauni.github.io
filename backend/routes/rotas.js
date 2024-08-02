@@ -20,6 +20,7 @@ router.post("/professor/adicionarRef", saveRef);
 
 //rota para obter todas as perguntas
 router.get("/aluno/turma/lista/:listaId", getQuestions);
+//rota para obter todas as referencias
 router.get("/aluno/turma/turmaRef/:turmaId", getReferences);
 // Rota para verificar as respostas do aluno
 router.post("/aluno/turma/resultado", saveAnswers);
@@ -34,7 +35,7 @@ router.post("/login", checkLogin);
 
 //rota para cadastro seja aluno, ou professor
 router.post('/cadastro', async (req, res) => {
-    console.log("vindo da rota:", req.body);
+
     const { username, password, email, userType, userFormatPref, userTurno } = req.body;
   
     try {
@@ -82,8 +83,8 @@ router.post('/cadastro', async (req, res) => {
 
 // Rota para obter listas de uma turma
 router.get('/turma/:turmaId/listas', (req, res) => {
+  
   const turmaId = req.params.turmaId;
-  console.log("cteste: ", turmaId);
   const query = 'SELECT * FROM listas as  l join turma_listas as tl on l.id = tl.lista_id WHERE turma_id = ?';
    
   db.query(query, [turmaId], (err, results) => {
@@ -98,9 +99,8 @@ router.get('/turma/:turmaId/listas', (req, res) => {
 
 // Rota para buscar os alunos da turma
 router.get('/turma/:turmaId/ListarAlunos', (req, res) => {
-  const turmaId = req.params.turmaId;
-  console.log("Recebido ID da turma:", turmaId);
-  
+
+  const turmaId = req.params.turmaId;  
   if (!turmaId) {
     console.error('ID da turma não fornecido');
     return res.status(400).json({ message: 'ID da turma é obrigatório' });
@@ -118,7 +118,6 @@ router.get('/turma/:turmaId/ListarAlunos', (req, res) => {
           return res.status(500).json({ message: 'Erro interno do servidor' });
       }
 
-      console.log('Alunos encontrados:', results);
       res.status(200).json({ alunos: results });
   });
 });

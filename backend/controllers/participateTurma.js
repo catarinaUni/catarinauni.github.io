@@ -3,9 +3,6 @@ import { db } from "../db.js";
 export const participarTurma = (req, res) => {
     const { userId, turmaCode } = req.body;
 
-    console.log('userId:', userId);
-    console.log('turmaCode:', turmaCode);
-
     if (!userId || !turmaCode) {
         return res.status(400).json({ message: 'Parâmetros ausentes: userId e turmaCode são necessários' });
     }
