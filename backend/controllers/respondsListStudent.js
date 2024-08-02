@@ -4,7 +4,6 @@ import { db } from "../db.js";
 // pega a as questao da qual lista foi selecionado
 export const getQuestions = (req, res) => {
   const listaId = req.params.listaId; // Obtendo o lista_id dos parâmetros da rota
-  console.log("listId no back: ", listaId);
   const q = `
         SELECT p.id, p.pergunta, p.alternativa_a, p.alternativa_b, p.alternativa_c, p.alternativa_d 
         FROM perguntas as p
@@ -51,8 +50,6 @@ export const getReferences = (req, res) => {
       formato: row.formato,
     }));
 
-    console.log(res);
-
     return res.status(200).json(references);
   });
 };
@@ -61,8 +58,6 @@ export const getReferences = (req, res) => {
 // salva as respostas do aluno
 export const saveAnswers = (req, res) => {
   const { alunoId, listaId, respostas } = req.body;
-
-  console.log("Recebendo respostas:", req.body);
 
   const query =
     "INSERT INTO respostas (pergunta_id, resposta, aluno_id, lista_id) VALUES ?";
@@ -74,7 +69,6 @@ export const saveAnswers = (req, res) => {
     listaId,
   ]);
 
-  console.log("Valores para inserção:", values);
 
   db.query(query, [values], (err, data) => {
     if (err) {
@@ -135,7 +129,6 @@ export const checkAnswers = (req, res) => {
           wrongTagCounts[tag] = (wrongTagCounts[tag] || 0) + 1;
         } else {
           correctTagCounts[tag] = (correctTagCounts[tag] || 0) + 1;
-          console.log("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII", score)
         }
       });
     });
@@ -157,9 +150,6 @@ export const checkAnswers = (req, res) => {
       .sort((a, b) => b[1] - a[1])
       .slice(0, 4)
       .map((entry) => entry[0]);
-
-    console.log("Tags erradas:", sortedWrongTags);
-    console.log("Tags corretas:", sortedCorrectTags);
 
     return res.status(200).json({
       resultados,
@@ -202,7 +192,6 @@ export const saveResultTags = (req, res) => {
 
 export const checkIfExists = (req, res) => {
   const listaId = req.query.listaId;
-  console.log("IDDDDDDD", listaId);
 
   const query = "SELECT * FROM resultado_listas WHERE lista_id = ?;";
   const queryCount =

@@ -21,7 +21,6 @@ export async function inserirAluno(dados) {
   var bgcolor = getRandomColor(colors)
   try {
    
-    console.log("recebendo:", dados.username, dados.password, dados.email, dados.userFormatPref, dados.userTurno, bgcolor);
     const result = await db.query('INSERT INTO alunos (nome, senha, email, material_formato, turno, bgcolor) VALUES (?, ?, ?, ?, ?, ?)', [dados.username, dados.password, dados.email, dados.userFormatPref, dados.userTurno, bgcolor]);
     return result;
   } catch (error) {
