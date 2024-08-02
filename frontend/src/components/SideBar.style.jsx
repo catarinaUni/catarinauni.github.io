@@ -18,11 +18,24 @@ export const Side = styled.div`
 `;
 
 export const SideBarItems = styled.div`
-    width: 60%;
-    height: 75%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+  width: 60%;
+  height: 75%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .sair {
+    font-size: 14px;
+    margin-top: 40px;
+    color: #f53939;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid #f53939;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+    }
+  }
 `;
 
 export const UserItems = styled.div`

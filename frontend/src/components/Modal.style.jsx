@@ -32,8 +32,8 @@ export const ModalContent = styled.div`
     margin-top: 18px;
     margin-bottom: 20px;
     hyphens: auto;
-    overflow-wrap: break-word; /* Garante a quebra de palavras longas */
-    word-break: break-word; /* Quebra palavras longas se necessário */
+    overflow-wrap: break-word; 
+    word-break: break-word; 
     width: 100%;
   }
 

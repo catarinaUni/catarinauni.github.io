@@ -85,14 +85,24 @@ function SideBar(props) {
     const handleTurmaClick = (turma) => {
         props.handleSetFlagTurma(true, turma);
     };
+  
+  const handleLogout = () => {
+     sessionStorage.clear();
+    localStorage.clear();
+      navigate("/login", { replace: true });
+   };
 
     return (
       <>
         <Side>
           <SideBarItems>
             <UserItems>
-              <StyledImage 
-                style={{ backgroundColor: props.bgcolor || "#E3E3E3", width: "100px", height: "100px" }}
+              <StyledImage
+                style={{
+                  backgroundColor: props.bgcolor || "#E3E3E3",
+                  width: "100px",
+                  height: "100px",
+                }}
               >
                 {props.userName[0]}
               </StyledImage>
@@ -121,6 +131,8 @@ function SideBar(props) {
                 </NewTurmaButton>
               )}
             </TurmasItems>
+
+            <p onClick={handleLogout} className="sair">Sair da conta</p>
           </SideBarItems>
         </Side>
 
