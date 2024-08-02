@@ -30,7 +30,8 @@ function Turma({
   const [refs, setRefs] = useState([])
   const turmaId = turma.id;
     const [selectedRef, setSelectedRef] = useState(null); // Estado para a referência selecionada
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [control, setControl] = useState(false)
 
   useEffect(() => {
     const fetchAlunos = async () => {
@@ -72,8 +73,12 @@ function Turma({
     fetchAlunos();
     fetchListas();
     fetchRefs();
-  }, []);
+  }, [turma.id, ]);
 
+
+  useEffect(() => {
+
+  })
 
    const openModal = (refData) => {
      setSelectedRef(refData);
@@ -101,6 +106,7 @@ function Turma({
                     style={{ backgroundColor: aluno.bgcolor || "#E3E3E3" }}
                   >
                     {aluno.nome[0]}
+
                   </StyledImage>
                   <p style={{ color: "#494949" }}>{aluno.nome}</p>
                 </div>
