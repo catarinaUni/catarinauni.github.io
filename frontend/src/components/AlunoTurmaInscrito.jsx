@@ -79,7 +79,7 @@ function AlunoTurmaInscrito(props) {
               items={listas}
               renderItem={(lista) => (
                 <div
-                  onClick={() => handleSetFlagLista(true, lista, user)}
+                  onClick={() => props.handleSetFlagLista(true, lista, user)}
                   className="dataCaros"
                 >
                   <StyledImage>
