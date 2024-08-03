@@ -3,6 +3,7 @@ import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
 import { ListaNome, Question } from "./Lista.style";
 import { Score, Result, ResultContent, Subtitulo, Grupos } from "./Resultado.style";
 import axios from "axios";
+import arrow from "./arrow.png";
 
 function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
   const [resultados, setResultados] = useState([]);
@@ -15,6 +16,7 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
   const [grupos, setGrupos] = useState([]);
   const [chamada, setChamada] = useState(false);
   const [matRelev, setMatRelev] = useState([])
+  
 
   const [score, setScore] = useState(0);
   const [alunosMap, setAlunosMap] = useState({});
@@ -169,9 +171,12 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
   return (
     <Main>
       <MainContent>
-        <span onClick={() => handleSetFlagTurma(true, turma)} className="seta">
-          &#x2B05;
-        </span>
+        <img
+          src={arrow}
+          alt="voltar"
+          onClick={() => handleSetFlagTurma(true, turma)}
+          className="seta"
+        />
         <MainItems>
           <ListaNome>{lista.nome}</ListaNome>
           <Subtitulo>

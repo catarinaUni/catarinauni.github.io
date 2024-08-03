@@ -100,6 +100,7 @@ export const NewTurmaButton = styled.div`
   padding: 10px;
   width: 100%;
   border: 1px solid #bdbdbd;
+  border-radius: 15px;
 
   &:hover {
     background-color: #e3e3e3;

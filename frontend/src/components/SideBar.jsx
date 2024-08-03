@@ -89,7 +89,7 @@ function SideBar(props) {
   const handleLogout = () => {
      sessionStorage.clear();
     localStorage.clear();
-      navigate("/login", { replace: true });
+      navigate("/", { replace: true });
    };
 
     return (

@@ -4,6 +4,7 @@ import { Form } from "./NewList.style";
 import { Main, MainContent, MainItems } from "./Turma.style";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import arrow from "./arrow.png";
 
 const QuestionFormRef = ({ turmaId }) => {
   const [references, setReferences] = useState([]);
@@ -93,9 +94,12 @@ function NewRef({ turma, handleSetFlagTurma }) {
   return (
     <Main>
       <MainContent>
-        <span onClick={() => handleSetFlagTurma(true, turma)} className="seta">
-          &#x2B05;
-        </span>
+          <img
+            src={arrow}
+            alt="voltar"
+            onClick={() => handleSetFlagTurma(true, turma)}
+            className="seta"
+          />
         <MainItems>
           <Form>
             <QuestionFormRef turmaId={turmaId} />

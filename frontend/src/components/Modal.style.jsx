@@ -35,6 +35,7 @@ export const ModalContent = styled.div`
     overflow-wrap: break-word; 
     word-break: break-word; 
     width: 100%;
+    text-align: center;
   }
 
   .criarTurma {

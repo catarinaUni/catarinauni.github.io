@@ -3,6 +3,7 @@ import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
 import { ListaNome, Question } from "./Lista.style";
 import { Score, Result, ResultContent, Subtitulo, Grupos } from "./Resultado.style";
 import axios from "axios";
+import arrow from "./arrow.png";
 
 function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) {
   const listaId = lista.id;
@@ -231,9 +232,12 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
   return (
     <Main>
       <MainContent>
-        <span onClick={() => handleSetFlagTurma(true, turma)} className="seta">
-          &#x2B05;
-        </span>
+        <img
+          src={arrow}
+          alt="voltar"
+          onClick={() => handleSetFlagTurma(true, turma)}
+          className="seta"
+        />
         <MainItems>
           <ListaNome>{lista.nome}</ListaNome>
           <Subtitulo>

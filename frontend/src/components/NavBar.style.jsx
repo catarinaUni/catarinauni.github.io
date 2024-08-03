@@ -2,11 +2,12 @@ import styled from "styled-components";
 
 export const NavBarContainer = styled.nav`
   background-color: #EEEEEE;
-  padding: 20px;
+  padding: 15px;
   width: 100vw;
   z-index: 3;
   position: fixed; 
   height:5vh;
+  padding-left: 25px;
 
 `;
 
@@ -40,8 +41,12 @@ export const NavItens = styled.div`
 
 `;
 export const NavLogo = styled.div`
+
  img{
-  width: 100px;
+  width: 40px;
  }
   
+  &:hover{
+    cursor: pointer;
+  }
 `;

@@ -23,9 +23,7 @@ export const MainContent = styled.div`
 
   .seta {
     display: inline-block;
-    font-size: 36px;
-    line-height: 1;
-    text-align: center;
+    width: 40px;
     color: #616161;
     cursor: pointer;
   }
@@ -91,7 +89,7 @@ export const StyledImage = styled.div`
   }
 
   .listLogo {
-    background-color: #92d3e9;
+    background-color: #40e0d0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -101,7 +99,7 @@ export const StyledImage = styled.div`
   }
 
   .refLogo {
-    background-color: #f0c87f;
+    background-color: #ff7f50;
   }
 `;
 
