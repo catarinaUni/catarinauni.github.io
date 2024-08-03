@@ -233,12 +233,12 @@ export const Form = styled.div`
   .addPergunta {
     width: 170px;
     height: 35px;
-    background-color: #71e375;
+    background-color: #50c878;
     border: none;
     border-radius: 30px;
     margin-bottom: 80px;
     font-size: 14px;
-    color: #494949;
+    color: white;
     cursor: pointer;
   }
 
@@ -255,12 +255,12 @@ export const Form = styled.div`
     width: 300px;
     height: 35px;
     margin-bottom: 50px;
-    background-color: #61b9ff;
+    background-color: #35b8ab;
     border: none;
     border-radius: 30px;
-    font-size: 14px;
+    font-size: 16px;
 
-    color: #494949;
+    color: white;
     cursor: pointer;
 
     &:disabled {

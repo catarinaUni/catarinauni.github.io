@@ -32,8 +32,8 @@ export const ModalContent = styled.div`
     margin-top: 18px;
     margin-bottom: 20px;
     hyphens: auto;
-    overflow-wrap: break-word; 
-    word-break: break-word; 
+    overflow-wrap: break-word;
+    word-break: break-word;
     width: 100%;
     text-align: center;
   }
@@ -53,11 +53,11 @@ export const ModalContent = styled.div`
     margin-top: 30px;
     width: 100px;
     padding: 5px;
-    background-color: #71e375;
+    background-color: #50c878;
     border: none;
     border-radius: 30px;
     font-size: 14px;
-    color: #494949;
+    color: white;
     cursor: pointer;
     margin-bottom: 5px;
   }
