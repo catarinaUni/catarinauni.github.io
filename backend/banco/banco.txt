@@ -4,11 +4,11 @@ USE questaoai;
 -- Tabela de Perguntas
 CREATE TABLE IF NOT EXISTS perguntas (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    pergunta VARCHAR(255),
-    alternativa_a VARCHAR(255),
-    alternativa_b VARCHAR(255),
-    alternativa_c VARCHAR(255),
-    alternativa_d VARCHAR(255),
+    pergunta TEXT,
+    alternativa_a TEXT,
+    alternativa_b TEXT,
+    alternativa_c TEXT,
+    alternativa_d TEXT,
     resposta_correta CHAR(1),
     tag_1 VARCHAR(255),
     tag_2 VARCHAR(255),
@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS alunos (
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     senha VARCHAR(255) NOT NULL,
-    material_formato VARCHAR(45) NOT NULL, -- Alteração
-    turno VARCHAR(45) NOT NULL, -- Alteração
+    material_formato VARCHAR(45) NOT NULL,
+    turno VARCHAR(45) NOT NULL,
     bgcolor VARCHAR(10)
 );
 
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS resultado_listas (
 CREATE TABLE IF NOT EXISTS referencias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     turma_id INT NOT NULL,
-    ref VARCHAR(255),
+    ref TEXT,
     tag VARCHAR(255),
     formato VARCHAR(255),
     FOREIGN KEY (turma_id) REFERENCES turmas(id)

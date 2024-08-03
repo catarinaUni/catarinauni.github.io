@@ -16,7 +16,7 @@ export const HeroItems = styled.div`
 
     align-items: center;
     flex-direction: column;
-    height: 40%;
+    height: 50%;
 
 `;
 
