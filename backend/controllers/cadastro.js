@@ -1,13 +1,13 @@
 import { db } from "../db.js";
 
 const colors = [
-  "#a3c2c2", // Azul Pastel
-  "#b2d8b4", // Verde Menta
-  "#f6b1b1", // Rosa Claro
-  "#e5e0ff", // Lavanda
-  "#f7c4a8", // Pêssego
-  "#d0d0d0", // Cinza Claro
-  "#f5f5dc", // Bege Claro
+  "#a3c2c2", 
+  "#b2d8b4", 
+  "#f6b1b1", 
+  "#e5e0ff",
+  "#f7c4a8",
+  "#d0d0d0", 
+  "#f5f5dc", 
 ];
 
 function getRandomColor(colors) {

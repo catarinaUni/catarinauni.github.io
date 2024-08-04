@@ -10,7 +10,7 @@ import { ModalContent, ModalOverlay, CloseButton } from "./Modal.style";
 function SideBar(props) {
     const [showModal, setShowModal] = useState(false);
     const [turmaCode, setTurmaCode] = useState('');
-    const [turmaName, setTurmaName] = useState(''); // Novo estado para nome da turma
+    const [turmaName, setTurmaName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [turmas, setTurmas] = useState([]);
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ function SideBar(props) {
         setShowModal(false);
         setErrorMessage('');
         setTurmaCode('');
-        setTurmaName(''); // Limpar nome da turma
+        setTurmaName(''); 
     };
 
     const handleTurmaCodeChange = (e) => {
@@ -45,7 +45,7 @@ function SideBar(props) {
     };
 
     const handleTurmaNameChange = (e) => {
-        setTurmaName(e.target.value); // Atualizar nome da turma
+        setTurmaName(e.target.value);
     };
 
     const handleParticiparSubmit = async () => {
@@ -55,7 +55,6 @@ function SideBar(props) {
                 turmaCode
             });
             handleCloseModal();
-            // Atualiza a lista de turmas após participar de uma nova turma
             fetchTurmas();
         } catch (error) {
             console.error('Erro ao participar da turma:', error);
@@ -125,11 +124,11 @@ function SideBar(props) {
               </TurmasList>
               {props.userType === "aluno" ? (
                 <NewTurmaButton onClick={handleParticiparClick}>
-                  participar de turma
+                  Participar de turma
                 </NewTurmaButton>
               ) : (
                 <NewTurmaButton onClick={handleParticiparClick}>
-                  criar turma
+                  Criar turma
                 </NewTurmaButton>
               )}
             </TurmasItems>

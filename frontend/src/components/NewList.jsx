@@ -81,10 +81,9 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
     }
 
     try {
-      // Show success toast
+
       toast.success("Lista finalizada com sucesso! Você será redirecionado em breve. Se a lista não aparecer, por favor atualize a página.");
 
-      // Delay the execution of the following code by 2 seconds
       setTimeout(async () => {
         try {
           const response = axios.post(
@@ -93,7 +92,6 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
           );
           console.log("Data saved to database:", response.data);
 
-          // Reset the form after saving
           setList([]);
           setQuestions([]);
           setNewList({ nome: "" });
@@ -109,7 +107,7 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
           console.error("Error saving data to database:", error);
           toast.error("Erro ao salvar a lista.");
         }
-      }, 3000); // Delay in milliseconds
+      }, 3000); 
     } catch (error) {
       console.error("Error", error);
     }

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import SideBar from "./SideBar";
 import Header from './Header';
 import Turma from './Turma';
-import CriarTurma from './CriarTurma.jsx'; // Componente que será usado para criar turma
+import CriarTurma from './CriarTurma.jsx';
 import { Contents } from "./AlunoTurma.style";
 import { Main } from "./Turma.style";
 import NewList from "./NewList.jsx";

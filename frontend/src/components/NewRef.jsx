@@ -21,7 +21,7 @@ const QuestionFormRef = ({ turmaId }) => {
 
       const response = await axios.post(
         "http://localhost:8800/professor/adicionarRef",
-        newReference // Enviando o objeto newReference diretamente
+        newReference 
       );
       console.log("Data saved to database:", response.data);
       setNewReference({

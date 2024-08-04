@@ -17,10 +17,10 @@ function Hero() {
             </HeroText>
             <Buttons>
               <Link to="/login">
-                <button className="botao">Entrar</button>
+                <button className="botao login">Entrar</button>
               </Link>
               <Link to="/cadastro">
-                <button className="botao">Cadastro</button>
+                <button className="botao cadastro">Cadastro</button>
               </Link>
             </Buttons>
           </HeroItems>

@@ -24,8 +24,7 @@ function Login() {
         try {
             const response = await axios.post('http://localhost:8800/login', formData);
             console.log('Login realizado com sucesso:', response.data);
-            
-            // Redirecionar com base no tipo de usuário
+
             if (response.data.user.userType == 'aluno') {
                 console.log(response.data.user);
                 navigate('/aluno/turma', { state: { user: response.data.user } });
@@ -33,13 +32,13 @@ function Login() {
                 navigate('/professor', { state: { user: response.data.user } });
             }
             
-            setErrorMessage(''); // Limpa a mensagem de erro em caso de sucesso
+            setErrorMessage(''); 
         } catch (error) {
             console.error('Erro ao realizar login:', error);
             if (error.response && error.response.data) {
-                setErrorMessage(error.response.data.message); // Define a mensagem de erro vinda do servidor
+                setErrorMessage(error.response.data.message);
             } else {
-                setErrorMessage('Erro ao realizar login. Por favor, tente novamente.'); // Define uma mensagem de erro genérica
+                setErrorMessage('Erro ao realizar login. Por favor, tente novamente.'); 
             }
         }
     };

@@ -79,7 +79,6 @@ function Lista(props) {
       .then((response) => {
         console.log("Respostas salvas com sucesso:", response.data);
 
-        // Depois de salvar as respostas, buscamos os resultados e salvamos as tags
         return axios.get(`http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/resultado`);
       })
       .then((response) => {
@@ -87,7 +86,6 @@ function Lista(props) {
         console.log(score)
         
 
-        // Salvar as tags
         return axios.post(
           `http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/salvarTags`,
           {

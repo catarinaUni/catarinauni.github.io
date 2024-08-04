@@ -45,11 +45,11 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
       try {
         const response = await axios.get(
           `http://localhost:8800/turma/${turmaId}/ListarAlunos`
-        ); // Ajuste a URL conforme necessário
+        );
         const alunosData = response.data["alunos"];
         console.log(alunosData["alunos"])
         const alunosMapping = alunosData.reduce((acc, aluno) => {
-          acc[aluno.id] = aluno.nome; // Ajuste conforme o nome da propriedade
+          acc[aluno.id] = aluno.nome;
           console.log(aluno.nome)
           return acc;
         }, {});
@@ -86,7 +86,6 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
             return acc;
           }, {});
 
-          // Transformar o objeto em um array de grupos
           const gruposArray = Object.keys(groupedData).map((grupo_id) => ({
             grupo_id,
             alunos: groupedData[grupo_id],
@@ -132,7 +131,6 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
 
         });
 
-        // Calcular a média do score
         setQntAluno(totalAlunos)
         if (totalScore == 0) {
           setScoreGeral(0)
@@ -141,8 +139,6 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
           setScoreGeral(totalScore / totalAlunos);
         }
         
-
-        // Ordenar as tags pela frequência e pegar as 5 mais frequentes
         const sortedTags = Object.entries(tagFrequency)
           .sort((a, b) => b[1] - a[1])
           .slice(0, 5);
@@ -180,7 +176,6 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
             })
           );
 
-          // Salvar grupos no backend
           const salvarGruposPromises = [];
           Object.entries(response.data).forEach(([key, alunos]) => {
             const grupoId = parseInt(key, 10);
@@ -197,7 +192,6 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
             });
           });
 
-          // Esperar todas as requisições serem concluídas
           Promise.all(salvarGruposPromises)
             .then(() => {
               return axios.post(

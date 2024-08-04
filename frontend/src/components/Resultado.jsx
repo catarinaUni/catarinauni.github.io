@@ -44,11 +44,11 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
       try {
         const response = await axios.get(
           `http://localhost:8800/turma/${turmaId}/ListarAlunos`
-        ); // Ajuste a URL conforme necessário
+        ); 
         const alunosData = response.data["alunos"];
         console.log(alunosData["alunos"]);
         const alunosMapping = alunosData.reduce((acc, aluno) => {
-          acc[aluno.id] = aluno.nome; // Ajuste conforme o nome da propriedade
+          acc[aluno.id] = aluno.nome;
           console.log(aluno.nome);
           return acc;
         }, {});
@@ -82,7 +82,6 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
             return acc;
           }, {});
 
-          // Transformar o objeto em um array de grupos
           const gruposArray = Object.keys(groupedData).map((grupo_id) => ({
             grupo_id,
             alunos: groupedData[grupo_id],
@@ -123,9 +122,8 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
      });
  }, [lista.id, aluno.id]);
 
- // Processar materiais quando topTags ou formato mudarem
  useEffect(() => {
-   if (topTags.length === 0 || !formato) return; // Verifique se as tags e o formato estão disponíveis
+   if (topTags.length === 0 || !formato) return;
 
    axios
      .get(`http://localhost:8800/aluno/turma/turmaRef/${turmaId}`)

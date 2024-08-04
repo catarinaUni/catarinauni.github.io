@@ -36,16 +36,17 @@ export const Buttons = styled.div`
   display: flex;
   width: 70%;
   justify-content: space-around;
-  margin-top: 100px;
+  margin-top: 140px;
 
   .botao {
     width: 150px;
-    height: 30px;
+    height: 35px;
     border-radius: 10px;
     border: none;
     background-color: #3497da;
     color: white;
     font-size: 18px;
+
 
     &:hover {
       background-color: #42aaf0;

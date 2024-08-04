@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// Estilização para o container do carrossel
+
 const CarouselContainer = styled.div`
   display: flex;
   overflow-x: auto;
@@ -25,10 +25,9 @@ const CarouselContainer = styled.div`
   }
 `;
 
-// Estilização para cada item do carrossel
 const CarouselItem = styled.div`
   flex: 0 0 auto;
-  width: 13%; // Ajuste para mostrar 6 itens por vez
+  width: 13%; 
   text-align: center;
   
   hyphens: auto;
@@ -36,7 +35,6 @@ const CarouselItem = styled.div`
 `;
 
 
-// Componente React genérico para carrossel
 const Carousel = ({ items, renderItem }) => {
   return (
     <CarouselContainer>

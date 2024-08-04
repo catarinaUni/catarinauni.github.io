@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios"; // Make sure axios is imported
+import axios from "axios";
 import SideBar from "./SideBar";
 import Resultado from "./Resultado";
 import Header from "./Header";

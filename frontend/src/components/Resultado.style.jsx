@@ -50,14 +50,16 @@ export const ResultContent = styled.div`
 
   button {
     margin-top: 30px;
-    width: 100px;
+    width: 130px;
     padding: 5px;
-    border-radius: 15px;
+    height: 35px;
+    border-radius: 20px;
     border: none;
-    color: #494949;
-    background-color: #61b9ff;
+    font-size: 16px;
+    color: white;
+    background-color: #50be81;
     &:disabled {
-      background-color: #61b8ff5c;
+      background-color: #9494945c;
       color: #49494955;
     }
   }

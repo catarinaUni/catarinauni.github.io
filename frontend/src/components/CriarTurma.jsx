@@ -16,7 +16,6 @@ function CriarTurma({ user }) {
                 turmaName
             });
             setTurmaName('');
-            // Sucesso, você pode atualizar a interface ou redirecionar conforme necessário
         } catch (error) {
             console.error('Erro ao criar turma:', error);
             setErrorMessage('Erro ao criar turma.');

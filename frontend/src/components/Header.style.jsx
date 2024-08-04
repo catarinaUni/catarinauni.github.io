@@ -13,11 +13,9 @@ export const Main = styled.div`
   justify-content: space-around;
   align-items: flex-start;
   padding-left: 15%;
-  background: #ffad1f;
+  
 
-  p {
-    color: white;
-  }
+ 
 `;
 
 export const Title = styled.div`

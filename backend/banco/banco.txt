@@ -1,3 +1,5 @@
+
+
 CREATE DATABASE IF NOT EXISTS isaData;
 USE isaData;
 
@@ -160,8 +162,8 @@ INSERT INTO alunos (nome, email, senha, material_formato, turno, bgcolor) VALUES
 ('Isabela Rocha', 'isabela.rocha@example.com', '123', 'Video', 'Manhã', '#a3c2c2'),
 ('João Mendes', 'joao.mendes@example.com', '123', 'Quiz', 'Tarde', '#a3c2c2');
 
-INSERT INTO professores (nome, email, senha, bgcolor) VALUES ( "Debora", 'debora@gmail.com', '123', '#a3c2c2');
-INSERT INTO turmas ( nome, professor_id, codigo, bgcolor) VALUES ('Programação', '1', '452316', '#f14300');
+INSERT INTO professores (nome, email, senha, bgcolor) VALUES ( "Ana Júlia", 'anajulia@gmail.com', '123', '#a3c2c2');
+INSERT INTO turmas ( nome, professor_id, codigo, bgcolor) VALUES ('Programação', '1', '452316', '#ffd1c0');
 INSERT INTO turma_alunos (turma_id, aluno_id) VALUES ('1', '1');
 INSERT INTO turma_alunos (turma_id, aluno_id) VALUES ('1', '2');
 INSERT INTO turma_alunos (turma_id, aluno_id) VALUES ('1', '3');
