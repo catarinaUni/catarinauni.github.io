@@ -36,7 +36,7 @@ export const FormGroup = styled.div`
   select {
     color: #3f3f3f;
     height: 30px;
-    background-color: #e3e3e3;
+    background-color: #f5f5f5;
     color: #222831;
     font-size: 14px;
     border-radius: 14px;
@@ -54,7 +54,7 @@ export const Input = styled.input`
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 15px;
-  background-color: #e3e3e3;
+  background-color: #f5f5f5;
 `;
 
 export const SubmitButton = styled.button`

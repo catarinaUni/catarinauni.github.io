@@ -103,7 +103,7 @@ function SideBar(props) {
                   border: "1px solid #533ad4",
                   width: "100px",
                   height: "100px",
-                  fontSize: "50px"
+                  fontSize: "60px"
                 }}
               >
                 {props.userName[0]}

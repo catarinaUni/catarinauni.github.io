@@ -22,7 +22,7 @@ export const MainContent = styled.div`
   .seta {
     display: inline-block;
     width: 40px;
-    color: #616161;
+    color: black;
     cursor: pointer;
   }
 

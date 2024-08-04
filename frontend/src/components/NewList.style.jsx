@@ -19,7 +19,7 @@ export const Form = styled.div`
     border: none;
     font-size: 20px;
     text-align: center;
-    color: #494949;
+    color: black;
 
     &:focus {
       outline: none;
@@ -28,7 +28,7 @@ export const Form = styled.div`
 
   .enunciado {
     width: 100%;
-    color: #494949;
+    color: black;
     padding-left: 10px;
     padding-bottom: 5px;
   }
@@ -67,7 +67,7 @@ export const Form = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    color: #494949;
+    color: black;
     & > label {
       margin-bottom: 10px;
     }
@@ -84,9 +84,6 @@ export const Form = styled.div`
         height: 30px;
         padding: 8px;
         font-size: 16px;
-        &:focus {
-          border-color: white;
-        }
       }
     }
   }
@@ -113,10 +110,6 @@ export const Form = styled.div`
     font-family: "Roboto", sans-serif;
     font-size: 16px;
     line-height: 1.5;
-
-    &:focus {
-      border-color: white;
-    }
 
     &::placeholder {
       color: #999;
@@ -148,10 +141,6 @@ export const Form = styled.div`
         border-radius: 30px;
         outline: none;
 
-        &:focus {
-          border-color: white;
-        }
-
         &::placeholder {
           color: #999;
         }
@@ -177,7 +166,7 @@ export const Form = styled.div`
       padding-left: 8px;
       border: 1px solid #cccccc;
       background-color: white;
-      color: #494949;
+      color: black;
     }
   }
 
@@ -191,7 +180,7 @@ export const Form = styled.div`
     margin-bottom: 60px;
 
     & > p {
-      color: #494949;
+      color: black;
     }
 
     & > div {
@@ -203,9 +192,6 @@ export const Form = styled.div`
         border: 1px solid #cccccc;
         height: 30px;
         padding: 8px;
-        &:focus {
-          border-color: white;
-        }
       }
     }
   }
