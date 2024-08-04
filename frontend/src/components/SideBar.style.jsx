@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Side = styled.div`
   font-size: 16px;
@@ -8,7 +8,7 @@ export const Side = styled.div`
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #eeeeee;
+  background-color: white;
   color: #494949;
   overflow-x: hidden;
   display: flex;
@@ -87,11 +87,11 @@ export const TurmaButton = styled.div`
 `;
 
 export const TurmasList = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 20px;
 `;
 
 export const NewTurmaButton = styled.div`
@@ -109,42 +109,42 @@ export const NewTurmaButton = styled.div`
 `;
 
 export const Modal = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 `;
 
 export const ModalContent = styled.div`
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    border-radius: 5px;
-    width: 40%;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 5px;
+  width: 40%;
 `;
 
 export const CloseButton = styled.span`
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 
-    &:hover,
-    &:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+  &:hover,
+  &:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
 `;
 
 export const ErrorMessage = styled.p`
-    color: red;
+  color: red;
 `;

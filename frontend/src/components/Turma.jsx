@@ -14,25 +14,23 @@ import {
 } from "./Turma.style";
 import Carousel from "./Carousel";
 import imageTest from "../assets/imgt.png";
-import Modal from "./Modal"; 
-import listLogo from "./listLogo.png"
-import refLogo from "./refLogo.png"
+import Modal from "./Modal";
+import listLogo from "../assets/listLogo.png";
+import refLogo from "../assets/refLogo.png";
 
 function Turma({
   user,
   turma,
   handleSetFlagNovaLista,
   handleSetFlagLista,
-  handleSetFlagNovaRef
+  handleSetFlagNovaRef,
 }) {
   const [alunos, setAlunos] = useState([]);
   const [listas, setListas] = useState([]);
-  const [refs, setRefs] = useState([])
+  const [refs, setRefs] = useState([]);
   const turmaId = turma.id;
-    const [selectedRef, setSelectedRef] = useState(null);
+  const [selectedRef, setSelectedRef] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-
 
   useEffect(() => {
     const fetchAlunos = async () => {
@@ -65,7 +63,7 @@ function Turma({
           `http://localhost:8800/aluno/turma/turmaRef/${turmaId}`
         );
         setRefs(response.data.reverse());
-        console.log(response.data)
+        console.log(response.data);
       } catch (error) {
         console.error("Erro ao buscar refs da turma:", error);
       }
@@ -76,18 +74,15 @@ function Turma({
     fetchRefs();
   }, [turma.id]);
 
+  const openModal = (refData) => {
+    setSelectedRef(refData);
+    setIsModalOpen(true);
+  };
 
-  
-
-   const openModal = (refData) => {
-     setSelectedRef(refData);
-     setIsModalOpen(true);
-   };
-
-   const closeModal = () => {
-     setIsModalOpen(false);
-     setSelectedRef(null);
-   };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRef(null);
+  };
 
   return (
     <Main>
@@ -101,11 +96,8 @@ function Turma({
               items={alunos}
               renderItem={(aluno) => (
                 <div className="dataCaros">
-                  <StyledImage
-                    style={{ backgroundColor: aluno.bgcolor || "#E3E3E3" }}
-                  >
+                  <StyledImage style={{ border: "1px solid #533ad4" }}>
                     {aluno.nome[0]}
-
                   </StyledImage>
                   <p style={{ color: "#494949" }}>{aluno.nome}</p>
                 </div>

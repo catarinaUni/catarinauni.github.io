@@ -1,36 +1,35 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const MainHero = styled.div`
-    width: 100%;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #EEEEEE;
-    color: #2e2e2e;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: white;
+  color: #2e2e2e;
 `;
 
 export const HeroItems = styled.div`
-    width: 50%;
-    display:flex;
+  width: 50%;
+  display: flex;
 
-    align-items: center;
-    flex-direction: column;
-    height: 50%;
-
+  align-items: center;
+  flex-direction: column;
+  height: 50%;
 `;
 
-export const LogoSection = styled.div` 
-    img{
-        width: 400px;
-    }
+export const LogoSection = styled.div`
+  img {
+    width: 400px;
+  }
 `;
 
 export const HeroText = styled.div`
-    margin-top: 100px;
-    font-size: 24px;
-    font-weight: 400;
-    text-align: center;
+  margin-top: 100px;
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
 `;
 
 export const Buttons = styled.div`

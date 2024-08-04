@@ -1,6 +1,7 @@
 import express from "express";
-import { addQuestion, saveRef } from "../controllers/insertPerguntas.js";
-import { checkAnswers, getQuestions, saveAnswers,  saveResultTags, getReferences, checkIfExists, checkIfExistsAluno } from '../controllers/respondsListStudent.js';
+import { saveRef, getReferences } from "../controllers/refs.js"; 
+import { checkAnswers, saveAnswers, saveResultTags, checkIfExists, checkIfExistsAluno } from '../controllers/responses.js';
+import { addQuestion, getQuestions } from "../controllers/questions.js";
 import { inserirAluno, inserirProfessor } from '../controllers/cadastro.js';
 import { checkLogin } from "../controllers/login.js";
 import { participarTurma } from "../controllers/participateTurma.js";
@@ -17,33 +18,22 @@ router.get("/grupos/getGrupos", getGrupos);
 router.post("/professor/salvarGrupos/api", salvarChamada)
 router.get("/grupos/chamada", getChamada)
 router.post("/professor/adicionarRef", saveRef);
-
-//rota para obter todas as perguntas
 router.get("/aluno/turma/lista/:listaId", getQuestions);
-//rota para obter todas as referencias
 router.get("/aluno/turma/turmaRef/:turmaId", getReferences);
-// Rota para verificar as respostas do aluno
 router.post("/aluno/turma/resultado", saveAnswers);
 router.get("/aluno/turma/resultado/verificar", checkIfExists);
 router.get("/aluno/turma/resultado/verificarAluno", checkIfExistsAluno);
 router.get("/aluno/turma/:alunoId/lista/:listaId/resultado", checkAnswers);
 router.post('/aluno/turma/:alunoId/lista/:listaId/salvarTags', saveResultTags);
-
-
-//rota para verificação de login
 router.post("/login", checkLogin);
-
-//rota para cadastro seja aluno, ou professor
 router.post('/cadastro', async (req, res) => {
 
     const { username, password, email, userType, userFormatPref, userTurno } = req.body;
   
     try {
       if (userType === 'aluno') {
-        // Insere no banco de dados de alunos
         await inserirAluno({ username, password, email, userFormatPref, userTurno});
       } else if (userType === 'professor') {
-        // Insere no banco de dados de professores
         await inserirProfessor({ username, password, email });
       }
   
@@ -54,10 +44,7 @@ router.post('/cadastro', async (req, res) => {
     }
   });
 
-  // aqui é quando o aluno vai entrar em uma turma
   router.post('/participar-turma', participarTurma);
-
-  // aqui é pra mostrar as turma na sidebar em professor/aluno
   router.get('/turmas/:userId/:userType', (req, res) => {
     const userId = req.params.userId;
     const userType = req.params.userType;
@@ -81,7 +68,6 @@ router.post('/cadastro', async (req, res) => {
     });
 });
 
-// Rota para obter listas de uma turma
 router.get('/turma/:turmaId/listas', (req, res) => {
   
   const turmaId = req.params.turmaId;
@@ -97,7 +83,6 @@ router.get('/turma/:turmaId/listas', (req, res) => {
   });
 });
 
-// Rota para buscar os alunos da turma
 router.get('/turma/:turmaId/ListarAlunos', (req, res) => {
 
   const turmaId = req.params.turmaId;  
@@ -122,7 +107,6 @@ router.get('/turma/:turmaId/ListarAlunos', (req, res) => {
   });
 });
 
-// para o professor criar turma
 router.post('/turmas/criar-turma', criarTurma);
 
 

@@ -1,17 +1,15 @@
 import styled from "styled-components";
 
-export const Main= styled.div`
-    display:flex;
-    color: white;
-    min-height: 100vh;
-    background-color: #EEEEEE;
-    
-    
+export const Main = styled.div`
+  display: flex;
+  color: white;
+  min-height: 100vh;
+  background-color: white;
 `;
 
 export const MainContent = styled.div`
   width: 70vw;
-  background-color: #eeeeee;
+  background-color: white;
   color: #333333;
   margin-left: 5vw;
   margin-top: 50px;
@@ -39,29 +37,24 @@ export const MainContent = styled.div`
   }
 `;
 
-
-
 export const Header = styled.div`
+  background-color: #00a4cc;
+  width: 100%;
+  height: 30vh;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 
-    background-color:#00A4CC;
-    width:100%;
-    height: 30vh;
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    p{
-        padding-top:50px;
-    }
-
+  p {
+    padding-top: 50px;
+  }
 `;
 
 export const Title = styled.div`
   font-size: 45px;
   padding-top: 50px;
   padding-right: 100px;
-  
 `;
 
 export const StyledImage = styled.div`
@@ -74,7 +67,7 @@ export const StyledImage = styled.div`
   flex-direction: column;
   font-size: 40px;
   font-weight: bold;
-  color: white;
+  color: #533ad4;
   margin-bottom: 5px;
   border-radius: 15px;
 
@@ -89,7 +82,7 @@ export const StyledImage = styled.div`
   }
 
   .listLogo {
-    background-color: #40e0d0;
+    border: 1px solid #50be80;
     width: 100%;
     height: 100%;
     display: flex;
@@ -99,7 +92,7 @@ export const StyledImage = styled.div`
   }
 
   .refLogo {
-    background-color: #ff7f50;
+    border: 1px solid #ffad1f;
   }
 `;
 
@@ -128,10 +121,8 @@ export const MainItems = styled.div`
   }
 `;
 
-
-
 export const Alunos = styled.div`
-    margin-bottom: 50px;
+  margin-bottom: 50px;
 `;
 
 export const Titulo = styled.div`
@@ -148,6 +139,7 @@ export const Titulo = styled.div`
   .new {
     border: 1px solid #bdbdbd;
     padding: 5px;
+    border-radius: 10px;
 
     &:hover {
       background-color: #e3e3e3;
@@ -156,28 +148,17 @@ export const Titulo = styled.div`
   }
 `;
 
-
-
 export const Image = styled.img`
-
-    width: 80px;
-
+  width: 80px;
 `;
-
 
 export const Listas = styled.div`
-margin-bottom: 50px;
-
-
+  margin-bottom: 50px;
 `;
 
-export const Materiais = styled.div` 
-
-`;
+export const Materiais = styled.div``;
 
 export const ButtonNew = styled.div`
-    margin-left:30px;
-    color: #333333;
-    
-
+  margin-left: 30px;
+  color: #333333;
 `;

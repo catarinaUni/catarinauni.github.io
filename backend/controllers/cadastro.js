@@ -10,29 +10,37 @@ const colors = [
   "#f5f5dc", // Bege Claro
 ];
 
-// Função para selecionar uma cor aleatoriamente
 function getRandomColor(colors) {
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex];
 }
 
-// Função para inserir um aluno no banco de dados
 export async function inserirAluno(dados) {
-  var bgcolor = getRandomColor(colors)
+  var bgcolor = getRandomColor(colors);
   try {
-   
-    const result = await db.query('INSERT INTO alunos (nome, senha, email, material_formato, turno, bgcolor) VALUES (?, ?, ?, ?, ?, ?)', [dados.username, dados.password, dados.email, dados.userFormatPref, dados.userTurno, bgcolor]);
+    const result = await db.query(
+      "INSERT INTO alunos (nome, senha, email, material_formato, turno, bgcolor) VALUES (?, ?, ?, ?, ?, ?)",
+      [
+        dados.username,
+        dados.password,
+        dados.email,
+        dados.userFormatPref,
+        dados.userTurno,
+        bgcolor,
+      ]
+    );
     return result;
   } catch (error) {
     throw error;
   }
 }
 
-// Função para inserir um professor no banco de dados
 export async function inserirProfessor(dados) {
   try {
-    
-    const result = await db.query('INSERT INTO professores (nome, senha, email) VALUES (?, ?, ?)', [dados.username, dados.password, dados.email]);
+    const result = await db.query(
+      "INSERT INTO professores (nome, senha, email) VALUES (?, ?, ?)",
+      [dados.username, dados.password, dados.email]
+    );
     return result;
   } catch (error) {
     throw error;

@@ -23,7 +23,6 @@ export const participarTurma = (req, res) => {
                     return res.status(500).json({ message: 'Erro interno do servidor' });
                 }
 
-                // Após a inserção bem-sucedida, consultar a lista atualizada de turmas do aluno
                 const updatedQuery = 'SELECT t.* FROM turmas t INNER JOIN turma_alunos ta ON t.id = ta.turma_id WHERE ta.aluno_id = ?';
                 db.query(updatedQuery, [userId], (err, updatedResults) => {
                     if (err) {

@@ -3,7 +3,7 @@ import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
 import { ListaNome, Question } from "./Lista.style";
 import { Score, Result, ResultContent, Subtitulo, Grupos } from "./Resultado.style";
 import axios from "axios";
-import arrow from "./arrow.png";
+import arrow from "../assets/arrow.png";
 
 function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
   const [resultados, setResultados] = useState([]);

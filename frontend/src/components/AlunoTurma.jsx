@@ -100,6 +100,7 @@ function AlunoTurma() {
           userType={user.userType}
           userId={user?.id}
           handleSetFlagTurma={handleSetFlagTurma}
+          bgcolor={user.bgcolor}
         />
         <Contents>
           <Header turma={selectedTurma} />

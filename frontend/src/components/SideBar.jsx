@@ -13,7 +13,8 @@ function SideBar(props) {
     const [turmaName, setTurmaName] = useState(''); // Novo estado para nome da turma
     const [errorMessage, setErrorMessage] = useState('');
     const [turmas, setTurmas] = useState([]);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  console.log(props)
 
     const fetchTurmas = async () => {
         try {
@@ -99,9 +100,10 @@ function SideBar(props) {
             <UserItems>
               <StyledImage
                 style={{
-                  backgroundColor: props.bgcolor || "#E3E3E3",
+                  border: "1px solid #533ad4",
                   width: "100px",
                   height: "100px",
+                  fontSize: "50px"
                 }}
               >
                 {props.userName[0]}
@@ -132,7 +134,9 @@ function SideBar(props) {
               )}
             </TurmasItems>
 
-            <p onClick={handleLogout} className="sair">Sair da conta</p>
+            <p onClick={handleLogout} className="sair">
+              Sair da conta
+            </p>
           </SideBarItems>
         </Side>
 

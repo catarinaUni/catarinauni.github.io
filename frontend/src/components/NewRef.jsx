@@ -4,7 +4,7 @@ import { Form } from "./NewList.style";
 import { Main, MainContent, MainItems } from "./Turma.style";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import arrow from "./arrow.png";
+import arrow from "../assets/arrow.png";
 
 const QuestionFormRef = ({ turmaId }) => {
   const [references, setReferences] = useState([]);

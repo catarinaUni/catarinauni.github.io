@@ -14,7 +14,6 @@ export const addQuestion = (req, res) => {
     return res.status(400).json({ error: "Turma id não esta definido" });
   }
   const listName = newList.nome;
-  // Inserir a nova lista na tabela listas
   const insertListQuery = "INSERT INTO listas (nome) VALUES (?)";
 
   db.query(insertListQuery, [listName], (err, result) => {
@@ -22,10 +21,8 @@ export const addQuestion = (req, res) => {
       return res.json(err);
     }
 
-    // Obter o id da nova lista inserida
     const listId = result.insertId;
 
-    // Inserir as perguntas na tabela perguntas
     const insertQuestionsQuery = `
             INSERT INTO perguntas 
             (pergunta, alternativa_a, alternativa_b, alternativa_c, alternativa_d, resposta_correta, tag_1, tag_2, tag_3) 
@@ -49,7 +46,6 @@ export const addQuestion = (req, res) => {
         return res.json(err);
       }
 
-      // Obter os ids das perguntas inseridas
       const insertedQuestionIds = [];
       for (
         let i = result.insertId;
@@ -59,7 +55,6 @@ export const addQuestion = (req, res) => {
         insertedQuestionIds.push(i);
       }
 
-      // Inserir as associações na tabela lista_perguntas
       const insertAssociationsQuery =
         "INSERT INTO lista_perguntas (lista_id, pergunta_id) VALUES ?";
       const associationValues = insertedQuestionIds.map((questionId) => [
@@ -71,8 +66,6 @@ export const addQuestion = (req, res) => {
         if (err) {
           return res.json(err);
         }
-
-        // Associar a lista com a turma na tabela turma_listas
         const insertTurmaListaQuery =
           "INSERT INTO turma_listas (turma_id, lista_id) VALUES (?, ?)";
         db.query(insertTurmaListaQuery, [turmaId, listId], (err, result) => {
@@ -85,31 +78,31 @@ export const addQuestion = (req, res) => {
   });
 };
 
-export const saveRef = (req, res) => {
-  const { turmaId, ref, tag, formato } = req.body;
 
-  // Verifique se turmaId está presente
-  if (!turmaId || !ref || !tag || !formato) {
-    return res
-      .status(400)
-      .json({ message: "Todos os campos são obrigatórios." });
-  }
+export const getQuestions = (req, res) => {
+  const listaId = req.params.listaId; // Obtendo o lista_id dos parâmetros da rota
+  const q = `
+        SELECT p.id, p.pergunta, p.alternativa_a, p.alternativa_b, p.alternativa_c, p.alternativa_d 
+        FROM perguntas as p
+        JOIN lista_perguntas as lp on p.id = lp.pergunta_id
+        JOIN listas as l on l.id = lp.lista_id
+        WHERE lista_id = ?
+    `;
 
-  const insertQuery = `
-    INSERT INTO referencias (turma_id, ref, tag, formato)
-    VALUES (?, ?, ?, ?)
-  `;
+  db.query(q, [listaId], (err, data) => {
+    if (err) return res.status(500).json(err);
 
-  db.query(insertQuery, [turmaId, ref, tag, formato], (err, data) => {
-    if (err) {
-      console.error("Erro ao inserir no banco de dados:", err);
-      return res
-        .status(500)
-        .json({ message: "Erro ao salvar referência", error: err });
-    }
+    const questions = data.map((row) => ({
+      id: row.id,
+      question: row.pergunta,
+      alternatives: {
+        a: row.alternativa_a,
+        b: row.alternativa_b,
+        c: row.alternativa_c,
+        d: row.alternativa_d,
+      },
+    }));
 
-    return res
-      .status(200)
-      .json({ message: "Referência salva com sucesso.", data: data });
+    return res.status(200).json(questions);
   });
 };

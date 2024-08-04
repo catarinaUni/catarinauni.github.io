@@ -12,7 +12,7 @@ function Header(props){
     console.log(props.turma.bgcolor)
 
     return (
-      <Main style={{ backgroundColor: bgcolor || "#E3E3E3" }}>
+      <Main >
         <Title>{props.turma.nome}</Title>
         <p>
           {textCod}

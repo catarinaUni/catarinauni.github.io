@@ -13,8 +13,8 @@ import {
 } from "./Turma.style";
 import Carousel from "./Carousel";
 import imageTest from "../assets/imgt.png";
-import listLogo from "./listLogo.png";
-import refLogo from "./refLogo.png";
+import listLogo from "../assets/listLogo.png";
+import refLogo from "../assets/refLogo.png";
 
 function AlunoTurmaInscrito(props) {
   const { user, turma } = props;
