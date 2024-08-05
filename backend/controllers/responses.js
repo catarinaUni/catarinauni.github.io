@@ -161,6 +161,10 @@ export const checkIfExistsAluno = (req, res) => {
   const alunoId = req.query.alunoId;
 
   const query = "SELECT * FROM resultado_listas WHERE lista_id = ? AND aluno_id = ?;";
+   const queryCount =
+     "SELECT COUNT(*) AS total_perguntas FROM lista_perguntas WHERE lista_id = ?;";
+
+  
 
   db.query(query, [listaId, alunoId], (err, results) => {
     if (err) {
@@ -168,6 +172,16 @@ export const checkIfExistsAluno = (req, res) => {
       return res.status(500).json(err);
     }
 
-    return res.status(200).json(results);
+    db.query(queryCount, [listaId], (errCount, countResults) => {
+      if (errCount) {
+        console.error("Erro ao contar perguntas:", errCount);
+        return res.status(500).json(errCount);
+      }
+
+      return res.status(200).json({
+        results,
+        total_perguntas: countResults[0].total_perguntas,
+      });
+    });
   });
 };

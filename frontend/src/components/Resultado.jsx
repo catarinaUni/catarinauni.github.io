@@ -16,13 +16,14 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
   const [grupos, setGrupos] = useState([]);
   const [chamada, setChamada] = useState(false);
   const [matRelev, setMatRelev] = useState([])
+  const [qntPer, setQntPer] = useState(0);
   
 
   const [score, setScore] = useState(0);
   const [alunosMap, setAlunosMap] = useState({});
 
   useEffect(() => {
-    console.log(turmaId, listaId);
+    console.log("listaaaaaaaaaaaaaaaa ", lista);
     axios
       .get(`http://localhost:8800/grupos/chamada`, {
         params: {
@@ -107,10 +108,11 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
        },
      })
      .then((response) => {
+       setQntPer(response.data.total_perguntas);
        console.log("aluno", response.data);
-       setScore(response.data[0]["score"]);
-       setFormato(response.data[0]["formato"]);
-       const tagsString = response.data[0]["tags"];
+       setScore(response.data.results[0]["score"]);
+       setFormato(response.data.results[0]["formato"]);
+       const tagsString = response.data.results[0]["tags"];
 
        const tagsArray = tagsString.split(",").map((tag) => tag.trim());
        console.log(tagsArray);
@@ -184,7 +186,7 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
             <ResultContent>
               <p>Média de acertos: </p>
               <div>
-                <p>{score}</p>
+                <p>{score}/{qntPer }</p>
               </div>
             </ResultContent>
             <ResultContent>
