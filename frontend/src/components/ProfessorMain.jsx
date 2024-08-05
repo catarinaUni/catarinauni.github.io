@@ -21,6 +21,7 @@ function ProfessorMain() {
     const [flagLista, setFlagLista] = useState(false);
     const [selectedLista, setSelectedLista] = useState([]);
     const [flagNewRef, setFlagNewRef] = useState(false)
+    const [render, setRender] = useState(false)
 
 
     const handleSetFlagLista = (flag, lista) => {
@@ -56,6 +57,7 @@ function ProfessorMain() {
         setFlagCriarTurma(false)
         setFlagLista(false)
         setFlagNewRef(false)
+        setRender((prev) => !prev);
         
 
         
@@ -72,7 +74,17 @@ function ProfessorMain() {
 
     const renderContent = () => {
         if (flagTurma) {
-            return <Turma user={user} turma={selectedTurma} handleSetFlagNovaLista={handleSetFlagNovaLista} handleSetFlagLista={handleSetFlagLista} handleSetFlagNovaRef={handleSetFlagNovaRef } />;
+            return (
+              <Turma
+                key={`turma-${selectedTurma.id}-${render}`} 
+                user={user}
+                render={render}
+                turma={selectedTurma}
+                handleSetFlagNovaLista={handleSetFlagNovaLista}
+                handleSetFlagLista={handleSetFlagLista}
+                handleSetFlagNovaRef={handleSetFlagNovaRef}
+              />
+            );
         }
         if (flagCriarTurma) {
             return <CriarTurma user={user} />;
@@ -81,7 +93,9 @@ function ProfessorMain() {
             return (
               <NewList
                 turma={selectedTurma}
-                handleSetFlagTurma={handleSetFlagTurma}
+                    handleSetFlagTurma={handleSetFlagTurma}
+                    setRender={setRender}
+                    render={render}
               />
             );
         }

@@ -24,6 +24,7 @@ function Turma({
   handleSetFlagNovaLista,
   handleSetFlagLista,
   handleSetFlagNovaRef,
+  render
 }) {
   const [alunos, setAlunos] = useState([]);
   const [listas, setListas] = useState([]);
@@ -33,46 +34,32 @@ function Turma({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const fetchAlunos = async () => {
+    const fetchData = async () => {
       try {
-        console.log("alunos em turma ID:", turma.id);
-        const response = await axios.get(
+        const alunosResponse = await axios.get(
           `http://localhost:8800/turma/${turma.id}/ListarAlunos`
         );
-        console.log("Resposta da API:", response.data.alunos);
-        setAlunos(response.data.alunos);
-      } catch (error) {
-        console.error("Erro ao buscar alunos da turma:", error);
-      }
-    };
+        setAlunos(alunosResponse.data.alunos);
 
-    const fetchListas = async () => {
-      try {
-        const response = await axios.get(
+        const listasResponse = await axios.get(
           `http://localhost:8800/turma/${turma.id}/listas`
         );
-        setListas(response.data.listas.reverse());
-      } catch (error) {
-        console.error("Erro ao buscar listas da turma:", error);
-      }
-    };
+        setListas(listasResponse.data.listas.reverse());
 
-    const fetchRefs = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8800/aluno/turma/turmaRef/${turmaId}`
+        const refsResponse = await axios.get(
+          `http://localhost:8800/aluno/turma/turmaRef/${turma.id}`
         );
-        setRefs(response.data.reverse());
-        console.log(response.data);
+        setRefs(refsResponse.data.reverse());
       } catch (error) {
-        console.error("Erro ao buscar refs da turma:", error);
+        console.error("Erro ao buscar dados da turma:", error);
       }
     };
 
-    fetchAlunos();
-    fetchListas();
-    fetchRefs();
-  }, [turma.id]);
+    if (turma.id) {
+      fetchData();
+    }
+  }, [turma, render]);
+
 
   const openModal = (refData) => {
     setSelectedRef(refData);

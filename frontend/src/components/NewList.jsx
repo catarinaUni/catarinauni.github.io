@@ -19,8 +19,9 @@ import { json } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ModalContent, ModalOverlay, CloseButton, CancelButton, ConfirmButton, ButtonContainer } from "./Modal.style";
 
-const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
+const QuestionForm = ({ turmaId, handleSetFlagTurma, turma, setRender, render }) => {
   const [list, setList] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [disableButton, setDisableButton] = useState(true);
@@ -34,6 +35,8 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
     resposta: "a",
     tags: ["", "", ""],
   });
+
+    const [showModal, setShowModal] = useState(false);
 
   const isQuestionValid = (question) => {
     const { pergunta, alternativa, resposta, tags } = question;
@@ -82,10 +85,8 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
 
     try {
 
-      toast.success("Lista finalizada com sucesso! Você será redirecionado em breve. Se a lista não aparecer, por favor atualize a página.");
 
-      setTimeout(async () => {
-        try {
+    
           const response = axios.post(
             "http://localhost:8800/professor/turma/novalista",
             { newList, questions, turmaId }
@@ -102,14 +103,11 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
             tags: ["", "", ""],
           });
 
-          handleSetFlagTurma(true, turma);
+      handleSetFlagTurma(true, turma);
+      return setRender(!render)
         } catch (error) {
           console.error("Error saving data to database:", error);
           toast.error("Erro ao salvar a lista.");
-        }
-      }, 3000); 
-    } catch (error) {
-      console.error("Error", error);
     }
   };
 
@@ -128,6 +126,20 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
       tags: newTags,
     });
   };
+
+  const handleConfirmarFinalizacao = () => {
+    handleSaveToJson();
+    setShowModal(false);
+    handleSetFlagTurma(true, turma);
+
+    
+  };
+
+  const handleCancelamento = () => {
+    setShowModal(false);
+  };
+
+
 
   return (
     <div className="questionForm">
@@ -231,14 +243,30 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma }) => {
       <button onClick={handleAddQuestion} className="addPergunta">
         Adicionar Pergunta
       </button>
-      <p className="nQ">Questões adicionadas: { questions.length}</p>
+      <p className="nQ">Questões adicionadas: {questions.length}</p>
       <button
-        onClick={handleSaveToJson}
+        onClick={() => setShowModal(true)}
         className="finalizar"
         disabled={disableButton}
       >
         Finalizar lista
       </button>
+
+      {showModal && (
+        <ModalOverlay>
+          <ModalContent>
+            <CloseButton onClick={handleCancelamento}>X</CloseButton>
+            <h2>Confirmar Finalização</h2>
+            <p>Tem certeza que deseja finalizar a lista?</p>
+            <ButtonContainer>
+              <ConfirmButton onClick={handleConfirmarFinalizacao}>
+                Sim
+              </ConfirmButton>
+              <CancelButton onClick={handleCancelamento}>Cancelar</CancelButton>
+            </ButtonContainer>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </div>
   );
 };

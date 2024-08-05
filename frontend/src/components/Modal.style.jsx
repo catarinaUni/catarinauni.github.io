@@ -81,3 +81,31 @@ export const CloseButton = styled.button`
   font-weight: 700;
   cursor: pointer;
 `;
+
+export const ConfirmButton = styled.button`
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #50be81;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+`;
+
+export const CancelButton = styled.button`
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f86262;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+export const ButtonContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  justify-content: space-between;
+  width: 40%;
+`;
