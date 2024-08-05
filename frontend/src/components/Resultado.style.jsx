@@ -28,7 +28,7 @@ export const ResultContent = styled.div`
   flex-direction: column;
   align-items: center;
   div {
-    background-color: #e3e3e38f;
+      background-color: #e3e3e38f;
     padding: 15px;
     margin-top: 15px;
     min-width: 100px;
@@ -47,6 +47,7 @@ export const ResultContent = styled.div`
       }
     }
   }
+
 
   button {
     margin-top: 30px;

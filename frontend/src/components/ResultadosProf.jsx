@@ -19,9 +19,8 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
   const [qntAluno, setQntAluno] = useState(0)
   const [topTags, setTopTags] = useState([])
   const [alunosMap, setAlunosMap] = useState({});
-
-
-
+  const [loading, setLoading] = useState(false);
+  
   useEffect(() => {
     console.log(turmaId, listaId);
     axios
@@ -157,7 +156,7 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
 
 
   const gerarGrupos = async () => {
-    
+    setLoading(true);
 
     if (dadosJson) {
       try {
@@ -195,12 +194,15 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
         });
 
         console.log("Grupos salvos com sucesso.");
+        setLoading(false);
        return setChamada(true);
       } catch (error) {
         console.error("Erro:", error);
+        setLoading(false);
       }
     } else {
       console.log("Dados JSON não disponíveis.");
+      setLoading(false);
     }
   };
 
@@ -251,11 +253,11 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
                   {qntAluno}{" "}
                   {qntAluno > 1 ? "Alunos responderam" : "Aluno respondeu"}{" "}
                 </p>
-                {chamada ? (
-                  <button disabled>Gerar Grupos</button>
-                ) : (
-                  <button onClick={gerarGrupos}>Gerar Grupos</button>
-                )}
+
+                  <button onClick={gerarGrupos} disabled={chamada || loading}> 
+                    {loading ? "Carregando..." : "Gerar grupos"}
+                  </button>
+ 
               </div>
             </ResultContent>
           </Result>
