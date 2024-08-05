@@ -61,12 +61,10 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
     };
 
     fetchAlunos();
-  }, []);
+  }, [turmaId]);
 
   useEffect(() => {
-
     if (chamada) {
-      
       axios
         .get("http://localhost:8800/grupos/getGrupos", {
           params: {
@@ -76,7 +74,7 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
         })
         .then((response) => {
           console.log("grupos:", response.data);
-          const data = response.data
+          const data = response.data;
           const groupedData = data.reduce((acc, item) => {
             const { grupo_id, aluno_id } = item;
             if (!acc[grupo_id]) {
@@ -97,8 +95,7 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
           console.error(error);
         });
     }
-
-  }, [chamada])
+  }, [chamada, turmaId, listaId]);
 
 
 
@@ -159,67 +156,54 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
 
 
 
-  const gerarGrupos = () => {
-
-
+  const gerarGrupos = async () => {
     
-    setChamada(true);
 
     if (dadosJson) {
-      axios
-        .post("http://127.0.0.1:5000/ga_python", dadosJson)
-        .then((response) => {
-          const gruposData = Object.entries(response.data).map(
-            ([id, items]) => ({
-              id,
-              items,
-            })
-          );
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:5000/ga_python",
+          dadosJson
+        );
+        const gruposData = Object.entries(response.data).map(([id, items]) => ({
+          id,
+          items,
+        }));
 
-          const salvarGruposPromises = [];
-          Object.entries(response.data).forEach(([key, alunos]) => {
-            const grupoId = parseInt(key, 10);
+        const salvarGruposPromises = [];
+        Object.entries(response.data).forEach(([key, alunos]) => {
+          const grupoId = parseInt(key, 10);
 
-            alunos.forEach((aluno) => {
-              salvarGruposPromises.push(
-                axios.post(`http://localhost:8800/professor/salvarGrupos`, {
-                  alunoId: aluno.aluno_id,
-                  turmaId,
-                  listaId,
-                  grupoId,
-                })
-              );
-            });
+          alunos.forEach((aluno) => {
+            salvarGruposPromises.push(
+              axios.post(`http://localhost:8800/professor/salvarGrupos`, {
+                alunoId: aluno.aluno_id,
+                turmaId,
+                listaId,
+                grupoId,
+              })
+            );
           });
-
-          Promise.all(salvarGruposPromises)
-            .then(() => {
-              return axios.post(
-                `http://localhost:8800/professor/salvarGrupos/api`,
-                {
-                  acao_chamada: true,
-                  turmaId,
-                  listaId,
-                }
-              );
-            })
-            .then(() => {
-              console.log("Grupos salvos com sucesso.");
-            })
-            .catch((error) => {
-              console.error("Erro ao salvar grupos:", error);
-            })
-
-        })
-        .catch((error) => {
-          console.error("Erro:", error);
-          
         });
+
+        await Promise.all(salvarGruposPromises);
+
+        await axios.post(`http://localhost:8800/professor/salvarGrupos/api`, {
+          acao_chamada: true,
+          turmaId,
+          listaId,
+        });
+
+        console.log("Grupos salvos com sucesso.");
+       return setChamada(true);
+      } catch (error) {
+        console.error("Erro:", error);
+      }
     } else {
       console.log("Dados JSON não disponíveis.");
-     
     }
   };
+
 
 
 
