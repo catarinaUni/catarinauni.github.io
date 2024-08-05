@@ -27,11 +27,19 @@ export const ResultContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 30px;
+
   div {
-      background-color: #e3e3e38f;
+    background-color: #e3e3e38f;
     padding: 15px;
     margin-top: 15px;
-    min-width: 100px;
+    min-width: 60px;
+    max-width: 500px;
+    text-align: left;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    word-break: break-word;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,7 +55,6 @@ export const ResultContent = styled.div`
       }
     }
   }
-
 
   button {
     margin-top: 30px;
