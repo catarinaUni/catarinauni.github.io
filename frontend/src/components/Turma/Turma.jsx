@@ -12,11 +12,10 @@ import {
   ButtonNew,
   StyledImage,
 } from "./Turma.style";
-import Carousel from "./Carousel";
-import imageTest from "../assets/imgt.png";
-import Modal from "./Modal";
-import listLogo from "../assets/listLogo.png";
-import refLogo from "../assets/refLogo.png";
+import Carousel from "../Carousel/Carousel";
+import Modal from "../Modal/Modal";
+import listLogo from "../../assets/listLogo.png";
+import refLogo from "../../assets/refLogo.png";
 
 function Turma({
   user,

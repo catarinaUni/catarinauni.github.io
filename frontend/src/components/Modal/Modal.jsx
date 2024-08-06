@@ -1,5 +1,5 @@
 import React from "react";
-import { ModalOverlay, ModalContent, CloseButton } from "./Modal.style"; 
+import { ModalOverlay, ModalContent, CloseButton } from "./Modal.style";
 
 const Modal = ({ isOpen, onClose, refData }) => {
   if (!isOpen) return null;

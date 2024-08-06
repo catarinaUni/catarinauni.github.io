@@ -102,5 +102,6 @@ export const Grupos = styled.div`
     padding: 5px;
     width: 100%;
     text-align: center;
+    border-radius: 15px;
   }
 `;

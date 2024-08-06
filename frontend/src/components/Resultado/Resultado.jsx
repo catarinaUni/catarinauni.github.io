@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
-import { ListaNome, Question } from "./Lista.style";
-import { Score, Result, ResultContent, Subtitulo, Grupos } from "./Resultado.style";
+import {
+  Main,
+  MainContent,
+  Header,
+  Title,
+  MainItems,
+} from "../Turma/Turma.style";
+import { ListaNome, Question } from "../Lista/Lista.style";
+import {
+  Score,
+  Result,
+  ResultContent,
+  Subtitulo,
+  Grupos,
+} from "./Resultado.style";
 import axios from "axios";
-import arrow from "../assets/arrow.png";
+import arrow from "../../assets/arrow.png";
 
 function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
   const [resultados, setResultados] = useState([]);
@@ -12,12 +24,11 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
   const listaId = lista.id;
   const turmaId = lista.turma_id;
   const [materiais, setMateriais] = useState([]);
-  const [formato, setFormato] = useState()
+  const [formato, setFormato] = useState();
   const [grupos, setGrupos] = useState([]);
   const [chamada, setChamada] = useState(false);
-  const [matRelev, setMatRelev] = useState([])
+  const [matRelev, setMatRelev] = useState([]);
   const [qntPer, setQntPer] = useState(0);
-  
 
   const [score, setScore] = useState(0);
   const [alunosMap, setAlunosMap] = useState({});
@@ -45,7 +56,7 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
       try {
         const response = await axios.get(
           `http://localhost:8800/turma/${turmaId}/ListarAlunos`
-        ); 
+        );
         const alunosData = response.data["alunos"];
         console.log(alunosData["alunos"]);
         const alunosMapping = alunosData.reduce((acc, aluno) => {
@@ -96,77 +107,71 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
     }
   }, [chamada]);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8800/aluno/turma/resultado/verificarAluno`, {
+        params: {
+          listaId: lista.id,
+          alunoId: aluno.id,
+        },
+      })
+      .then((response) => {
+        setQntPer(response.data.total_perguntas);
+        console.log("aluno", response.data);
+        setScore(response.data.results[0]["score"]);
+        setFormato(response.data.results[0]["formato"]);
+        const tagsString = response.data.results[0]["tags"];
 
+        const tagsArray = tagsString.split(",").map((tag) => tag.trim());
+        console.log(tagsArray);
 
-  
- useEffect(() => {
-   axios
-     .get(`http://localhost:8800/aluno/turma/resultado/verificarAluno`, {
-       params: {
-         listaId: lista.id,
-         alunoId: aluno.id,
-       },
-     })
-     .then((response) => {
-       setQntPer(response.data.total_perguntas);
-       console.log("aluno", response.data);
-       setScore(response.data.results[0]["score"]);
-       setFormato(response.data.results[0]["formato"]);
-       const tagsString = response.data.results[0]["tags"];
+        setTopTags(tagsArray);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [lista.id, aluno.id]);
 
-       const tagsArray = tagsString.split(",").map((tag) => tag.trim());
-       console.log(tagsArray);
+  useEffect(() => {
+    if (topTags.length === 0 || !formato) return;
 
-       setTopTags(tagsArray);
-     })
-     .catch((error) => {
-       console.error(error);
-     });
- }, [lista.id, aluno.id]);
+    axios
+      .get(`http://localhost:8800/aluno/turma/turmaRef/${turmaId}`)
+      .then((response) => {
+        console.log("resssss", response.data);
+        setMateriais(response.data);
 
- useEffect(() => {
-   if (topTags.length === 0 || !formato) return;
+        let allFormats = [];
+        let oneFormat = [];
 
-   axios
-     .get(`http://localhost:8800/aluno/turma/turmaRef/${turmaId}`)
-     .then((response) => {
-       console.log("resssss", response.data);
-       setMateriais(response.data);
+        response.data.forEach((material) => {
+          const tagsDisc = material.tag;
+          const tagsFormt = material.formato;
 
-       let allFormats = [];
-       let oneFormat = [];
+          console.log("Processing Material:", material, topTags);
 
-       response.data.forEach((material) => {
-         const tagsDisc = material.tag;
-         const tagsFormt = material.formato;
+          if (topTags.includes(tagsDisc)) {
+            if (tagsFormt === formato) {
+              oneFormat.push(material.ref);
+              console.log("Added to oneFormat:", material.ref);
+            } else {
+              allFormats.push(material.ref);
+              console.log("Added to allFormats:", material.ref);
+            }
+          }
+        });
 
-         console.log("Processing Material:", material, topTags);
+        console.log("All Formats:", allFormats);
+        console.log("One Format:", oneFormat);
 
-         if (topTags.includes(tagsDisc)) {
-           if (tagsFormt === formato) {
-             oneFormat.push(material.ref);
-             console.log("Added to oneFormat:", material.ref);
-           } else {
-             allFormats.push(material.ref);
-             console.log("Added to allFormats:", material.ref);
-           }
-         }
-       });
+        allFormats.sort(() => Math.random() - 0.5);
+        const materiaisRelevantes = oneFormat.concat(allFormats).slice(0, 30);
+        setMatRelev(materiaisRelevantes);
 
-       console.log("All Formats:", allFormats);
-       console.log("One Format:", oneFormat);
-
-       allFormats.sort(() => Math.random() - 0.5);
-       const materiaisRelevantes = oneFormat.concat(allFormats).slice(0, 30);
-       setMatRelev(materiaisRelevantes);
-
-       console.log("Materiais Relevantes:", materiaisRelevantes);
-     })
-     .catch((error) => console.log(error));
- }, [topTags, formato, listaId]);
-
-  
-
+        console.log("Materiais Relevantes:", materiaisRelevantes);
+      })
+      .catch((error) => console.log(error));
+  }, [topTags, formato, listaId]);
 
   return (
     <Main>
@@ -186,7 +191,9 @@ function Resultado({ lista, aluno, handleSetFlagTurma, turma }) {
             <ResultContent>
               <p>Média de acertos: </p>
               <div>
-                <p>{score}/{qntPer }</p>
+                <p>
+                  {score}/{qntPer}
+                </p>
               </div>
             </ResultContent>
             <ResultContent>

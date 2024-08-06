@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Main, MainContent, MainItems } from "./Turma.style";
+import { Main, MainContent, MainItems } from "../Turma/Turma.style";
 import { ListaNome, FormAluno } from "./Lista.style";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -43,7 +43,6 @@ function Lista(props) {
 
   useEffect(() => {
     const listaId = props.lista.id;
-    
 
     axios
       .get(`http://localhost:8800/aluno/turma/lista/${listaId}`)
@@ -62,7 +61,7 @@ function Lista(props) {
     const listaId = props.lista.id;
     const alunoTurno = props.aluno.turno;
     const formato = props.aluno.formato;
-    console.log(props.aluno)
+    console.log(props.aluno);
     const respostas = Object.keys(responses).map((perguntaId) => ({
       perguntaId: Number(perguntaId),
       respostaAluno: responses[perguntaId],
@@ -79,12 +78,13 @@ function Lista(props) {
       .then((response) => {
         console.log("Respostas salvas com sucesso:", response.data);
 
-        return axios.get(`http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/resultado`);
+        return axios.get(
+          `http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/resultado`
+        );
       })
       .then((response) => {
         const { topWrongTags, topCorrectTags, score } = response.data;
-        console.log(score)
-        
+        console.log(score);
 
         return axios.post(
           `http://localhost:8800/aluno/turma/${alunoId}/lista/${listaId}/salvarTags`,

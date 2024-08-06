@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import SideBar from "./SideBar";
-import Resultado from "./Resultado";
-import Header from "./Header";
-import Turma from "./Turma";
-import Lista from "./Lista";
-import AlunoTurmaInscrito from "./AlunoTurmaInscrito";
+import SideBar from "../SideBar/SideBar";
+import Resultado from "../Resultado/Resultado";
+import Header from "../Header/Header";
+import Turma from "../Turma/Turma";
+import Lista from "../Lista/Lista";
+import AlunoTurmaInscrito from "../AlunoTurmaInscrito/AlunoTurmaInscrito";
 import { Contents } from "./AlunoTurma.style";
-import { Main } from "./Turma.style";
+import { Main } from "../Turma/Turma.style";
 
 function AlunoTurma() {
   const location = useLocation();
   const user = location.state?.user;
-  console.log("USEEERRRRR",user)
+  console.log("USEEERRRRR", user);
   const [flagTurma, setFlagTurma] = useState(false);
   const [flagLista, setFlagLista] = useState(false);
   const [flagResposta, setFlagResposta] = useState(false);
@@ -24,14 +24,13 @@ function AlunoTurma() {
   const handleSetFlagTurma = (flag, turma) => {
     setFlagTurma(flag);
     setSelectedTurma(turma);
-    setFlagLista(false)
-    setFlagResposta(false)
+    setFlagLista(false);
+    setFlagResposta(false);
   };
 
   const handleSetFlagLista = async (flag, lista, aluno) => {
     setSelectedLista(lista);
     setFlagTurma(false);
-    
 
     try {
       const response = await axios.get(
@@ -46,20 +45,20 @@ function AlunoTurma() {
 
       console.log("Resposta recebida:", response.data);
       if (response.data.length !== 0) {
-        return handleSetFlagResposta(true)
-      } 
+        return handleSetFlagResposta(true);
+      }
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
     }
-      
+
     setFlagLista(flag);
-    setFlagResposta(false)
+    setFlagResposta(false);
   };
 
   const handleSetFlagResposta = (flag, resposta) => {
     setFlagResposta(flag);
     setFlagLista(false);
-    setFlagTurma(false)
+    setFlagTurma(false);
     setSelectecResposta(resposta);
   };
 
@@ -87,7 +86,12 @@ function AlunoTurma() {
     }
     if (flagResposta) {
       return (
-        <Resultado lista={selectedLista} aluno={user} turma={selectedTurma} handleSetFlagTurma={handleSetFlagTurma} />
+        <Resultado
+          lista={selectedLista}
+          aluno={user}
+          turma={selectedTurma}
+          handleSetFlagTurma={handleSetFlagTurma}
+        />
       );
     }
   };

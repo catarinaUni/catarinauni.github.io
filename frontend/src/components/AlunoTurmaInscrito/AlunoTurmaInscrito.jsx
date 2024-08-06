@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import Modal from "./Modal"; 
+import Modal from "../Modal/Modal";
 import {
   MainContent,
   Listas,
@@ -10,11 +10,10 @@ import {
   Main,
   MainItems,
   Titulo,
-} from "./Turma.style";
-import Carousel from "./Carousel";
-import imageTest from "../assets/imgt.png";
-import listLogo from "../assets/listLogo.png";
-import refLogo from "../assets/refLogo.png";
+} from "../Turma/Turma.style";
+import Carousel from "../Carousel/Carousel";
+import listLogo from "../../assets/listLogo.png";
+import refLogo from "../../assets/refLogo.png";
 
 function AlunoTurmaInscrito(props) {
   const { user, turma } = props;

@@ -1,26 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Main, MainContent, Header, Title, MainItems } from "./Turma.style";
-import { ListaNome, Question } from "./Lista.style";
-import { Score, Result, ResultContent, Subtitulo, Grupos } from "./Resultado.style";
+import { Main, MainContent, Header, Title, MainItems } from "../Turma/Turma.style";
+import { ListaNome, Question } from "../Lista/Lista.style";
+import {
+  Score,
+  Result,
+  ResultContent,
+  Subtitulo,
+  Grupos,
+} from "../Resultado/Resultado.style";
 import axios from "axios";
-import arrow from "../assets/arrow.png";
+import arrow from "../../assets/arrow.png";
 
-function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) {
+function ResultadosProf({
+  lista,
+  aluno,
+  respostas,
+  turma,
+  handleSetFlagTurma,
+}) {
   const listaId = lista.id;
-  const turmaId = lista.turma_id
+  const turmaId = lista.turma_id;
 
   const [dadosJson, setDadosJson] = useState(null);
   const [error, setError] = useState(null);
-  const [grupos, setGrupos] = useState([])
-  const [chamada, setChamada] = useState(false)
+  const [grupos, setGrupos] = useState([]);
+  const [chamada, setChamada] = useState(false);
 
   const [scoreGeral, setScoreGeral] = useState(0);
   const [qntPer, setQntPer] = useState(0);
-  const [qntAluno, setQntAluno] = useState(0)
-  const [topTags, setTopTags] = useState([])
+  const [qntAluno, setQntAluno] = useState(0);
+  const [topTags, setTopTags] = useState([]);
   const [alunosMap, setAlunosMap] = useState({});
   const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
     console.log(turmaId, listaId);
     axios
@@ -46,14 +58,13 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
           `http://localhost:8800/turma/${turmaId}/ListarAlunos`
         );
         const alunosData = response.data["alunos"];
-        console.log(alunosData["alunos"])
+        console.log(alunosData["alunos"]);
         const alunosMapping = alunosData.reduce((acc, aluno) => {
           acc[aluno.id] = aluno.nome;
-          console.log(aluno.nome)
+          console.log(aluno.nome);
           return acc;
         }, {});
         setAlunosMap(alunosMapping);
-        
       } catch (error) {
         console.error("Erro ao buscar dados dos alunos:", error);
       }
@@ -96,8 +107,6 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
     }
   }, [chamada, turmaId, listaId]);
 
-
-
   useEffect(() => {
     axios
       .get(`http://localhost:8800/aluno/turma/resultado/verificar`, {
@@ -105,13 +114,13 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
       })
       .then((response) => {
         console.log("Resposta recebida JSON:", response);
-        setDadosJson(response.data.results)
+        setDadosJson(response.data.results);
 
         const results = response.data.results;
         let totalScore = 0;
         let totalAlunos = 0;
         const tagFrequency = {};
-        setQntPer(response.data.total_perguntas)
+        setQntPer(response.data.total_perguntas);
 
         results.forEach((data) => {
           totalScore += data["score"];
@@ -124,17 +133,15 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
               tagFrequency[trimmedTag] = (tagFrequency[trimmedTag] || 0) + 1;
             }
           });
-
         });
 
-        setQntAluno(totalAlunos)
+        setQntAluno(totalAlunos);
         if (totalScore == 0) {
-          setScoreGeral(0)
+          setScoreGeral(0);
         } else {
-          
           setScoreGeral(totalScore / totalAlunos);
         }
-        
+
         const sortedTags = Object.entries(tagFrequency)
           .sort((a, b) => b[1] - a[1])
           .slice(0, 5);
@@ -151,9 +158,7 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
   }, [listaId]);
 
   console.log("Média do score: ", scoreGeral);
-  console.log(topTags)
-
-
+  console.log(topTags);
 
   const gerarGrupos = async () => {
     setLoading(true);
@@ -195,7 +200,7 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
 
         console.log("Grupos salvos com sucesso.");
         setLoading(false);
-       return setChamada(true);
+        return setChamada(true);
       } catch (error) {
         console.error("Erro:", error);
         setLoading(false);
@@ -205,9 +210,6 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
       setLoading(false);
     }
   };
-
-
-
 
   return (
     <Main>
@@ -254,10 +256,9 @@ function ResultadosProf({ lista, aluno, respostas, turma, handleSetFlagTurma }) 
                   {qntAluno > 1 ? "Alunos responderam" : "Aluno respondeu"}{" "}
                 </p>
 
-                  <button onClick={gerarGrupos} disabled={chamada || loading}> 
-                    {loading ? "Carregando..." : "Gerar grupos"}
-                  </button>
- 
+                <button onClick={gerarGrupos} disabled={chamada || loading}>
+                  {loading ? "Carregando..." : "Gerar grupos"}
+                </button>
               </div>
             </ResultContent>
           </Result>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Form } from "./NewList.style";
-import { Main, MainContent, MainItems } from "./Turma.style";
+import { Form } from "../NewList/NewList.style";
+import { Main, MainContent, MainItems } from "../Turma/Turma.style";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import arrow from "../assets/arrow.png";
+import arrow from "../../assets/arrow.png";
 
 const QuestionFormRef = ({ turmaId }) => {
   const [references, setReferences] = useState([]);
@@ -21,7 +21,7 @@ const QuestionFormRef = ({ turmaId }) => {
 
       const response = await axios.post(
         "http://localhost:8800/professor/adicionarRef",
-        newReference 
+        newReference
       );
       console.log("Data saved to database:", response.data);
       setNewReference({
@@ -30,7 +30,7 @@ const QuestionFormRef = ({ turmaId }) => {
         tag: "",
         formato: "Vídeo",
       });
-       toast.success("Referência adicionada!");
+      toast.success("Referência adicionada!");
     } catch (error) {
       console.error("Error saving data to database:", error);
     }
@@ -94,12 +94,12 @@ function NewRef({ turma, handleSetFlagTurma }) {
   return (
     <Main>
       <MainContent>
-          <img
-            src={arrow}
-            alt="voltar"
-            onClick={() => handleSetFlagTurma(true, turma)}
-            className="seta"
-          />
+        <img
+          src={arrow}
+          alt="voltar"
+          onClick={() => handleSetFlagTurma(true, turma)}
+          className="seta"
+        />
         <MainItems>
           <Form>
             <QuestionFormRef turmaId={turmaId} />

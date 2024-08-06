@@ -1,5 +1,5 @@
 import React from "react";
-import SideBar from "./SideBar";
+
 import {
   Main,
   MainContent,
@@ -12,16 +12,28 @@ import {
   MainItems,
   Image,
   ButtonNew,
-} from "./Turma.style";
+} from "../Turma/Turma.style";
 import { Form, Question } from "./NewList.style";
 import { useState } from "react";
-import { json } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ModalContent, ModalOverlay, CloseButton, CancelButton, ConfirmButton, ButtonContainer } from "./Modal.style";
+import {
+  ModalContent,
+  ModalOverlay,
+  CloseButton,
+  CancelButton,
+  ConfirmButton,
+  ButtonContainer,
+} from "../Modal/Modal.style";
 
-const QuestionForm = ({ turmaId, handleSetFlagTurma, turma, setRender, render }) => {
+const QuestionForm = ({
+  turmaId,
+  handleSetFlagTurma,
+  turma,
+  setRender,
+  render,
+}) => {
   const [list, setList] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [disableButton, setDisableButton] = useState(true);
@@ -36,7 +48,7 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma, setRender, render })
     tags: ["", "", ""],
   });
 
-    const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const isQuestionValid = (question) => {
     const { pergunta, alternativa, resposta, tags } = question;
@@ -84,30 +96,27 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma, setRender, render })
     }
 
     try {
+      const response = axios.post(
+        "http://localhost:8800/professor/turma/novalista",
+        { newList, questions, turmaId }
+      );
+      console.log("Data saved to database:", response.data);
 
-
-    
-          const response = axios.post(
-            "http://localhost:8800/professor/turma/novalista",
-            { newList, questions, turmaId }
-          );
-          console.log("Data saved to database:", response.data);
-
-          setList([]);
-          setQuestions([]);
-          setNewList({ nome: "" });
-          setNewQuestion({
-            pergunta: "",
-            alternativa: { a: "", b: "", c: "", d: "" },
-            resposta: "a",
-            tags: ["", "", ""],
-          });
+      setList([]);
+      setQuestions([]);
+      setNewList({ nome: "" });
+      setNewQuestion({
+        pergunta: "",
+        alternativa: { a: "", b: "", c: "", d: "" },
+        resposta: "a",
+        tags: ["", "", ""],
+      });
 
       handleSetFlagTurma(true, turma);
-      return setRender(!render)
-        } catch (error) {
-          console.error("Error saving data to database:", error);
-          toast.error("Erro ao salvar a lista.");
+      return setRender(!render);
+    } catch (error) {
+      console.error("Error saving data to database:", error);
+      toast.error("Erro ao salvar a lista.");
     }
   };
 
@@ -131,15 +140,11 @@ const QuestionForm = ({ turmaId, handleSetFlagTurma, turma, setRender, render })
     handleSaveToJson();
     setShowModal(false);
     handleSetFlagTurma(true, turma);
-
-    
   };
 
   const handleCancelamento = () => {
     setShowModal(false);
   };
-
-
 
   return (
     <div className="questionForm">
