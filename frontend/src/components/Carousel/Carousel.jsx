@@ -6,10 +6,9 @@ const CarouselContainer = styled.div`
   display: flex;
   overflow-x: auto;
   scrollbar-width: thin;
-  scrollbar-color: #c0c0c0 transparent;
+  scrollbar-color: #dbdbdb transparent;
   padding-bottom: 10px;
   padding-left: 50px;
-  
 
   &::-webkit-scrollbar {
     width: 8px;

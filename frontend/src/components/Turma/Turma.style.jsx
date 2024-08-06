@@ -118,6 +118,7 @@ export const MainItems = styled.div`
     border-radius: 30px;
     margin-bottom: 60px;
     margin-top: 40px;
+
   }
 `;
 
@@ -138,7 +139,7 @@ export const Titulo = styled.div`
   align-items: center;
   .new {
     border: 1px solid #bdbdbd;
-    padding: 5px;
+    padding: 5px 10px;
     border-radius: 10px;
 
     &:hover {

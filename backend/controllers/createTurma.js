@@ -4,7 +4,7 @@ const colors = [
   "#3C91E6", //azul
   "#C33C54", //vinho
   "#4A7856", //verde escuro
-  "#553D3", //marrom
+  "#553D32", //marrom
   "#231651", //roxo escuro
   "#EB8258", //laranja
   "#9067C6", //roxo

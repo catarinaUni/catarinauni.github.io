@@ -223,7 +223,7 @@ export const Form = styled.div`
     border: none;
     border-radius: 30px;
     margin-bottom: 80px;
-    font-size: 14px;
+    font-size: 16px;
     color: white;
     cursor: pointer;
   }

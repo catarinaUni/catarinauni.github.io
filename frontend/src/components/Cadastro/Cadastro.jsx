@@ -113,7 +113,6 @@ function Cadastro() {
                   <option value="Artigo">Artigo</option>
                   <option value="Quiz">Quiz</option>
                   <option value="Podcast">Podcast</option>
-                  <option value="Quiz">Quiz</option>
                 </select>
               </FormGroup>
               <FormGroup>

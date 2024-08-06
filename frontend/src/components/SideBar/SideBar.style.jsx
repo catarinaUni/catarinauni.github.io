@@ -13,8 +13,22 @@ export const Side = styled.div`
   overflow-x: hidden;
   display: flex;
   align-items: center;
+  scrollbar-width: thin;
+  scrollbar-color: #dbdbdb transparent;
   justify-content: center;
-  
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 4px;
+  }
 `;
 
 export const SideBarItems = styled.div`
@@ -29,6 +43,7 @@ export const SideBarItems = styled.div`
     margin-top: 40px;
     color: #f53939;
     cursor: pointer;
+    padding-bottom: 50px;
     &:hover {
       border: 1px solid #f53939;
       border-left: none;
@@ -79,9 +94,9 @@ export const TurmaButton = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
+  border-radius: 15px;
 
   &:hover {
-    background-color: #e3e3e3;
     cursor: pointer;
   }
 `;

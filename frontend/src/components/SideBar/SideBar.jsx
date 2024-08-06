@@ -30,6 +30,7 @@ function SideBar(props) {
         `http://localhost:8800/turmas/${props.userId}/${props.userType}`
       );
       setTurmas(response.data.turmas);
+      console.log(response.data.turmas)
     } catch (error) {
       console.error("Erro ao buscar turmas:", error);
     }
@@ -126,6 +127,7 @@ function SideBar(props) {
                 <TurmaButton
                   key={turma.id}
                   onClick={() => handleTurmaClick(turma)}
+                  style={{ border: `1px solid ${turma.bgcolor}` }}
                 >
                   {turma.nome}
                 </TurmaButton>
