@@ -1,12 +1,14 @@
 import { db } from "../db.js";
 
 const colors = [
-  "#a3f5c7",
-  "#f8e1b9",
-  "#dad7f5",
-  "#fbd8ff",
-  "#ffd1c0",
-  "#bedfff",
+  "#3C91E6", //azul
+  "#C33C54", //vinho
+  "#4A7856", //verde escuro
+  "#553D3", //marrom
+  "#231651", //roxo escuro
+  "#EB8258", //laranja
+  "#9067C6", //roxo
+  "#CE2D4F", //rosa-vermelho
 ];
 
 function getRandomColor(colors) {
