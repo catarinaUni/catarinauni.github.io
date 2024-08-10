@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const TagSuggestionsContainer = styled.div`
-  max-height: 15px; /* Limita a altura da lista de opções */
-  overflow-y: auto;  /* Adiciona barra de rolagem se necessário */
+  max-height: 15px;
+  overflow-y: auto; 
   border: 1px solid #ccc;
   background-color: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);

@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 function Cadastro() {
   const [userAluno, setUserAluno] = useState(false);
+  const [buttonControl, setButtonControl] = useState(false)
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -27,6 +28,31 @@ function Cadastro() {
   useEffect(() => {
     setUserAluno(formData.userType === "aluno");
   }, [formData.userType]);
+
+
+    useEffect(() => {
+      const checkButtonControl = () => {
+        const {
+          username,
+          password,
+          email,
+          userType,
+          userFormatPref,
+          userTurno,
+        } = formData;
+        if (username && password && email && userType) {
+          if (userType === "aluno") {
+            setButtonControl(userFormatPref && userTurno);
+          } else {
+            setButtonControl(true);
+          }
+        } else {
+          setButtonControl(false);
+        }
+      };
+
+      checkButtonControl();
+    }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -129,7 +155,7 @@ function Cadastro() {
               </FormGroup>
             </>
           )}
-          <SubmitButton type="submit">Cadastrar</SubmitButton>
+          <SubmitButton type="submit" disabled={!buttonControl}>Cadastrar</SubmitButton>
         </CadastroForm>
       </CadastroItems>
 
