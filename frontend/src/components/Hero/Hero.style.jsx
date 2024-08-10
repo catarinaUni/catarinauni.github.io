@@ -37,6 +37,7 @@ export const Buttons = styled.div`
   width: 70%;
   justify-content: space-around;
   margin-top: 15%;
+  margin-bottom: 100px;
 
   .botao {
     width: 150px;

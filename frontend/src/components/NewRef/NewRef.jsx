@@ -8,7 +8,7 @@ import arrow from "../../assets/arrow.png";
 
 const QuestionFormRef = ({ turmaId }) => {
   const [references, setReferences] = useState([]);
-  const [tags, setTags] = useState([]); // Estado para as tags existentes
+  const [tags, setTags] = useState([]);
   const [newReference, setNewReference] = useState({
     turmaId: turmaId,
     ref: "",
