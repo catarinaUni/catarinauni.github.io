@@ -12,9 +12,22 @@ export const getTags = (req, res) => {
       console.error("Erro:", err);
       return res.status(500).json(err);
     }
-    const tags = data.map((item) => item.tag);
-    const uniqueTags = [...new Set(tags)];
 
+    const normalizeTag = (tag) => {
+      return tag
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    };
+
+    const tagMap = new Map();
+    data.forEach((item) => {
+      const normalizedTag = normalizeTag(item.tag);
+      if (!tagMap.has(normalizedTag)) {
+        tagMap.set(normalizedTag, item.tag);
+      }
+    });
+    const uniqueTags = Array.from(tagMap.values());
     return res.status(200).json(uniqueTags);
   });
 };
