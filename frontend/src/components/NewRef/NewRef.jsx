@@ -23,6 +23,7 @@ const QuestionFormRef = ({ turmaId }) => {
           `http://localhost:8800/professor/turma/${turmaId}/tags`
         );
         setTags(response.data);
+        console.log("refs: ", response.data)
       } catch (error) {
         console.error("Erro ao buscar tags:", error);
       }
