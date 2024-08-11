@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 function Cadastro() {
   const [userAluno, setUserAluno] = useState(false);
-  const [buttonControl, setButtonControl] = useState(false)
+  const [buttonControl, setButtonControl] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -23,36 +23,29 @@ function Cadastro() {
     userTurno: "Manhã",
   });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); 
   const navigate = useNavigate();
 
   useEffect(() => {
     setUserAluno(formData.userType === "aluno");
   }, [formData.userType]);
 
-
-    useEffect(() => {
-      const checkButtonControl = () => {
-        const {
-          username,
-          password,
-          email,
-          userType,
-          userFormatPref,
-          userTurno,
-        } = formData;
-        if (username && password && email && userType) {
-          if (userType === "aluno") {
-            setButtonControl(userFormatPref && userTurno);
-          } else {
-            setButtonControl(true);
-          }
+  useEffect(() => {
+    const checkButtonControl = () => {
+      const { username, password, email, userType, userFormatPref, userTurno } = formData;
+      if (username && password && email && userType) {
+        if (userType === "aluno") {
+          setButtonControl(userFormatPref && userTurno);
         } else {
-          setButtonControl(false);
+          setButtonControl(true);
         }
-      };
+      } else {
+        setButtonControl(false);
+      }
+    };
 
-      checkButtonControl();
-    }, [formData]);
+    checkButtonControl();
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,8 +64,10 @@ function Cadastro() {
       );
       console.log("Cadastro realizado com sucesso:", response.data);
       setShowSuccessModal(true);
+      setErrorMessage("");
     } catch (error) {
       console.error("Erro ao realizar cadastro:", error);
+      setErrorMessage("Erro ao realizar cadastro: " + (error.response?.data?.message || error.message));
     }
   };
 
@@ -134,7 +129,7 @@ function Cadastro() {
                   onChange={handleChange}
                   value={formData.userFormatPref}
                 >
-                  <option value="Vídeo">Video</option>
+                  <option value="Vídeo">Vídeo</option>
                   <option value="Livro">Livro</option>
                   <option value="Artigo">Artigo</option>
                   <option value="Quiz">Quiz</option>
@@ -157,6 +152,9 @@ function Cadastro() {
           )}
           <SubmitButton type="submit" disabled={!buttonControl}>Cadastrar</SubmitButton>
         </CadastroForm>
+
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+
       </CadastroItems>
 
       {showSuccessModal && (
@@ -191,6 +189,11 @@ function Cadastro() {
               color: white;
               cursor: pointer;
               border-radius: 5px;
+            }
+            .error-message {
+              margin-top: 20px;
+              color: red;
+              font-weight: bold;
             }
           `}</style>
         </div>
