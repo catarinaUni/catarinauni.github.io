@@ -26,10 +26,17 @@ export const saveAnswers = (req, res) => {
 };
 
 
+const normalizeTag = (tag) => {
+  return tag
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+};
+
 export const checkAnswers = (req, res) => {
   const { listaId } = req.params;
   const { alunoId } = req.params;
-  var score = 0;
+  let score = 0;
 
   const query = `
         SELECT r.pergunta_id, r.resposta, p.tag_1, p.tag_2, p.tag_3, p.resposta_correta AS resposta_correta
@@ -55,27 +62,37 @@ export const checkAnswers = (req, res) => {
     const wrongTagCounts = {};
     const correctTagCounts = {};
 
+    const tagMap = new Map();
+
     resultados.forEach((item) => {
       const tags = [item.tag1, item.tag2, item.tag3].filter(Boolean);
       tags.forEach((tag) => {
-        totalTagCounts[tag] = (totalTagCounts[tag] || 0) + 1;
+        const normalizedTag = normalizeTag(tag);
+        if (!tagMap.has(normalizedTag)) {
+          tagMap.set(normalizedTag, tag);
+        }
+        totalTagCounts[normalizedTag] =
+          (totalTagCounts[normalizedTag] || 0) + 1;
       });
       if (item.correta) {
         score++;
       }
     });
 
-
     resultados.forEach((item) => {
       const tags = [item.tag1, item.tag2, item.tag3].filter(Boolean);
       tags.forEach((tag) => {
+        const normalizedTag = normalizeTag(tag);
         if (!item.correta) {
-          wrongTagCounts[tag] = (wrongTagCounts[tag] || 0) + 1;
+          wrongTagCounts[normalizedTag] =
+            (wrongTagCounts[normalizedTag] || 0) + 1;
         } else {
-          correctTagCounts[tag] = (correctTagCounts[tag] || 0) + 1;
+          correctTagCounts[normalizedTag] =
+            (correctTagCounts[normalizedTag] || 0) + 1;
         }
       });
     });
+
     const tagErrorRates = Object.keys(wrongTagCounts).reduce((acc, tag) => {
       acc[tag] = wrongTagCounts[tag] / totalTagCounts[tag];
       return acc;
@@ -84,12 +101,11 @@ export const checkAnswers = (req, res) => {
     const sortedWrongTags = Object.entries(tagErrorRates)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 4)
-      .map((entry) => entry[0]);
-
+      .map((entry) => tagMap.get(entry[0])); 
     const sortedCorrectTags = Object.entries(correctTagCounts)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 4)
-      .map((entry) => entry[0]);
+      .map((entry) => tagMap.get(entry[0]));
 
     return res.status(200).json({
       resultados,
@@ -99,6 +115,8 @@ export const checkAnswers = (req, res) => {
     });
   });
 };
+
+
 
 export const saveResultTags = (req, res) => {
   const { alunoId, listaId, tags, tagsCons, turno, score, formato } = req.body;
