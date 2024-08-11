@@ -1,20 +1,8 @@
 import React from "react";
 
-import {
-  Main,
-  MainContent,
-  Header,
-  Title,
-  Alunos,
-  Titulo,
-  Listas,
-  Materiais,
-  MainItems,
-  Image,
-  ButtonNew,
-} from "../Turma/Turma.style";
+import { Main, MainContent, MainItems } from "../Turma/Turma.style";
 import { Form, Question } from "./NewList.style";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -37,7 +25,7 @@ const QuestionForm = ({
   const [list, setList] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [disableButton, setDisableButton] = useState(true);
-  const [references, setReferences] = useState([]);
+  const [tags, setTags] = useState([]);
   const [newList, setNewList] = useState({
     nome: "",
   });
@@ -49,6 +37,21 @@ const QuestionForm = ({
   });
 
   const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8800/professor/turma/${turmaId}/tags`
+        );
+        setTags(response.data);
+        console.log("refs: ", response.data);
+      } catch (error) {
+        console.error("Erro ao buscar tags:", error);
+      }
+    };
+
+    fetchTags();
+  }, [turmaId]);
 
   const isQuestionValid = (question) => {
     const { pergunta, alternativa, resposta, tags } = question;
@@ -224,6 +227,7 @@ const QuestionForm = ({
         <p>Assuntos:</p>
         <div>
           <input
+            list="tag-options"
             type="text"
             value={newQuestion.tags[0]}
             onChange={(e) => handleChangeTag(e, 0)}
@@ -231,13 +235,22 @@ const QuestionForm = ({
         </div>
         <div>
           <input
+            list="tag-options"
             type="text"
             value={newQuestion.tags[1]}
             onChange={(e) => handleChangeTag(e, 1)}
           />
+          <datalist id="tag-options">
+            {tags.map((tag, index) => (
+              <option key={index} value={tag}>
+                {tag}
+              </option>
+            ))}
+          </datalist>
         </div>
         <div>
           <input
+            list="tag-options"
             type="text"
             value={newQuestion.tags[2]}
             onChange={(e) => handleChangeTag(e, 2)}
