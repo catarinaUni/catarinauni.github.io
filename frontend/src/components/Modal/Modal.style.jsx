@@ -106,6 +106,5 @@ export const ButtonContainer = styled.div`
   margin-top: 20px;
   display: flex;
   justify-content: space-around;
-  justify-content: space-between;
-  width: 40%;
+  width: 60%;
 `;
