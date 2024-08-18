@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Main, MainContent, Header, Title, MainItems } from "../Turma/Turma.style";
+import {
+  Main,
+  MainContent,
+  Header,
+  Title,
+  MainItems,
+} from "../Turma/Turma.style";
 import { ListaNome, Question } from "../Lista/Lista.style";
 import {
   Score,
@@ -10,6 +16,14 @@ import {
 } from "../Resultado/Resultado.style";
 import axios from "axios";
 import arrow from "../../assets/arrow.png";
+import {
+  ModalContent,
+  ModalOverlay,
+  CloseButton,
+  CancelButton,
+  ConfirmButton,
+  ButtonContainer,
+} from "../Modal/Modal.style";
 
 function ResultadosProf({
   lista,
@@ -25,16 +39,16 @@ function ResultadosProf({
   const [error, setError] = useState(null);
   const [grupos, setGrupos] = useState([]);
   const [chamada, setChamada] = useState(false);
-
   const [scoreGeral, setScoreGeral] = useState(0);
   const [qntPer, setQntPer] = useState(0);
   const [qntAluno, setQntAluno] = useState(0);
   const [topTags, setTopTags] = useState([]);
   const [alunosMap, setAlunosMap] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    console.log(turmaId, listaId);
+     ;
     axios
       .get(`http://localhost:8800/grupos/chamada`, {
         params: {
@@ -43,7 +57,7 @@ function ResultadosProf({
         },
       })
       .then((response) => {
-        console.log("CHAMADA: ", response.data.exists);
+         ;
         setChamada(response.data.exists);
       })
       .catch((error) => {
@@ -58,10 +72,10 @@ function ResultadosProf({
           `http://localhost:8800/turma/${turmaId}/ListarAlunos`
         );
         const alunosData = response.data["alunos"];
-        console.log(alunosData["alunos"]);
+         ;
         const alunosMapping = alunosData.reduce((acc, aluno) => {
           acc[aluno.id] = aluno.nome;
-          console.log(aluno.nome);
+           ;
           return acc;
         }, {});
         setAlunosMap(alunosMapping);
@@ -83,7 +97,7 @@ function ResultadosProf({
           },
         })
         .then((response) => {
-          console.log("grupos:", response.data);
+           ;
           const data = response.data;
           const groupedData = data.reduce((acc, item) => {
             const { grupo_id, aluno_id } = item;
@@ -113,7 +127,7 @@ function ResultadosProf({
         params: { listaId },
       })
       .then((response) => {
-        console.log("Resposta recebida JSON:", response);
+         ;
         setDadosJson(response.data.results);
 
         const results = response.data.results;
@@ -136,7 +150,7 @@ function ResultadosProf({
         });
 
         setQntAluno(totalAlunos);
-        if (totalScore == 0) {
+        if (totalScore === 0) {
           setScoreGeral(0);
         } else {
           setScoreGeral(totalScore / totalAlunos);
@@ -157,8 +171,8 @@ function ResultadosProf({
       });
   }, [listaId]);
 
-  console.log("Média do score: ", scoreGeral);
-  console.log(topTags);
+   ;
+   ;
 
   const gerarGrupos = async () => {
     setLoading(true);
@@ -198,17 +212,26 @@ function ResultadosProf({
           listaId,
         });
 
-        console.log("Grupos salvos com sucesso.");
+         ;
         setLoading(false);
-        return setChamada(true);
+        setChamada(true);
       } catch (error) {
         console.error("Erro:", error);
         setLoading(false);
       }
     } else {
-      console.log("Dados JSON não disponíveis.");
+       ;
       setLoading(false);
     }
+  };
+
+  const handleConfirmarGerarGrupos = () => {
+    gerarGrupos();
+    setShowModal(false);
+  };
+
+  const handleCancelamento = () => {
+    setShowModal(false);
   };
 
   return (
@@ -255,8 +278,10 @@ function ResultadosProf({
                   {qntAluno}{" "}
                   {qntAluno > 1 ? "Alunos responderam" : "Aluno respondeu"}{" "}
                 </p>
-
-                <button onClick={gerarGrupos} disabled={chamada || loading}>
+                <button
+                  onClick={() => setShowModal(true)}
+                  disabled={chamada || loading}
+                >
                   {loading ? "Carregando..." : "Gerar grupos"}
                 </button>
               </div>
@@ -272,24 +297,40 @@ function ResultadosProf({
                       {grupo.alunos.length > 0 ? (
                         grupo.alunos.map((aluno_id, index) => (
                           <li key={index}>
-                            {alunosMap[aluno_id] || `Aluno ID: ${aluno_id}`}
+                            {alunosMap[aluno_id] || `Aluno ${aluno_id}`}
                           </li>
                         ))
                       ) : (
-                        <li>Nenhum aluno disponível.</li>
+                        <li>Sem alunos</li>
                       )}
                     </ul>
                   </div>
                 ))
               ) : (
-                <div>Não há grupos para mostrar.</div>
+                <p>Nenhum grupo encontrado.</p>
               )
             ) : (
-              <div>Não há grupos para mostrar.</div>
+              <p>Não foram gerados grupos ainda.</p>
             )}
           </Grupos>
         </MainItems>
       </MainContent>
+
+      {showModal && (
+        <ModalOverlay>
+          <ModalContent>
+            <CloseButton onClick={() => setShowModal(false)}>X</CloseButton>
+            <h3>Confirmar geração de grupos</h3>
+            <p>Tem certeza de que deseja gerar os grupos e encerrar a lista?</p>
+            <ButtonContainer>
+              <CancelButton onClick={handleCancelamento}>Cancelar</CancelButton>
+              <ConfirmButton onClick={handleConfirmarGerarGrupos}>
+                Confirmar
+              </ConfirmButton>
+            </ButtonContainer>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </Main>
   );
 }
