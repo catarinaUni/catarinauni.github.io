@@ -173,7 +173,7 @@ export const Form = styled.div`
 
   .tags {
     display: flex;
-    width: 80%;
+    width: 100%;
     justify-content: space-around;
     align-items: center;
     padding-right: 50px;
